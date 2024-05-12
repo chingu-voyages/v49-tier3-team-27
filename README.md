@@ -40,3 +40,4 @@ coding!
   ...
 
 - Mariana Farcas: [GitHub](https://github.com/MarianaFarcas) / [LinkedIn](https://linkedin.com/in/Mariana-Farcas)
+Osarumen Peace Osayande: [GitHub](https://github.com/Chukuli12) / [LinkedIn](https://www.linkedin.com/in/osarumen-osayande-019a3823b)
