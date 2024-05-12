@@ -39,4 +39,4 @@ coding!
 
   ...
 
-- Teammate name #n: [GitHub](https://github.com/MarianaFarcas) / [LinkedIn](https://linkedin.com/in/Mariana_Farcas)
+- Mariana Farcas: [GitHub](https://github.com/MarianaFarcas) / [LinkedIn](https://linkedin.com/in/Mariana_Farcas)
