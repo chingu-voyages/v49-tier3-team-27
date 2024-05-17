@@ -1,0 +1,33 @@
+<svg width="1255" height="3265" viewBox="0 0 1255 3265" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="timeline path">
+<g id="webpage path">
+<path id="Vector 4" d="M63 0V138.436C63 138.436 64.003 1643.24 64.003 1671.73C64.003 1671.73 76.0553 1723.74 117.372 1723.74M117.372 1723.74C152.466 1723.74 1109.98 1725.74 1176.49 1723.74C1243 1721.74 1243 1773.73 1243 1773.73V3059.53C1243 3059.53 1243 3145.02 1184.55 3145.02C1138.55 3145.02 740.649 3145.02 681.194 3145.02C621.738 3145.02 621.738 3189.76 621.738 3189.76V3234.5V3265M117.372 1723.74V1873.71" stroke="#B4B3B3"/>
+<path id="Vector 5" d="M150 142H77.7409H24.4186M137.043 1094H77.7409C77.7409 1094 24.7207 1094 24.4186 1052.5C24.1166 1011 24.4186 142 24.4186 142M24.4186 142H0" stroke="#B4B3B3"/>
+<path id="Vector 6" d="M953 2569H1243.5" stroke="#B4B3B3"/>
+</g>
+<g id="socket -terminal-6">
+<rect id="Rectangle 42" x="609" y="3231" width="25" height="25" rx="12.5" fill="white"/>
+<circle id="Ellipse 7" cx="622" cy="3243" r="8.5" fill="#E48732" stroke="#B4B3B3" stroke-width="3"/>
+</g>
+<g id="socket -terminal-5">
+<rect id="Rectangle 42_2" x="1230" y="2556" width="25" height="25" rx="12.5" fill="white"/>
+<circle id="Ellipse 7_2" cx="1243" cy="2568" r="8.5" fill="#E48732" stroke="#B4B3B3" stroke-width="3"/>
+</g>
+<g id="socket -terminal-4">
+<rect id="Rectangle 42_3" x="104" y="1709" width="25" height="25" rx="12.5" fill="white"/>
+<circle id="Ellipse 7_3" cx="117" cy="1721" r="8.5" fill="#E48732" stroke="#B4B3B3" stroke-width="3"/>
+</g>
+<g id="socket-terminal-3">
+<rect id="Rectangle 42_4" x="50" y="1081" width="25" height="25" rx="12.5" fill="white"/>
+<circle id="Ellipse 7_4" cx="63" cy="1093" r="8.5" fill="#E48732" stroke="#B4B3B3" stroke-width="3"/>
+</g>
+<g id="socket -terminal-2">
+<rect id="Rectangle 42_5" x="15" y="129" width="25" height="25" rx="12.5" fill="#E48732"/>
+<circle id="Ellipse 7_5" cx="28" cy="141" r="8.5" fill="#E48732" stroke="#B4B3B3" stroke-width="3"/>
+</g>
+<g id="socket -terminal-1">
+<rect id="Rectangle 42_6" x="50" y="129" width="25" height="25" rx="12.5" fill="#E48732"/>
+<circle id="Ellipse 7_6" cx="63" cy="141" r="8.5" fill="#E48732" stroke="#B4B3B3" stroke-width="3"/>
+</g>
+</g>
+</svg>
