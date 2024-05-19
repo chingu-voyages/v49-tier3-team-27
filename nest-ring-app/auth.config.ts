@@ -26,7 +26,7 @@ export const authConfig = {
       ) {
         if (isLoggedIn) return true;
         return false;
-      } else if (isRootRoute && !isLandingPage && !isLoggedIn) {
+      } else if (isRootRoute && !isLandingPage) {
         return Response.redirect(new URL("/home", nextUrl));
       }
 
