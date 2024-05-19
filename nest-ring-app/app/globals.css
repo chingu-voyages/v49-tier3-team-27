@@ -1,8 +1,127 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 
-  @layer base {
+
+.signin-form-desktop {
+  animation: signin-form-desktop-animate 1s ease;
+}
+
+@keyframes signin-form-desktop-animate {
+  from {
+    transform: translate(20%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.signup-form-desktop {
+  animation: signup-form-desktop-animate 1s ease;
+  transform: translateX(100%);
+}
+
+@keyframes signup-form-desktop-animate {
+  from {
+    transform: translateX(80%);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.signup-banner-desktop {
+  animation: signup-banner-desktop-animate 1s ease;
+  transform: translateX(100%);
+}
+
+@keyframes signup-banner-desktop-animate {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.signin-banner-desktop {
+  animation: signin-banner-desktop-animate 1s ease;
+  transform: translateX(0);
+}
+
+@keyframes signin-banner-desktop-animate {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+/*For devices with portrait screens*/
+.signin-form-portrait {
+  animation: signin-form-portrait-animate 1s ease;
+}
+
+@keyframes signin-form-portrait-animate {
+  from {
+    transform: translate(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.signup-form-portrait {
+  animation: signup-form-portrait-animate 1s ease;
+}
+
+@keyframes signup-form-portrait-animate {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.signup-banner-portrait {
+  animation: signup-banner-portrait-animate 1s ease;
+  transform: translateY(0);
+}
+
+@keyframes signup-banner-portrait-animate {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+.signin-banner-portrait {
+  animation: signin-banner-portrait-animate 1s ease;
+  transform: translateY(0);
+}
+
+@keyframes signin-banner-portrait-animate {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@layer base {
     :root {
       --background: 0 0% 100%;
       --foreground: 224 71.4% 4.1%;
