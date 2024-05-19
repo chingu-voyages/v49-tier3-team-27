@@ -55,6 +55,8 @@ const LandingPage = () => {
           alt=""
           width={1400}
           height={1000}
+          priority
+          loading="eager"
           className=" w-full h-auto"
         />
         <div className=" absolute lg:right-[15%] md:right-[10%] right-[5%] top-[50%] text-white font-bold md:text-3xl text-lg max-sm:text-sm flex sm:gap-3 gap-1 md:items-center max-sm:flex-col">
@@ -157,6 +159,7 @@ const LandingPage = () => {
             alt=""
             width={1400}
             height={1000}
+            loading="lazy"
             className=" w-[40%] h-auto"
           />
           <div className=" md:mt-36 md:w-[35%] w-1/2 flex flex-col gap-3">
@@ -165,9 +168,16 @@ const LandingPage = () => {
               alt=""
               width={1400}
               height={1000}
+              loading="lazy"
             />
             <Link href="http://localhost:3000/events">
-              <Image src={recipeNavButton} alt="" width={300} height={300} />
+              <Image
+                src={recipeNavButton}
+                alt=""
+                width={300}
+                height={300}
+                loading="lazy"
+              />
             </Link>
           </div>
         </div>
@@ -179,6 +189,7 @@ const LandingPage = () => {
             alt=""
             width={1400}
             height={1000}
+            loading="lazy"
           />
           <Link href="http://localhost:3000/community">
             <Image
@@ -186,6 +197,7 @@ const LandingPage = () => {
               alt=""
               width={400}
               height={400}
+              loading="lazy"
               className=" absolute left-20 bottom-[20%] w-1/4 hover:scale-105 transition-transform duration-300"
             />
           </Link>
