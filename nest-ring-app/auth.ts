@@ -2,10 +2,15 @@ import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
 import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
+import dbConnect from "./lib/mongo";
+import User from "./lib/models/User";
 
 async function getUser(email: string) {
   try {
-    const user = null;
+    await dbConnect();
+    const user = await User.findOne({
+      email,
+    });
 
     return user;
   } catch (error) {
@@ -14,7 +19,12 @@ async function getUser(email: string) {
   }
 }
 
-export const {} = NextAuth({
+export const {
+  handlers: { GET, POST },
+  signIn,
+  signOut,
+  auth,
+} = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
