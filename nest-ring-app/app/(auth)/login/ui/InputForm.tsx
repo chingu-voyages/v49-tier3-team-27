@@ -3,9 +3,15 @@ import github_icon from "@/public/auth-form-icons/github.svg";
 import google_icon from "@/public/auth-form-icons/google-plus-g.svg";
 import linkedIn_icon from "@/public/auth-form-icons/linkedin-in.svg";
 import Image from "next/image";
+import { useFormState } from "react-dom";
+import { login, signUpUser } from "../lib/action";
 
 const InputForm = ({ action }: { action: string }) => {
-  const handleFormSubmit = () => {};
+  const [loginErrorMessage, dispatchLogin] = useFormState(login, undefined);
+  const [signUpErrorMessage, dispatchSignUp] = useFormState(
+    signUpUser,
+    undefined
+  );
 
   return (
     <>
@@ -34,7 +40,7 @@ const InputForm = ({ action }: { action: string }) => {
           </div>
           <span className="">or use your email and password</span>
           <form
-            onSubmit={handleFormSubmit}
+            action={dispatchLogin}
             className="flex flex-col gap-2 w-3/4 items-center"
           >
             <input
@@ -47,9 +53,10 @@ const InputForm = ({ action }: { action: string }) => {
               type="password"
               name="password"
               placeholder="Password"
+              minLength={6}
               className=" bg-gray-200 text-gray-400 p-2 rounded-lg w-full"
             />
-            <span className="">forgot your password?</span>
+            <span className="">Error: {loginErrorMessage}</span>
             <button
               type="submit"
               className=" font-semibold w-[40%] p-2 rounded-md bg-indigo-950 text-white"
@@ -87,7 +94,7 @@ const InputForm = ({ action }: { action: string }) => {
           </div>
           <span className="">or use your email for registration</span>
           <form
-            onSubmit={handleFormSubmit}
+            action={dispatchSignUp}
             className="flex flex-col gap-2 w-3/4 items-center"
           >
             <input
@@ -106,8 +113,10 @@ const InputForm = ({ action }: { action: string }) => {
               type="password"
               name="password"
               placeholder="Password"
+              minLength={6}
               className="bg-gray-200 text-gray-400 p-2 rounded-lg w-full"
             />
+            <span>message: {signUpErrorMessage}</span>
             <button
               type="submit"
               className=" font-semibold w-[40%] p-2 rounded-md bg-indigo-950 text-white"

@@ -16,6 +16,8 @@ export const authConfig = {
       const isNotifications = nextUrl.pathname.startsWith("/notifications");
       const isProfile = nextUrl.pathname.startsWith("/profile");
       const isLandingPage = nextUrl.pathname.startsWith("/home");
+      const query = new URLSearchParams(nextUrl.search);
+      const intendedURL = query.get("callbackUrl");
 
       if (
         isCommunity ||
@@ -27,6 +29,8 @@ export const authConfig = {
       ) {
         if (isLoggedIn) return true;
         return false; // Redirect unauthenticated users to login page
+      } else if (isLoginPage && intendedURL) {
+        if (isLoggedIn) return Response.redirect(new URL(intendedURL));
       } else if (isRootRoute && !isLandingPage && !isLoggedIn && !isLoginPage) {
         return Response.redirect(new URL("/home", nextUrl));
       }
