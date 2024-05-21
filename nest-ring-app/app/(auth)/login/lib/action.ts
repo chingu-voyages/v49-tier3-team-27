@@ -4,6 +4,8 @@ import { signIn, signOut } from "@/auth";
 import User from "@/lib/models/User";
 import dbConnect from "@/lib/mongo";
 import { AuthError } from "next-auth";
+import bcrypt from "bcrypt";
+import { NextResponse } from "next/server";
 
 export async function login(prevState: string | undefined, formData: FormData) {
   try {
@@ -34,29 +36,47 @@ export async function signUpUser(
   }
 }
 
-async function registerNewUser(formData: FormData) {
+async function registerNewUser(formData: FormData): Promise<NextResponse> {
   try {
     console.log("new user data: ", formData);
+
     const email = formData.get("email");
     const name = formData.get("name");
     const password = formData.get("password");
 
+    if (!email || !name || !password || typeof email !== "string" || typeof name !== "string" || typeof password !== "string" || email.trim() === "" || name.trim() === "" || password.trim() === "") {
+      return NextResponse.json({ error: "Invalid form data" }, { status: 400 });
+    }
+
+    await dbConnect();
+
+    const emailTaken = await User.findOne({ email });
+
+    if (emailTaken) {
+      return NextResponse.json({ error: "Email is already registered." }, { status: 400 });
+    }
+
+    const salt: string = await bcrypt.genSalt(10);
+    const hashedPassword: string = await bcrypt.hash(password, salt);
+
     const newUser = {
       name,
       email,
-      password,
+      password: hashedPassword,
     };
 
-    await dbConnect();
-    const savedUser = await User.create(newUser);
+    await User.create(newUser);
 
-    console.log("saved user: ", savedUser);
-    if (savedUser) {
-      return true;
-    }
+    return NextResponse.json({
+      message: "User created successfully",
+      success: true,
+    });
 
-    return false;
   } catch (error) {
-    throw error;
+    return NextResponse.json(
+      { error: "Something went wrong" },
+      { status: 500 },
+    );
   }
 }
+
