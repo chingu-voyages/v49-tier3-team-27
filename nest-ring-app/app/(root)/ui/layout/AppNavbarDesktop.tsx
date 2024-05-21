@@ -4,8 +4,8 @@ import AppIconButton from "./AppIconButton";
 
 const AppNavbar = async () => {
   return (
-    <section className="max-md:hidden w-full h-[48px] px-28 flex flex-row items-center justify-between ">
-      <div className=" flex flex-row items-center gap-[23px]">
+    <section className="max-md:hidden w-full h-[48px] xl:px-28 lg:px-20 md:px-10 flex flex-row items-center justify-between ">
+      <div className=" w-[40%] flex flex-row items-center xl:gap-[23px] gap-3">
         <AppIconButton />
         <Input
           id="global-search-bar"
@@ -13,12 +13,12 @@ const AppNavbar = async () => {
           aria-label="Search Input; global app search."
           aria-atomic
           placeholder="Search"
-          className=" focus:border-figma-brown focus-visible:border-2 transition-all duration-300 ease-linear"
+          className=" grow max-w-[250px] focus:border-figma-brown focus-visible:border-2 transition-all duration-300 ease-linear"
         />
       </div>
 
       {/* Navigation links */}
-      <nav className=" flex flex-row items-center gap-16">
+      <nav className=" w-1/2 flex flex-row items-center justify-between">
         <TabNavButton tabName="community" />
         <TabNavButton tabName="events" />
         <TabNavButton tabName="order-meal" />

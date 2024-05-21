@@ -1,17 +1,6 @@
-"use client";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
 
-const Page = () => {
-  const router = useRouter();
-
-  useEffect(() => {
-    setTimeout(() => {
-      router.push("/home");
-    }, 10000);
-  }, [router]);
-
+export default function Loading() {
   return (
     <main className=" w-full h-screen flex items-center justify-center bg-slate-100">
       <Image
@@ -24,6 +13,4 @@ const Page = () => {
       />
     </main>
   );
-};
-
-export default Page;
+}
