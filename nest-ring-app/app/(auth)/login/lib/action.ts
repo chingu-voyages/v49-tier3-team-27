@@ -25,14 +25,15 @@ export async function signUpUser(
   formData: FormData
 ) {
   try {
-    const isNewUser = await registerNewUser(formData);
+    const response = await registerNewUser(formData);
 
-    if (!isNewUser) {
-      return "Failed to signUp user: No Error";
+    if (response.status !== 200) {
+      const errorData = await response.json();
+      return errorData.error || "Failed to sign up user.";
     }
     return "New user created successfully.";
   } catch (error) {
-    return "Failed to SignUp user";
+    return "Server error.";
   }
 }
 
@@ -45,7 +46,7 @@ async function registerNewUser(formData: FormData): Promise<NextResponse> {
     const password = formData.get("password");
 
     if (!email || !name || !password || typeof email !== "string" || typeof name !== "string" || typeof password !== "string" || email.trim() === "" || name.trim() === "" || password.trim() === "") {
-      return NextResponse.json({ error: "Invalid form data" }, { status: 400 });
+      return NextResponse.json({ success: false, error: "Please fill the required fields" }, { status: 400 });
     }
 
     await dbConnect();
@@ -53,7 +54,7 @@ async function registerNewUser(formData: FormData): Promise<NextResponse> {
     const emailTaken = await User.findOne({ email });
 
     if (emailTaken) {
-      return NextResponse.json({ error: "Email is already registered." }, { status: 400 });
+      return NextResponse.json({ success: false, error: "Email is already registered." }, { status: 400 });
     }
 
     const salt: string = await bcrypt.genSalt(10);
@@ -67,14 +68,14 @@ async function registerNewUser(formData: FormData): Promise<NextResponse> {
 
     await User.create(newUser);
 
-    return NextResponse.json({
-      message: "User created successfully",
+    return NextResponse.json({      
       success: true,
+      message: "User created successfully",
     });
 
   } catch (error) {
     return NextResponse.json(
-      { error: "Something went wrong" },
+      { success: false, error: "Something went wrong" },
       { status: 500 },
     );
   }
