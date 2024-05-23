@@ -11,7 +11,7 @@ const NewPostButton = () => {
     <button
       //   href="/community/new-post"
       onClick={() => {
-        router.replace("/community/new-post");
+        router.push("/community/new-post");
       }}
       className=" w-full p-3 text-white bg-interactive-green rounded-lg mt-5"
     >
@@ -25,7 +25,7 @@ const NewRecipeButton = () => {
   return (
     <button
       onClick={() => {
-        router.replace("/recipe/new-recipe");
+        router.push("/recipe/new-recipe");
       }}
       className=" w-full p-3 text-white bg-interactive-green rounded-lg mt-5"
     >

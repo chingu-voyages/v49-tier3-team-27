@@ -9,7 +9,7 @@ const Page = () => {
   useEffect(() => {
     setTimeout(() => {
       router.push("/home");
-    }, 10000);
+    }, 3000);
   }, [router]);
 
   return (

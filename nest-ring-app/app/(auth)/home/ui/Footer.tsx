@@ -13,7 +13,7 @@ import Link from "next/link";
 const links_v1 = [
   {
     name: "Get Started",
-    address: "signup",
+    address: "login?signup=true",
   },
   {
     name: "Customer Support",
@@ -116,7 +116,7 @@ const Footer = () => {
           <div className=" flex flex-col gap-1">
             {links_v1.map(
               (link, index) =>
-                index > 4 && (
+                index > 3 && (
                   <Link
                     key={link.name}
                     href={link.address}
