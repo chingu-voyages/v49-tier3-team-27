@@ -1,44 +1,39 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import React from "react";
+import Link from "next/link";
+import ProfileUpdate from "./profile-update/ProfileUpdate";
 
 const ProfileCard = () => {
-  const { data } = useSession();
+  const { data } = useSession() as any;
 
   return (
     <section className=" w-full xl:h-[20vw] md:h-[25vw]  bg-white rounded-lg flex flex-col justify-between lg:pb-4 md:pb-2">
       {/* Profile avatar and background banner */}
       <div className=" w-full relative">
         <Image
-          src={"/random-images/profile-banner.jpg"}
+          src={data?.user?.bannerURL || "/random-images/profile-banner.jpeg"}
           alt=""
           width={1400}
           height={1000}
           className=" w-full h-[5vw] rounded-t-lg"
         />
         <div className=" w-full absolute top-3 flex flex-row justify-center">
-          <Image
-            src={"/random-images/profile-avatar.png"}
-            alt=""
-            width={1400}
-            height={1000}
-            className=" w-[8vw] h-[8vw] rounded-full "
-          />
+          <ProfileUpdate hideTrigger={false} />
         </div>
       </div>
 
-      <div className=" flex flex-col lg:gap-6 gap-2">
+      <Link href={"/profile"} className=" flex flex-col lg:gap-6 gap-2">
         {/* users full name */}
-        <span className=" font-bold text-md text-center">
-          {data?.user?.name}
+        <span className=" font-bold text-md text-center hover:underline">
+          {data?.user?.name || "Your Name"}
         </span>
 
         {/* user description */}
         <span className=" font-light text-sm underline underline-offset-4 text-center px-2">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae
-          dolor nisi
+          {data?.user?.description ||
+            "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Recusandae dolor nisi"}
         </span>
-      </div>
+      </Link>
     </section>
   );
 };

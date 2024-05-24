@@ -1,10 +1,10 @@
 import facebook_icon from "@/public/auth-form-icons/facebook-f.svg";
-import github_icon from "@/public/auth-form-icons/github.svg";
 import google_icon from "@/public/auth-form-icons/google-plus-g.svg";
-import linkedIn_icon from "@/public/auth-form-icons/linkedin-in.svg";
 import Image from "next/image";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { login, signUpUser } from "../lib/action";
+import signUpIcon from "@/public/login-ui/signup-icon.svg";
+import loginIcon from "@/public/login-ui/login-icon.svg";
 
 const InputForm = ({ action }: { action: string }) => {
   const [loginErrorMessage, dispatchLogin] = useFormState(login, undefined);
@@ -12,6 +12,8 @@ const InputForm = ({ action }: { action: string }) => {
     signUpUser,
     undefined
   );
+
+  const formStatus = useFormStatus();
 
   return (
     <>
@@ -56,12 +58,23 @@ const InputForm = ({ action }: { action: string }) => {
               minLength={6}
               className=" bg-gray-200 text-gray-400 p-2 rounded-lg w-full"
             />
-            <span className="">Error: {loginErrorMessage}</span>
+            {loginErrorMessage && (
+              <span className=" text-sm text-red-500">{loginErrorMessage}</span>
+            )}
             <button
               type="submit"
-              className=" font-semibold w-[40%] p-2 rounded-md bg-indigo-950 text-white"
+              className=" font-semibold w-[40%] p-2 rounded-md bg-interactive-green text-white flex items-center gap-2 justify-center "
             >
-              SIGN IN
+              {formStatus.pending ? (
+                <>
+                  <div className="w-[20px] h-[20px] rounded-full border-white border-t-2 border-l-0 border-r-0 border-b-2 animate-spin repeat-infinite duration-500" />
+                </>
+              ) : (
+                <>
+                  <span>SIGN IN</span>
+                  <Image src={loginIcon} alt="" width={20} height={20} />
+                </>
+              )}
             </button>
           </form>
         </div>
@@ -76,19 +89,19 @@ const InputForm = ({ action }: { action: string }) => {
             <a href="">
               <Image
                 src={google_icon}
-                alt="Click here to Sign up with your google account"
+                alt="Click here to Sign in with your google account"
                 width={40}
                 height={40}
-                className="p-2 w-auto h-auto border rounded-lg"
+                className="p-2 w-[40px] h-[40px] border rounded-lg"
               />
             </a>
             <a href="">
               <Image
                 src={facebook_icon}
-                alt="Click here to Sign up with your facebook account"
+                alt="Click here to Sign in with your facebook account"
                 width={40}
                 height={40}
-                className="p-2 w-auto h-auto border rounded-lg"
+                className="p-2 w-[40px] h-[40px] border rounded-lg"
               />
             </a>
           </div>
@@ -116,12 +129,25 @@ const InputForm = ({ action }: { action: string }) => {
               minLength={6}
               className="bg-gray-200 text-gray-400 p-2 rounded-lg w-full"
             />
-            <span>message: {signUpErrorMessage}</span>
+            {signUpErrorMessage && (
+              <span className=" text-sm text-red-500">
+                {signUpErrorMessage}
+              </span>
+            )}
             <button
               type="submit"
-              className=" font-semibold w-[40%] p-2 rounded-md bg-indigo-950 text-white"
+              className=" font-semibold w-[40%] p-2 rounded-md bg-interactive-green text-white flex items-center gap-2 justify-center "
             >
-              SIGN UP
+              {formStatus.pending ? (
+                <>
+                  <div className="w-[20px] h-[20px] rounded-full border-white border-t-2 border-l-0 border-r-0 border-b-2 animate-spin repeat-infinite duration-500" />
+                </>
+              ) : (
+                <>
+                  <span>SIGN UP</span>
+                  <Image src={loginIcon} alt="" width={20} height={20} />
+                </>
+              )}
             </button>
           </form>
         </div>
