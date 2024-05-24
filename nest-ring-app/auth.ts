@@ -4,6 +4,8 @@ import Credentials from "next-auth/providers/credentials";
 import { z } from "zod";
 import dbConnect from "./lib/mongo";
 import User from "./lib/models/User";
+import bcrypt from "bcrypt";
+import { NextResponse } from "next/server";
 
 async function getUser(email: string) {
   try {
@@ -27,21 +29,26 @@ export const {
 } = NextAuth({
   ...authConfig,
   providers: [
-    Credentials({
+    Credentials({      
       async authorize(credentials) {
         const parsedCredentials = z
           .object({ email: z.string().email(), password: z.string().min(6) })
           .safeParse(credentials);
 
         if (parsedCredentials.success) {
-          const { email } = parsedCredentials.data;
+          const { email, password } = parsedCredentials.data;
 
           const user = await getUser(email);
 
-          if (!user) {
+          if (!user) {            
             return null;
           }
 
+          const match = await bcrypt.compare(password, user.password);
+          if (!match) {
+            return null;
+          }
+          
           return user;
         }
 
