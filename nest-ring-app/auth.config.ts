@@ -26,20 +26,28 @@ export const authConfig = {
         isProfile
       ) {
         if (isLoggedIn) return true;
-        return false; // Redirect unauthenticated users to login page
+          return false; // Redirect unauthenticated users to login page
       } else if (
         isLoginPage &&
         redirectURL !== undefined &&
         redirectURL !== null
       ) {
         if (isLoggedIn)
-          return Response.redirect(
+          return Response.redirect(            
             new URL(redirectURL, process.env.NEXTAUTH_URL)
+            // new URL('https://www.google.com')
           );
       }
 
       return true;
     },
+    // async signIn({ account, profile }) {
+    //   if(account?.provider === 'google'){
+    //     profile?.email_verified
+    //   } else if(account?.provider === 'github') {
+
+    //   }
+    // }
   },
   providers: [],
 } satisfies NextAuthConfig;
