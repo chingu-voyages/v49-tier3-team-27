@@ -1,3 +1,4 @@
+import credentials from "next-auth/providers/credentials";
 import { createContext, ReactNode, useMemo, useState } from "react";
 
 type AppearanceType = {
@@ -24,15 +25,23 @@ type moreDetailsType = {
   city: string | null;
 };
 
+type CredentialsType = {
+  email: string;
+  password: string;
+};
+
 export const ProfileUpdateContext = createContext({
   appearance: {} as AppearanceType,
   personalInfo: {} as PersonalInfoType,
   moreDetails: {} as moreDetailsType,
+  credentials: {} as CredentialsType,
   activeStep: 0 as number,
   updateAppearance: (data: AppearanceType) => {},
   updatePersonalInfo: (data: PersonalInfoType) => {},
   updateMoreDetails: (data: moreDetailsType) => {},
   updateActiveStep: (step: number) => {},
+  updateCredentials: (data: CredentialsType) => {},
+  uploadData: () => {},
 });
 
 export const ProfileUpdateContextProvider = ({
@@ -59,6 +68,10 @@ export const ProfileUpdateContextProvider = ({
     state: null,
     city: null,
   });
+  const [credentials, setCredentials] = useState<CredentialsType>({
+    email: "",
+    password: "",
+  });
 
   const [activeStep, setActiveStep] = useState(1);
 
@@ -78,18 +91,28 @@ export const ProfileUpdateContextProvider = ({
     const updateActiveStep = (step: number) => {
       setActiveStep(step);
     };
+    const updateCredentials = (data: CredentialsType) => {
+      setCredentials(data);
+    };
+
+    const uploadData = () => {
+      alert("data uploading...");
+    };
 
     return {
       appearance,
       personalInfo,
       moreDetails,
       activeStep,
+      credentials,
       updateAppearance,
       updatePersonalInfo,
       updateMoreDetails,
       updateActiveStep,
+      updateCredentials,
+      uploadData,
     };
-  }, [activeStep, appearance, moreDetails, personalInfo]);
+  }, [activeStep, appearance, credentials, moreDetails, personalInfo]);
   return (
     <ProfileUpdateContext.Provider value={contextValues}>
       {children}

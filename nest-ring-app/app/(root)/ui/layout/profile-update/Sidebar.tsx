@@ -3,25 +3,25 @@ import React, { useContext } from "react";
 import { ProfileUpdateContext } from "./ProfileUpdateContext";
 import clsx from "clsx";
 
+const availableSteps = [
+  {
+    index: 1,
+    title: "Appearance",
+  },
+  {
+    index: 2,
+    title: "Personal Information",
+  },
+  {
+    index: 3,
+    title: "More Details",
+  },
+  {
+    index: 4,
+    title: "Confirmation",
+  },
+];
 const Sidebar = () => {
-  const availableSteps = [
-    {
-      index: 1,
-      title: "Appearance",
-    },
-    {
-      index: 2,
-      title: "Personal Information",
-    },
-    {
-      index: 3,
-      title: "More Details",
-    },
-    {
-      index: 4,
-      title: "Confirmation",
-    },
-  ];
   const { activeStep, updateActiveStep } = useContext(ProfileUpdateContext);
 
   return (
@@ -43,13 +43,11 @@ const Sidebar = () => {
               onClick={() => {
                 updateActiveStep(step.index);
               }}
-              className={clsx(
-                " w-8 h-8  rounded-full border-dotted border-2 border-white text-white font-bold text-sm text-center",
-                {
-                  " border-none bg-white text-figma-brown":
-                    step.index === activeStep,
-                }
-              )}
+              className={`w-8 h-8  rounded-full border-dotted text-white font-bold text-sm text-center ${
+                step.index == activeStep
+                  ? "border-none bg-white text-figma-brown"
+                  : "border-2 border-white "
+              }`}
             >
               {step.index}
             </button>

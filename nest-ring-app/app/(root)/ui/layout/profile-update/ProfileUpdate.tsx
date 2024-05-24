@@ -19,12 +19,17 @@ import ActiveTab from "./ActiveTab";
             - password
 */
 
-const ProfileUpdate = () => {
+const ProfileUpdate = ({
+  hideTrigger = true,
+}: Readonly<{ hideTrigger?: boolean }>) => {
   const { data } = useSession() as any;
 
   return (
-    <Dialog defaultOpen>
-      <DialogTrigger id="update-profile-trigger">
+    <Dialog defaultOpen={!data?.user?.isProfileComplete}>
+      <DialogTrigger
+        id="update-profile-trigger"
+        className={`${hideTrigger ? "hidden" : "block"}`}
+      >
         <Image
           src={data?.user?.avatarURL || "/random-images/profile-avatar.png"}
           alt=""

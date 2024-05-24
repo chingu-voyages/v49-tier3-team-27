@@ -3,7 +3,6 @@ import clsx from "clsx";
 import { useRouter, usePathname } from "next/navigation";
 import ProfileCard from "./ProfileCard";
 import ManageNotifCard from "./ManageNotifCard";
-import Link from "next/link";
 
 const NewPostButton = () => {
   const router = useRouter();

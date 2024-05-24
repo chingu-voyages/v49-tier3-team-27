@@ -4,6 +4,7 @@ import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { ReactNode } from "react";
 import { ProfileUpdateContextProvider } from "../layout/profile-update/ProfileUpdateContext";
+import ProfileUpdate from "../layout/profile-update/ProfileUpdate";
 
 const Provider = ({
   children,
@@ -14,7 +15,10 @@ const Provider = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <ProfileUpdateContextProvider>{children}</ProfileUpdateContextProvider>
+      <ProfileUpdateContextProvider>
+        <ProfileUpdate hideTrigger />
+        {children}
+      </ProfileUpdateContextProvider>
     </SessionProvider>
   );
 };

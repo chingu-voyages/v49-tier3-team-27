@@ -73,16 +73,14 @@ const MoreDetails = () => {
     }
   }, []);
 
-  const handleSubmit = (values: any) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  const handleSubmit = () => {
+    updateActiveStep(activeStep + 1);
   };
 
   return (
     <section className="w-full h-full overflow-hidden">
       <form onSubmit={handleSubmit} className="space-y-1 h-full">
-        <div className="w-full flex gap-2 mt-8">
+        <div className="w-full flex gap-2 mt-3">
           <div className="w-1/2 flex flex-col gap-2">
             <label
               htmlFor="terms"
@@ -140,125 +138,157 @@ const MoreDetails = () => {
             />
           </div>
         </div>
-        <div className="mt-3">
-          <label
-            htmlFor="terms"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          >
-            Delivery Address
-          </label>
-          <Input
-            placeholder="Delivery address"
-            value={moreDetails.deliveryAddress || ""}
-            onChange={(e) => {
-              const value = e.currentTarget.value;
-              updateMoreDetails({
-                ...moreDetails,
-                deliveryAddress: value,
-              });
-            }}
-          />
-        </div>
 
         {/* Location select dropdown menu */}
-        <div className=" w-full mt-5">
+        <div className="w-full flex flex-col gap-2 pt-2">
           <label
             htmlFor="terms"
             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
-            Whats your Location
+            Select Your Location
           </label>
-          <div className="w-full flex gap-3">
-            {/* Country Select*/}
-            <Select
-              id="country-select-input"
-              options={countrieOptions}
-              placeholder="Country"
-              defaultInputValue={moreDetails.country || ""}
-              className="grow text-sm"
-              onChange={(e: any) => {
-                const value = e.value;
-                if (value) {
-                  const countryObj: CountryType | undefined = countries.find(
-                    (item) => item.name === value
-                  );
-                  if (countryObj) {
-                    const discoveredStates = State.getStatesOfCountry(
-                      countryObj.isoCode
+          <div className=" w-full flex items-center justify-between">
+            <div className="w-[48%] flex flex-col ">
+              <label
+                htmlFor="terms"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Country
+              </label>
+              {/* Country Select*/}
+              <Select
+                id="country-select-input"
+                options={countrieOptions}
+                placeholder="Country"
+                defaultInputValue={moreDetails.country || ""}
+                className="grow text-sm"
+                onChange={(e: any) => {
+                  const value = e.value;
+                  if (value) {
+                    const countryObj: CountryType | undefined = countries.find(
+                      (item) => item.name === value
                     );
-                    setStates([...discoveredStates]);
-                    const options: any = discoveredStates.map((item: any) => ({
-                      value: item.name,
-                      label: item.name,
-                    }));
-                    options && setStatesOptions([...options]);
-                    updateMoreDetails({
-                      ...moreDetails,
-                      country: value,
-                    });
+                    if (countryObj) {
+                      const discoveredStates = State.getStatesOfCountry(
+                        countryObj.isoCode
+                      );
+                      setStates([...discoveredStates]);
+                      const options: any = discoveredStates.map(
+                        (item: any) => ({
+                          value: item.name,
+                          label: item.name,
+                        })
+                      );
+                      options && setStatesOptions([...options]);
+                      updateMoreDetails({
+                        ...moreDetails,
+                        country: value,
+                      });
+                    }
                   }
-                }
-              }}
-            />
-            {/* State Select */}
-            <Select
-              id="state-select-input"
-              options={statesOptions}
-              placeholder="State"
-              defaultInputValue={moreDetails.state || ""}
-              className="grow text-sm"
-              onChange={(e: any) => {
-                const value = e.value;
-                const countrySelect = document.getElementById(
-                  "country-select-input"
-                ) as HTMLSelectElement;
-                if (value && countrySelect) {
-                  const statesObj: any = states.find(
-                    (item: any) => item.name === value
-                  );
-                  const countryObj: CountryType | undefined = countries.find(
-                    (item) => item.name == countrySelect.textContent
-                  );
+                }}
+              />
+            </div>
+            <div className="w-[48%] flex flex-col ">
+              <label
+                htmlFor="terms"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                State
+              </label>
+              {/* State Select */}
+              <Select
+                id="state-select-input"
+                options={statesOptions}
+                placeholder="State"
+                defaultInputValue={moreDetails.state || ""}
+                className="grow text-sm"
+                onChange={(e: any) => {
+                  const value = e.value;
+                  const countrySelect = document.getElementById(
+                    "country-select-input"
+                  ) as HTMLSelectElement;
+                  if (value && countrySelect) {
+                    const statesObj: any = states.find(
+                      (item: any) => item.name === value
+                    );
+                    const countryObj: CountryType | undefined = countries.find(
+                      (item) => item.name == countrySelect.textContent
+                    );
 
-                  if (statesObj && countryObj) {
-                    console.log("state: ", statesObj);
-                    const discoveredCities = City.getCitiesOfState(
-                      countryObj.isoCode,
-                      statesObj.isoCode
-                    );
-                    console.log(discoveredCities);
-                    setCities([...discoveredCities]);
-                    const options: any = discoveredCities.map((item: any) => ({
-                      value: item.name,
-                      label: item.name,
-                    }));
-                    options && setCitiesOptions([...options]);
+                    if (statesObj && countryObj) {
+                      console.log("state: ", statesObj);
+                      const discoveredCities = City.getCitiesOfState(
+                        countryObj.isoCode,
+                        statesObj.isoCode
+                      );
+                      console.log(discoveredCities);
+                      setCities([...discoveredCities]);
+                      const options: any = discoveredCities.map(
+                        (item: any) => ({
+                          value: item.name,
+                          label: item.name,
+                        })
+                      );
+                      options && setCitiesOptions([...options]);
+                      updateMoreDetails({
+                        ...moreDetails,
+                        state: value,
+                      });
+                    }
+                  }
+                }}
+              />
+            </div>
+          </div>
+          <div className="w-full flex items-center justify-between">
+            <div className="w-[48%] flex flex-col">
+              <label
+                htmlFor="terms"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                City
+              </label>
+              {/* City Select */}
+              <Select
+                id="city-select-input"
+                options={citiesOptions}
+                placeholder="City"
+                className="grow text-sm"
+                onChange={(e: any) => {
+                  const value = e.value;
+                  if (value) {
                     updateMoreDetails({
                       ...moreDetails,
-                      state: value,
+                      city: value,
                     });
                   }
-                }
-              }}
-            />
-            {/* City Select */}
-            <Select
-              id="city-select-input"
-              options={citiesOptions}
-              placeholder="City"
-              className="grow text-sm"
-              onChange={(e: any) => {
-                const value = e.value;
-                if (value) {
+                }}
+              />
+            </div>
+            <div className=" flex flex-col">
+              <label
+                htmlFor="terms"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Delivery Address
+              </label>
+              <Input
+                placeholder="street address..."
+                value={moreDetails.deliveryAddress || ""}
+                onChange={(e) => {
+                  const value = e.currentTarget.value;
                   updateMoreDetails({
                     ...moreDetails,
-                    city: value,
+                    deliveryAddress: value,
                   });
-                }
-              }}
-            />
+                }}
+              />
+            </div>
           </div>
         </div>
+
+        {/* Tab navigation buttons */}
         <div className=" flex flex-row gap-2 pt-5">
           <Button
             type="button"
