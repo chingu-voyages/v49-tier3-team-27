@@ -2,7 +2,11 @@ import { Button } from "@/components/ui/button";
 import { useContext } from "react";
 import { ProfileUpdateContext } from "../ProfileUpdateContext";
 import { Input } from "@/components/ui/input";
-import { DialogDescription, DialogHeader } from "@/components/ui/dialog";
+import {
+  DialogDescription,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const Confirmation = () => {
   const {
@@ -13,12 +17,9 @@ const Confirmation = () => {
     uploadData,
   } = useContext(ProfileUpdateContext);
 
-  const handleSubmit = () => {
-    uploadData();
-  };
   return (
     <section className="w-full">
-      <form onSubmit={handleSubmit} className="w-full space-y-3">
+      <form className="w-full space-y-3">
         <DialogHeader>
           <DialogDescription>
             To complete your Profile Update, please confirm it&apos;s you. Thank
@@ -77,7 +78,8 @@ const Confirmation = () => {
             Back
           </Button>
           <Button
-            type="submit"
+            type="button"
+            onClick={uploadData}
             className=" bg-interactive-green hover:bg-interactive-green hover:scale-110"
           >
             Complete

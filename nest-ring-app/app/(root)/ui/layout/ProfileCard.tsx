@@ -18,7 +18,7 @@ const ProfileCard = () => {
           className=" w-full h-[5vw] rounded-t-lg"
         />
         <div className=" w-full absolute top-3 flex flex-row justify-center">
-          <ProfileUpdate hideTrigger={false} />
+          <ProfileUpdate showByDefault={false} hideTrigger={false} />
         </div>
       </div>
 

@@ -9,8 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@types/bcrypt": "^5.0.2",
-    "bcrypt": "^5.1.1",
     "@hookform/resolvers": "^3.4.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -21,7 +19,10 @@
     "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-toast": "^1.1.5",
+    "@types/bcrypt": "^5.0.2",
     "autoprefixer": "^10.4.19",
+    "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "country-state-city": "^3.2.1",
