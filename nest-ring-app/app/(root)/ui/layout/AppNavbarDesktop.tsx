@@ -4,7 +4,7 @@ import AppIconButton from "./AppIconButton";
 
 const AppNavbar = async () => {
   return (
-    <section className="max-md:hidden w-full h-[48px] xl:px-28 lg:px-20 md:px-10 flex flex-row items-center justify-between ">
+    <section className="max-md:hidden w-full h-[48px] xl:px-28 lg:px-20 md:px-10 flex flex-row items-start justify-between sticky top-0 bg-white z-50 pt-1">
       <div className=" w-[40%] flex flex-row items-center xl:gap-[23px] gap-3">
         <AppIconButton />
         <Input

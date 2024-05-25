@@ -75,7 +75,7 @@ const RightLayout = () => {
   const pathname = usePathname();
 
   return (
-    <div className=" max-md:hidden w-[26%] mt-[14px]">
+    <div className=" max-md:hidden w-[30%] sticky top-16">
       {/* notification overview card */}
       {(pathname.startsWith("/community") ||
         pathname.startsWith("/events")) && <NotificationOverviewCard />}
