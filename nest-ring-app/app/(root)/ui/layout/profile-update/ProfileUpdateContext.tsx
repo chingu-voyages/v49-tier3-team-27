@@ -1,5 +1,8 @@
+import { useToast } from "@/components/ui/use-toast";
 import credentials from "next-auth/providers/credentials";
-import { createContext, ReactNode, useMemo, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { createContext, ReactNode, useEffect, useMemo, useState } from "react";
 
 type AppearanceType = {
   profileAvatarURL: any;
@@ -30,23 +33,32 @@ type CredentialsType = {
   password: string;
 };
 
+type ConsentConcludeType = {
+  consent: boolean;
+  conclude: boolean;
+};
+
 export const ProfileUpdateContext = createContext({
+  profileUpdateComplete: false as boolean,
   appearance: {} as AppearanceType,
   personalInfo: {} as PersonalInfoType,
   moreDetails: {} as moreDetailsType,
   credentials: {} as CredentialsType,
   activeStep: 0 as number,
+  consentConclude: {} as ConsentConcludeType,
   updateAppearance: (data: AppearanceType) => {},
   updatePersonalInfo: (data: PersonalInfoType) => {},
   updateMoreDetails: (data: moreDetailsType) => {},
   updateActiveStep: (step: number) => {},
   updateCredentials: (data: CredentialsType) => {},
+  updateConsentConclude: (data: ConsentConcludeType) => {},
   uploadData: () => {},
 });
 
 export const ProfileUpdateContextProvider = ({
   children,
 }: Readonly<{ children: ReactNode }>) => {
+  const [profileUpdateComplete, setProfileUpdateComplete] = useState(false);
   const [appearance, setAppearance] = useState<AppearanceType>({
     profileAvatarURL: null,
     profileAvatarFile: null,
@@ -72,8 +84,19 @@ export const ProfileUpdateContextProvider = ({
     email: "",
     password: "",
   });
-
   const [activeStep, setActiveStep] = useState(1);
+  const [consentConclude, setConsentConclude] = useState<ConsentConcludeType>({
+    consent: false,
+    conclude: false,
+  });
+
+  const { toast } = useToast();
+  const { data } = useSession() as any;
+  useEffect(() => {
+    if (!data?.user?.isProfileComplete) {
+      setProfileUpdateComplete(false);
+    }
+  }, [data?.user?.isProfileComplete]);
 
   const contextValues = useMemo(() => {
     const updateAppearance = (data: AppearanceType) => {
@@ -95,24 +118,61 @@ export const ProfileUpdateContextProvider = ({
       setCredentials(data);
     };
 
+    const updateConsentConclude = (data: any) => {
+      setConsentConclude(data);
+    };
+
     const uploadData = () => {
-      alert("data uploading...");
+      console.log(
+        "Data to be uploaded: ",
+        appearance,
+        personalInfo,
+        moreDetails
+      );
+
+      toast({
+        title: "Uploading data...",
+        description: "will be done in a few; hang on tight.",
+      });
+      setTimeout(() => {
+        setProfileUpdateComplete(true);
+        setConsentConclude({
+          ...consentConclude,
+          conclude: true,
+        });
+        toast({
+          title: "Done!",
+          description: "Your Profile has been updated Successfully!",
+        });
+      }, 3000);
     };
 
     return {
+      profileUpdateComplete,
       appearance,
       personalInfo,
       moreDetails,
       activeStep,
       credentials,
+      consentConclude,
       updateAppearance,
       updatePersonalInfo,
       updateMoreDetails,
       updateActiveStep,
       updateCredentials,
+      updateConsentConclude,
       uploadData,
     };
-  }, [activeStep, appearance, credentials, moreDetails, personalInfo]);
+  }, [
+    profileUpdateComplete,
+    appearance,
+    personalInfo,
+    moreDetails,
+    activeStep,
+    credentials,
+    consentConclude,
+    toast,
+  ]);
   return (
     <ProfileUpdateContext.Provider value={contextValues}>
       {children}

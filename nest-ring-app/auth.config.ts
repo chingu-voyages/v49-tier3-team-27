@@ -27,16 +27,13 @@ export const authConfig = {
       ) {
         if (isLoggedIn) return true;
         return false; // Redirect unauthenticated users to login page
-      } else if (
-        isLoginPage &&
-        redirectURL !== undefined &&
-        redirectURL !== null
-      ) {
-        if (isLoggedIn) {
-          return Response.redirect(
-            new URL(redirectURL, process.env.NEXTAUTH_URL)
-            // new URL('https://www.google.com')
-          );
+      } else if (isLoginPage) {
+        const baseURL = process.env.NEXTAUTH_URL;
+
+        if (isLoggedIn && redirectURL !== undefined && redirectURL !== null) {
+          return Response.redirect(new URL(new URL(redirectURL)));
+        } else if (isLoggedIn && baseURL) {
+          return Response.redirect(new URL("/order-meal", baseURL));
         }
       }
 

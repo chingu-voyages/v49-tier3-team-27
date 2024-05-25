@@ -16,7 +16,7 @@ const Provider = ({
   return (
     <SessionProvider session={session}>
       <ProfileUpdateContextProvider>
-        <ProfileUpdate hideTrigger />
+        <ProfileUpdate showByDefault={true} hideTrigger />
         {children}
       </ProfileUpdateContextProvider>
     </SessionProvider>
