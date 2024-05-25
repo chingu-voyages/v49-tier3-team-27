@@ -9,13 +9,8 @@ import {
 } from "@/components/ui/dialog";
 
 const Confirmation = () => {
-  const {
-    credentials,
-    updateCredentials,
-    activeStep,
-    updateActiveStep,
-    uploadData,
-  } = useContext(ProfileUpdateContext);
+  const { password, updatePassword, activeStep, updateActiveStep, uploadData } =
+    useContext(ProfileUpdateContext);
 
   return (
     <section className="w-full">
@@ -26,42 +21,20 @@ const Confirmation = () => {
             you.
           </DialogDescription>
         </DialogHeader>
-        <div className=" flex flex-col">
+        <div className=" flex flex-col gap-2">
           <label
             htmlFor="terms"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          >
-            Email
-          </label>
-          <Input
-            placeholder="all@email.com"
-            value={credentials.email || ""}
-            onChange={(e) => {
-              const value = e.currentTarget.value;
-              updateCredentials({
-                ...credentials,
-                email: value,
-              });
-            }}
-          />
-        </div>
-        <div className=" flex flex-col">
-          <label
-            htmlFor="terms"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
           >
             Password
           </label>
           <Input
-            placeholder="...."
+            placeholder="..."
             name="password"
-            value={credentials.password}
+            value={password}
             onChange={(e) => {
               const value = e.currentTarget.value;
-              updateCredentials({
-                ...credentials,
-                password: value,
-              });
+              updatePassword(value);
             }}
           />
         </div>

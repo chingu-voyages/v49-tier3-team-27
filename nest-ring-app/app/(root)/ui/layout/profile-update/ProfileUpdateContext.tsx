@@ -28,11 +28,6 @@ type moreDetailsType = {
   city: string | null;
 };
 
-type CredentialsType = {
-  email: string;
-  password: string;
-};
-
 type ConsentConcludeType = {
   consent: boolean;
   conclude: boolean;
@@ -43,14 +38,14 @@ export const ProfileUpdateContext = createContext({
   appearance: {} as AppearanceType,
   personalInfo: {} as PersonalInfoType,
   moreDetails: {} as moreDetailsType,
-  credentials: {} as CredentialsType,
+  password: "" as string,
   activeStep: 0 as number,
   consentConclude: {} as ConsentConcludeType,
   updateAppearance: (data: AppearanceType) => {},
   updatePersonalInfo: (data: PersonalInfoType) => {},
   updateMoreDetails: (data: moreDetailsType) => {},
   updateActiveStep: (step: number) => {},
-  updateCredentials: (data: CredentialsType) => {},
+  updatePassword: (data: string) => {},
   updateConsentConclude: (data: ConsentConcludeType) => {},
   uploadData: () => {},
 });
@@ -80,10 +75,7 @@ export const ProfileUpdateContextProvider = ({
     state: null,
     city: null,
   });
-  const [credentials, setCredentials] = useState<CredentialsType>({
-    email: "",
-    password: "",
-  });
+  const [password, setPassword] = useState<string>("");
   const [activeStep, setActiveStep] = useState(1);
   const [consentConclude, setConsentConclude] = useState<ConsentConcludeType>({
     consent: false,
@@ -114,8 +106,8 @@ export const ProfileUpdateContextProvider = ({
     const updateActiveStep = (step: number) => {
       setActiveStep(step);
     };
-    const updateCredentials = (data: CredentialsType) => {
-      setCredentials(data);
+    const updatePassword = (data: string) => {
+      setPassword(data);
     };
 
     const updateConsentConclude = (data: any) => {
@@ -153,13 +145,13 @@ export const ProfileUpdateContextProvider = ({
       personalInfo,
       moreDetails,
       activeStep,
-      credentials,
+      password,
       consentConclude,
       updateAppearance,
       updatePersonalInfo,
       updateMoreDetails,
       updateActiveStep,
-      updateCredentials,
+      updatePassword,
       updateConsentConclude,
       uploadData,
     };
@@ -169,7 +161,7 @@ export const ProfileUpdateContextProvider = ({
     personalInfo,
     moreDetails,
     activeStep,
-    credentials,
+    password,
     consentConclude,
     toast,
   ]);
