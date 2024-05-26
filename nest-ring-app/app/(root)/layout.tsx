@@ -9,7 +9,7 @@ export default function RootAppLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="bg-white h-screen max-md:h-[80vh] relative">
+    <div className=" h-screen max-md:h-[80vh] relative overflow-hidden">
       <Provider>
         {/* AppNavbar */}
         <AppNavbarDesktop />

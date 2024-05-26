@@ -38,12 +38,15 @@ const LeftLayout = () => {
 
   return (
     <div
-      className={clsx(" max-md:hidden xl:w-[20%] md:w-[25%] h-full mt-[14px]", {
-        hidden:
-          pathname.startsWith("/events") ||
-          pathname.startsWith("/order-meal") ||
-          pathname.startsWith("/profile"),
-      })}
+      className={clsx(
+        " max-md:hidden xl:w-[20%] md:w-[25%] h-full sticky top-16",
+        {
+          hidden:
+            pathname.startsWith("/events") ||
+            pathname.startsWith("/order-meal") ||
+            pathname.startsWith("/profile"),
+        }
+      )}
     >
       {(pathname.startsWith("/community") ||
         pathname.startsWith("/recipes")) && <ProfileCard />}
