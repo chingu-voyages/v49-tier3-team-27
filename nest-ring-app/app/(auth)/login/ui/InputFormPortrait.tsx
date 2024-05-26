@@ -1,12 +1,16 @@
 import facebook_icon from "@/public/auth-form-icons/facebook-f.svg";
-import github_icon from "@/public/auth-form-icons/github.svg";
 import google_icon from "@/public/auth-form-icons/google-plus-g.svg";
-import linkedIn_icon from "@/public/auth-form-icons/linkedin-in.svg";
+import Image from "next/image";
+import { useFormState } from "react-dom";
+import { login, signUpUser } from "../lib/action";
 
 const InputFormPortrait = ({ action }: { action: string }) => {
-  const handleFormSubmit = () => {
-    // todo:
-  };
+  const [loginErrorMessage, dispatchLogin] = useFormState(login, undefined);
+  const [signUpErrorMessage, dispatchSignUp] = useFormState(
+    signUpUser,
+    undefined
+  );
+
   return (
     <>
       {action === "signIn" && (
@@ -14,37 +18,27 @@ const InputFormPortrait = ({ action }: { action: string }) => {
           <span className="font-bold text-[35px]">Sign In</span>
           <div className="flex flex-row gap-2">
             <a href="">
-              <img
+              <Image
                 src={google_icon}
                 alt="Click here to Sign in with your google account"
+                width={40}
+                height={40}
                 className="p-2 w-[40px] h-[40px] border rounded-lg"
               />
             </a>
             <a href="">
-              <img
+              <Image
                 src={facebook_icon}
-                alt="Click here to sign in with your facebook account"
-                className="p-2 w-[40px] h-[40px] border rounded-lg"
-              />
-            </a>
-            <a href="">
-              <img
-                src={github_icon}
-                alt="Click here to sign in with your github account"
-                className="p-2 w-[40px] h-[40px] border rounded-lg"
-              />
-            </a>
-            <a href="">
-              <img
-                src={linkedIn_icon}
-                alt="Click here to sign in with your linked in account"
+                alt="Click here to Sign in with your facebook account"
+                width={40}
+                height={40}
                 className="p-2 w-[40px] h-[40px] border rounded-lg"
               />
             </a>
           </div>
           <span className="">or use your email and password</span>
           <form
-            onSubmit={handleFormSubmit}
+            action={dispatchLogin}
             className="flex flex-col gap-2 w-3/4 items-center"
           >
             <input
@@ -57,12 +51,13 @@ const InputFormPortrait = ({ action }: { action: string }) => {
               type="password"
               name="password"
               placeholder="Password"
+              minLength={6}
               className=" bg-gray-200 text-gray-400 p-2 rounded-lg w-full"
             />
-            <span className="">forgot your password?</span>
+            <span className="">Error: {loginErrorMessage}</span>
             <button
               type="submit"
-              className=" font-semibold w-[40%] p-2 rounded-md bg-indigo-950 text-white"
+              className=" font-semibold w-[40%] p-2 rounded-md bg-interactive-green text-white"
             >
               SIGN IN
             </button>
@@ -77,37 +72,27 @@ const InputFormPortrait = ({ action }: { action: string }) => {
           </span>
           <div className="flex flex-row gap-2">
             <a href="">
-              <img
+              <Image
                 src={google_icon}
-                alt="Click here to Sign up with your google account"
+                alt="Click here to Sign in with your google account"
+                width={40}
+                height={40}
                 className="p-2 w-[40px] h-[40px] border rounded-lg"
               />
             </a>
             <a href="">
-              <img
+              <Image
                 src={facebook_icon}
-                alt="Click here to sign up with your facebook account"
-                className="p-2 w-[40px] h-[40px] border rounded-lg"
-              />
-            </a>
-            <a href="">
-              <img
-                src={github_icon}
-                alt="Click here to sign up with your github account"
-                className="p-2 w-[40px] h-[40px] border rounded-lg"
-              />
-            </a>
-            <a href="">
-              <img
-                src={linkedIn_icon}
-                alt="Click here to sign up with your linked in account"
+                alt="Click here to Sign in with your facebook account"
+                width={40}
+                height={40}
                 className="p-2 w-[40px] h-[40px] border rounded-lg"
               />
             </a>
           </div>
           <span className="">or use your email for registration</span>
           <form
-            onSubmit={handleFormSubmit}
+            action={dispatchSignUp}
             className="flex flex-col gap-2 w-3/4 items-center"
           >
             <input
@@ -126,11 +111,13 @@ const InputFormPortrait = ({ action }: { action: string }) => {
               type="password"
               name="password"
               placeholder="Password"
+              minLength={6}
               className="bg-gray-200 text-gray-400 p-2 rounded-lg w-full"
             />
+            <span>message: {signUpErrorMessage}</span>
             <button
               type="submit"
-              className=" font-semibold w-[40%] p-2 rounded-md bg-indigo-950 text-white"
+              className=" font-semibold w-[40%] p-2 rounded-md bg-interactive-green text-white"
             >
               SIGN UP
             </button>
