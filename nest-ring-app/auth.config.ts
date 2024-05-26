@@ -39,6 +39,48 @@ export const authConfig = {
 
       return true;
     },
+    async jwt({ token, user }: { token: any; user: any }) {
+      if (user) {
+        token.name = user.name;
+        token.email = user.email;
+        token.foodOrders = user.foodOrders;
+        token.avatarUrl = user.avatarUrl;
+        token.bannerUrl = user.bannerUrl;
+        token.firstname = user.firstname;
+        token.middlename = user.middlename;
+        token.lastname = user.lastname;
+        token.description = user.description;
+        token.dob = user.dob;
+        token.accountType = user.accountType;
+        token.authToken = user.authToken;
+        token.location = user.loaction;
+        token.isAuthenticated = user.isAuthenticated;
+        token.isEmailVerified = user.isEmailVerified;
+        token.isProfileComplete = user.isProfileComplete;
+      }
+      return token;
+    },
+    async session({ session, token }: { session: any; token: any }) {
+      if (token) {
+        session.user.name = token.name;
+        session.user.email = token.email;
+        session.user.foodOrders = token.foodOrders;
+        session.user.avatarUrl = token.avatarUrl;
+        session.user.bannerUrl = token.bannerUrl;
+        session.user.firstname = token.firstname;
+        session.user.middlename = token.middlename;
+        session.user.lastname = token.lastname;
+        session.user.description = token.description;
+        session.user.dob = token.dob;
+        session.user.accountType = token.accountType;
+        session.user.authToken = token.authToken;
+        session.user.location = token.location;
+        session.user.isAuthenticated = token.isAuthenticated;
+        session.user.isEmailVerified = token.isEmailVerified;
+        session.user.isProfileComplete = token.isProfileComplete;
+      }
+      return session;
+    },
   },
   providers: [],
 } satisfies NextAuthConfig;

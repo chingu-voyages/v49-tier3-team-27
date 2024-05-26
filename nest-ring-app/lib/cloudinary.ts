@@ -11,24 +11,24 @@ export { cloudinary };
 export const uploadImageToCloudinary = async (
   buffer: Buffer,
   filename: string,
-  options: { tags?: string[] } = {},
+  options: { tags?: string[]; folder?: string } = {}
 ) => {
   return new Promise((resolve, reject) => {
     cloudinary.v2.uploader
       .upload_stream(
         {
-          upload_preset: 'nest-ring-app',
           tags: options.tags || [""],
           use_filename: true,
           filename_override: filename,
-        }, 
+          folder: options.folder ?? "nest-ring-app",
+        },
         function (error, result) {
           if (error) {
             reject(error);
             return;
           }
           resolve(result);
-        },        
+        }
       )
       .end(buffer);
   });

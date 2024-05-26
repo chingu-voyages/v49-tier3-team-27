@@ -29,9 +29,7 @@ const formSchema = z.object({
   firstname: z.string().min(2, {
     message: "minimum 2 characters.",
   }),
-  middlename: z.string().min(2, {
-    message: "minimum 2 characters.",
-  }),
+  middlename: z.string(),
   lastname: z.string().min(2, {
     message: "minimum 2 characters.",
   }),
@@ -94,7 +92,12 @@ const PersonalInfo = () => {
                 <FormItem>
                   <FormLabel>First name</FormLabel>
                   <FormControl>
-                    <Input placeholder="First name" {...field} />
+                    <Input
+                      placeholder="First name"
+                      defaultValue={personalInfo.firstname}
+                      {...field}
+                      required
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -107,7 +110,11 @@ const PersonalInfo = () => {
                 <FormItem>
                   <FormLabel>Middle name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Middle name" {...field} />
+                    <Input
+                      placeholder="Middle name"
+                      defaultValue={personalInfo.middlename}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -122,7 +129,12 @@ const PersonalInfo = () => {
                 <FormItem>
                   <FormLabel>Last name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Last name" {...field} />
+                    <Input
+                      placeholder="Last name"
+                      defaultValue={personalInfo.lastname}
+                      {...field}
+                      required
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -178,7 +190,7 @@ const PersonalInfo = () => {
               <FormItem>
                 <FormLabel>Describe yourself</FormLabel>
                 <FormControl>
-                  <Input placeholder="Description..." {...field} />
+                  <Input placeholder="Description..." {...field} required />
                 </FormControl>
                 <FormMessage />
               </FormItem>
