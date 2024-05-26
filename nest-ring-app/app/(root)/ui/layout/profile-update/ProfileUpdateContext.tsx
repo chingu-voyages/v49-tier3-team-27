@@ -1,4 +1,5 @@
-import { useToast } from "@/components/ui/use-toast";
+import { toast, useToast } from "@/components/ui/use-toast";
+import User from "@/lib/models/User";
 import credentials from "next-auth/providers/credentials";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -6,8 +7,8 @@ import { createContext, ReactNode, useEffect, useMemo, useState } from "react";
 
 type AppearanceType = {
   profileAvatarURL: any;
-  profileAvatarFile: File | null;
   profileBannerURL: any;
+  profileAvatarFile: File | null;
   profileBannerFile: File | null;
 };
 
@@ -20,7 +21,7 @@ type PersonalInfoType = {
 };
 
 type moreDetailsType = {
-  usersRole: "Customer" | "Admin" | "Customer Support";
+  usersRole: "Customer" | "Customer Support" | "Admin";
   authToken: string | null;
   deliveryAddress: string | null;
   country: string | null;
@@ -114,29 +115,99 @@ export const ProfileUpdateContextProvider = ({
       setConsentConclude(data);
     };
 
-    const uploadData = () => {
-      console.log(
-        "Data to be uploaded: ",
-        appearance,
-        personalInfo,
-        moreDetails
-      );
-
+    const uploadData = async () => {
       toast({
         title: "Uploading data...",
-        description: "will be done in a few; hang on tight.",
+        description: "Will be done in a few; hang on tight.",
       });
-      setTimeout(() => {
-        setProfileUpdateComplete(true);
-        setConsentConclude({
-          ...consentConclude,
-          conclude: true,
-        });
+
+      const payload = new FormData();
+
+      if (
+        appearance.profileAvatarFile &&
+        appearance.profileBannerFile &&
+        personalInfo.firstname &&
+        personalInfo.lastname &&
+        personalInfo.description &&
+        moreDetails.usersRole &&
+        moreDetails.deliveryAddress &&
+        moreDetails.country &&
+        moreDetails.state &&
+        moreDetails.city
+      ) {
+        payload.append("email", data.user.email);
+        payload.append("avatarFile", appearance.profileAvatarFile);
+        payload.append("bannerFile", appearance.profileBannerFile);
+        payload.append("firstname", personalInfo.firstname);
+        personalInfo.middlename &&
+          payload.append("middlename", personalInfo.middlename);
+        payload.append("lastname", personalInfo.lastname);
+        payload.append("dob", String(personalInfo.dob));
+        payload.append("description", personalInfo.description);
+        payload.append("deliveryAddress", moreDetails.deliveryAddress);
+        payload.append("country", moreDetails.country);
+        payload.append("state", moreDetails.state);
+        payload.append("city", moreDetails.city);
+        payload.append("password", password);
+        payload.append("accountType", moreDetails.usersRole);
+        if (
+          (moreDetails.usersRole === "Admin" ||
+            moreDetails.usersRole === "Customer Support") &&
+          moreDetails.authToken
+        ) {
+          payload.append("authToken", moreDetails.authToken);
+        } else {
+          toast({
+            title: "Auth Token Required",
+            description:
+              "This is a requirement for an Admin and Customer Support.",
+          });
+          return;
+        }
+      } else {
         toast({
-          title: "Done!",
-          description: "Your Profile has been updated Successfully!",
+          title: "Wait, Hold on!",
+          description: "Check your inputs see you didn't miss any field.",
         });
-      }, 3000);
+        return;
+      }
+
+      try {
+        const fetchResponse = await fetch("/api/profile/upload", {
+          method: "PUT",
+          body: payload,
+        });
+
+        const result = await fetchResponse.json();
+        if (fetchResponse.status === 201) {
+          setProfileUpdateComplete(true);
+          setConsentConclude({
+            ...consentConclude,
+            conclude: true,
+          });
+
+          toast({
+            title: "Done!",
+            description: result.message,
+          });
+        } else if (
+          fetchResponse.status === 401 ||
+          fetchResponse.status === 404 ||
+          fetchResponse.status === 500
+        ) {
+          toast({
+            title: "Error",
+            description: result.message,
+          });
+        }
+      } catch (error) {
+        console.log("Error: ", error);
+        toast({
+          title: "Error!",
+          description: "Check your internet connection and try again.",
+          duration: 30000,
+        });
+      }
     };
 
     return {
@@ -164,6 +235,7 @@ export const ProfileUpdateContextProvider = ({
     password,
     consentConclude,
     toast,
+    data.user.email,
   ]);
   return (
     <ProfileUpdateContext.Provider value={contextValues}>

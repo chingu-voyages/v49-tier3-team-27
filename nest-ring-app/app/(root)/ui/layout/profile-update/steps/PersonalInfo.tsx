@@ -29,9 +29,7 @@ const formSchema = z.object({
   firstname: z.string().min(2, {
     message: "minimum 2 characters.",
   }),
-  middlename: z.string().min(2, {
-    message: "minimum 2 characters.",
-  }),
+  middlename: z.string(),
   lastname: z.string().min(2, {
     message: "minimum 2 characters.",
   }),
@@ -94,7 +92,7 @@ const PersonalInfo = () => {
                 <FormItem>
                   <FormLabel>First name</FormLabel>
                   <FormControl>
-                    <Input placeholder="First name" {...field} />
+                    <Input placeholder="First name" {...field} required />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -122,7 +120,7 @@ const PersonalInfo = () => {
                 <FormItem>
                   <FormLabel>Last name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Last name" {...field} />
+                    <Input placeholder="Last name" {...field} required />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -178,7 +176,7 @@ const PersonalInfo = () => {
               <FormItem>
                 <FormLabel>Describe yourself</FormLabel>
                 <FormControl>
-                  <Input placeholder="Description..." {...field} />
+                  <Input placeholder="Description..." {...field} required />
                 </FormControl>
                 <FormMessage />
               </FormItem>
