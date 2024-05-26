@@ -29,7 +29,7 @@ export const {
 } = NextAuth({
   ...authConfig,
   providers: [
-    Credentials({      
+    Credentials({
       async authorize(credentials) {
         const parsedCredentials = z
           .object({ email: z.string().email(), password: z.string().min(6) })
@@ -40,7 +40,7 @@ export const {
 
           const user = await getUser(email);
 
-          if (!user) {            
+          if (!user) {
             return null;
           }
 
@@ -48,7 +48,7 @@ export const {
           if (!match) {
             return null;
           }
-          
+
           return user;
         }
 

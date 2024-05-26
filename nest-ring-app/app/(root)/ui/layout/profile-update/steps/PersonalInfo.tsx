@@ -92,7 +92,12 @@ const PersonalInfo = () => {
                 <FormItem>
                   <FormLabel>First name</FormLabel>
                   <FormControl>
-                    <Input placeholder="First name" {...field} required />
+                    <Input
+                      placeholder="First name"
+                      defaultValue={personalInfo.firstname}
+                      {...field}
+                      required
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -105,7 +110,11 @@ const PersonalInfo = () => {
                 <FormItem>
                   <FormLabel>Middle name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Middle name" {...field} />
+                    <Input
+                      placeholder="Middle name"
+                      defaultValue={personalInfo.middlename}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -120,7 +129,12 @@ const PersonalInfo = () => {
                 <FormItem>
                   <FormLabel>Last name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Last name" {...field} required />
+                    <Input
+                      placeholder="Last name"
+                      defaultValue={personalInfo.lastname}
+                      {...field}
+                      required
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

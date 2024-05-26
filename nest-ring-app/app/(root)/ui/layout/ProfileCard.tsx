@@ -11,7 +11,7 @@ const ProfileCard = () => {
       {/* Profile avatar and background banner */}
       <div className=" w-full relative">
         <Image
-          src={data?.user?.bannerURL || "/random-images/profile-banner.jpeg"}
+          src={data?.user?.bannerUrl || "/random-images/profile-banner.jpeg"}
           alt=""
           width={1400}
           height={1000}

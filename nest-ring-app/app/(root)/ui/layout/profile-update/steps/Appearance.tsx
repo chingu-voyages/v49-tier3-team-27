@@ -5,7 +5,7 @@ import {
   DialogHeader,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Edit3Icon } from "lucide-react";
+import { Delete, DeleteIcon, Edit3Icon, Trash2Icon } from "lucide-react";
 import Image from "next/image";
 import { useContext } from "react";
 import { ProfileUpdateContext } from "../ProfileUpdateContext";
@@ -43,11 +43,17 @@ const Appearance = () => {
                       profileBannerURL: e.target?.result,
                       profileBannerFile: file,
                     });
+                } else {
+                  updateAppearance({
+                    ...appearance,
+                    profileBannerFile: null,
+                  });
                 }
               }
             }}
           />
           <Image
+            id="profile-banner-image-PU"
             src={
               appearance.profileBannerURL ??
               "/random-images/profile-banner.jpeg"
@@ -66,7 +72,7 @@ const Appearance = () => {
             }}
             className=" absolute right-2 bottom-2 flex flex-row items-center gap-1 bg-interactive-green text-white"
           >
-            <span>Upload</span> <Edit3Icon className=" h-[80%] " />
+            <span>change photo</span> <Edit3Icon className=" h-[80%] " />
           </Button>
         </div>
 
@@ -118,6 +124,25 @@ const Appearance = () => {
 
       {/* footer */}
       <DialogFooter>
+        <Button
+          variant={"ghost"}
+          className="border-2 border-interactive-green text-interactive-green bg-transparent"
+          onClick={() => {}}
+        >
+          <Trash2Icon /> Profile Photo
+        </Button>
+        <Button
+          variant={"ghost"}
+          className="border-2 border-interactive-green text-interactive-green bg-transparent"
+          onClick={() => {
+            const imageEl = document.getElementById(
+              "profile-banner-image-PU"
+            ) as HTMLImageElement;
+            imageEl.setAttribute("src", "/random-images/profile-banner.jpeg");
+          }}
+        >
+          <Trash2Icon /> Banner Photo
+        </Button>
         <Button
           variant={"secondary"}
           onClick={() => {

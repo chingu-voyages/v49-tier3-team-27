@@ -38,7 +38,7 @@ const ProfileUpdate = ({
         className={`${hideTrigger ? "hidden" : "block"}`}
       >
         <Image
-          src={data?.user?.avatarURL || "/random-images/profile-avatar.png"}
+          src={data?.user?.avatarUrl || "/random-images/profile-avatar.png"}
           alt=""
           width={1400}
           height={1000}

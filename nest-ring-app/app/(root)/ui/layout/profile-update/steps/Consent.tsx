@@ -59,7 +59,14 @@ const Consent = () => {
                 Modify
               </Button>
               <DialogTrigger>
-                <Button className=" self-center bg-interactive-green hover:bg-interactive-green text-white hover:scale-105">
+                <Button
+                  onClick={() => {
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, 3000);
+                  }}
+                  className=" self-center bg-interactive-green hover:bg-interactive-green text-white hover:scale-105"
+                >
                   Dismiss
                 </Button>
               </DialogTrigger>

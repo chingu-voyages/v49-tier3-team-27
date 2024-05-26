@@ -1,8 +1,5 @@
-import { toast, useToast } from "@/components/ui/use-toast";
-import User from "@/lib/models/User";
-import credentials from "next-auth/providers/credentials";
+import { useToast } from "@/components/ui/use-toast";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { createContext, ReactNode, useEffect, useMemo, useState } from "react";
 
 type AppearanceType = {
@@ -13,11 +10,11 @@ type AppearanceType = {
 };
 
 type PersonalInfoType = {
-  firstname: string | null;
-  middlename: string | null;
-  lastname: string | null;
-  description: string | null;
-  dob: Date | null;
+  firstname: string;
+  middlename: string;
+  lastname: string;
+  description: string;
+  dob: Date;
 };
 
 type moreDetailsType = {
@@ -54,7 +51,7 @@ export const ProfileUpdateContext = createContext({
 export const ProfileUpdateContextProvider = ({
   children,
 }: Readonly<{ children: ReactNode }>) => {
-  const [profileUpdateComplete, setProfileUpdateComplete] = useState(false);
+  const [profileUpdateComplete, setProfileUpdateComplete] = useState(true);
   const [appearance, setAppearance] = useState<AppearanceType>({
     profileAvatarURL: null,
     profileAvatarFile: null,
@@ -62,11 +59,11 @@ export const ProfileUpdateContextProvider = ({
     profileBannerFile: null,
   });
   const [personalInfo, setPersonalInfo] = useState<PersonalInfoType>({
-    firstname: null,
-    middlename: null,
-    lastname: null,
-    description: null,
-    dob: null,
+    firstname: "",
+    middlename: "",
+    lastname: "",
+    description: "",
+    dob: new Date(),
   });
   const [moreDetails, setMoreDetails] = useState<moreDetailsType>({
     usersRole: "Customer",
@@ -76,6 +73,7 @@ export const ProfileUpdateContextProvider = ({
     state: null,
     city: null,
   });
+  const [userEmail, setUserEmail] = useState("");
   const [password, setPassword] = useState<string>("");
   const [activeStep, setActiveStep] = useState(1);
   const [consentConclude, setConsentConclude] = useState<ConsentConcludeType>({
@@ -86,10 +84,36 @@ export const ProfileUpdateContextProvider = ({
   const { toast } = useToast();
   const { data } = useSession() as any;
   useEffect(() => {
+    console.log(data);
     if (!data?.user?.isProfileComplete) {
       setProfileUpdateComplete(false);
     }
-  }, [data?.user?.isProfileComplete]);
+
+    if (data?.user) {
+      setUserEmail(data.user.email);
+
+      if (data.user.bannerUrl) {
+        setAppearance((prevState) => ({
+          ...prevState,
+          profileBannerURL: data.user.bannerUrl,
+        }));
+      }
+      if (data.user.avatarUrl) {
+        setAppearance((prevState) => ({
+          ...prevState,
+          profileAvatarURL: data.user.avatarUrl,
+        }));
+      }
+
+      setPersonalInfo({
+        ...personalInfo,
+        firstname: data.user.firstname || data.user.name.split(" ")[0] || "",
+        lastname: data.user.lastname || data.user.name.split(" ")[1] || "",
+        middlename: data.user.middlename || data.user.name.split(" ")[2] || "",
+        description: data.user.description,
+      });
+    }
+  }, [data]);
 
   const contextValues = useMemo(() => {
     const updateAppearance = (data: AppearanceType) => {
@@ -135,7 +159,7 @@ export const ProfileUpdateContextProvider = ({
         moreDetails.state &&
         moreDetails.city
       ) {
-        payload.append("email", data.user.email);
+        payload.append("email", userEmail);
         payload.append("avatarFile", appearance.profileAvatarFile);
         payload.append("bannerFile", appearance.profileBannerFile);
         payload.append("firstname", personalInfo.firstname);
@@ -156,7 +180,11 @@ export const ProfileUpdateContextProvider = ({
           moreDetails.authToken
         ) {
           payload.append("authToken", moreDetails.authToken);
-        } else {
+        } else if (
+          (moreDetails.usersRole === "Admin" ||
+            moreDetails.usersRole === "Customer Support") &&
+          !moreDetails.authToken
+        ) {
           toast({
             title: "Auth Token Required",
             description:
@@ -173,7 +201,7 @@ export const ProfileUpdateContextProvider = ({
       }
 
       try {
-        const fetchResponse = await fetch("/api/profile/upload", {
+        const fetchResponse = await fetch("/api/profile/update", {
           method: "PUT",
           body: payload,
         });
@@ -227,6 +255,7 @@ export const ProfileUpdateContextProvider = ({
       uploadData,
     };
   }, [
+    userEmail,
     profileUpdateComplete,
     appearance,
     personalInfo,
@@ -235,7 +264,6 @@ export const ProfileUpdateContextProvider = ({
     password,
     consentConclude,
     toast,
-    data.user.email,
   ]);
   return (
     <ProfileUpdateContext.Provider value={contextValues}>
