@@ -10,14 +10,19 @@ export interface IUser extends mongoose.Document {
   description?: string;
   avatarUrl?: string;
   bannerUrl?: string;
-  address?: string;
+  location?: {
+    country: string;
+    state: string;
+    city: string;
+    deliveryAddress: string; 
+  };
   dob?: Date;
   foodOrders?: Types.ObjectId[];
-  userRole?: string;
-  authenticationCode?: string;
-  isAuthenticated?: string;
-  isEmailVerified?: string;
-  isProfileComplete?: string; 
+  acountType?: string;
+  authToken?: string;
+  isAuthenticated?: boolean;
+  isEmailVerified?: boolean;
+  isProfileComplete?: boolean; 
 }
 
 const UserSchema = new mongoose.Schema<IUser>({
@@ -52,8 +57,19 @@ const UserSchema = new mongoose.Schema<IUser>({
   bannerUrl: {
     type: String,
   },
-  address: {
-    type: String,
+  location: {
+    country: {
+      type: String
+    },
+    state: {
+      type: String,
+    },
+    city: {
+      type: String
+    },
+    deliveryAddress: {
+      type: String
+    }      
   },
   dob: {
     type: Date,
@@ -62,22 +78,22 @@ const UserSchema = new mongoose.Schema<IUser>({
     type: [Schema.Types.ObjectId],
     ref: "orders",
   },  
-  userRole: {
+  acountType: {
     type: String,
-    default: "customer",
-    enum: ["customer", "admin", "customerSupport"]
+    default: "Customer",
+    enum: ["Customer", "Admin", "Customer Support"]
   },
-  authenticationCode: {
+  authToken: {
     type: String,
   },
   isAuthenticated: {
-    type: String,
+    type: Boolean,
   },
   isEmailVerified: { 
-    type: String, 
+    type: Boolean, 
   }, 
   isProfileComplete: { 
-    type: String 
+    type: Boolean, 
   } 
 },
 
