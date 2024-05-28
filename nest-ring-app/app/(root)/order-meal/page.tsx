@@ -15,7 +15,10 @@ const page = () => {
           <TabsTrigger value="events-menu">Events Menu</TabsTrigger>
           <TabsTrigger value="delivery-menu">Delivery Menu</TabsTrigger>
         </TabsList>
-        <TabsContent value="events-menu" className="w-full h-full">
+        <TabsContent
+          value="events-menu"
+          className="w-full overflow-hidden overflow-y-auto"
+        >
           <EventsMenu />
         </TabsContent>
         <TabsContent

@@ -462,7 +462,7 @@ const DeliveryMenu = () => {
                 >
                   {subCategory.name}
                 </label>
-                <div className=" w-full flex flex-row items-center gap-3 overflow-hidden hover:overflow-x-auto shrink-0">
+                <div className=" w-full flex flex-row items-center gap-3 overflow-hidden md:hover:overflow-x-auto max-md:overflow-x-auto shrink-0">
                   {subCategory.values.map((foodObj) => (
                     <div
                       key={`${category.name}-${subCategory.name}-${foodObj.name}`}
