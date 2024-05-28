@@ -32,7 +32,6 @@ type ConsentConcludeType = {
 };
 
 export const ProfileUpdateContext = createContext({
-  profileUpdateComplete: false as boolean,
   appearance: {} as AppearanceType,
   personalInfo: {} as PersonalInfoType,
   moreDetails: {} as moreDetailsType,
@@ -51,7 +50,6 @@ export const ProfileUpdateContext = createContext({
 export const ProfileUpdateContextProvider = ({
   children,
 }: Readonly<{ children: ReactNode }>) => {
-  const [profileUpdateComplete, setProfileUpdateComplete] = useState(true);
   const [appearance, setAppearance] = useState<AppearanceType>({
     profileAvatarURL: null,
     profileAvatarFile: null,
@@ -82,13 +80,8 @@ export const ProfileUpdateContextProvider = ({
   });
 
   const { toast } = useToast();
-  const { data } = useSession() as any;
+  const { data, status } = useSession() as any;
   useEffect(() => {
-    console.log(data);
-    if (!data?.user?.isProfileComplete) {
-      setProfileUpdateComplete(false);
-    }
-
     if (data?.user) {
       setUserEmail(data.user.email);
 
@@ -113,7 +106,7 @@ export const ProfileUpdateContextProvider = ({
         description: data.user.description,
       });
     }
-  }, [data]);
+  }, [data, status]);
 
   const contextValues = useMemo(() => {
     const updateAppearance = (data: AppearanceType) => {
@@ -208,7 +201,6 @@ export const ProfileUpdateContextProvider = ({
 
         const result = await fetchResponse.json();
         if (fetchResponse.status === 201) {
-          setProfileUpdateComplete(true);
           setConsentConclude({
             ...consentConclude,
             conclude: true,
@@ -239,7 +231,6 @@ export const ProfileUpdateContextProvider = ({
     };
 
     return {
-      profileUpdateComplete,
       appearance,
       personalInfo,
       moreDetails,
@@ -256,7 +247,6 @@ export const ProfileUpdateContextProvider = ({
     };
   }, [
     userEmail,
-    profileUpdateComplete,
     appearance,
     personalInfo,
     moreDetails,

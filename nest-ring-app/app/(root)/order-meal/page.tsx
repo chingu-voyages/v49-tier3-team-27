@@ -9,7 +9,7 @@ const page = () => {
       <SearchCartBar />
       <Tabs
         defaultValue="delivery-menu"
-        className="w-full h-full overflow-y-auto"
+        className="w-full h-full overflow-hidden overflow-y-auto relative"
       >
         <TabsList className=" sticky top-0 w-full rounded-none bg-white flex items-center justify-start">
           <TabsTrigger value="events-menu">Events Menu</TabsTrigger>
@@ -18,7 +18,10 @@ const page = () => {
         <TabsContent value="events-menu" className="w-full h-full">
           <EventsMenu />
         </TabsContent>
-        <TabsContent value="delivery-menu" className="w-full h-full">
+        <TabsContent
+          value="delivery-menu"
+          className="w-full overflow-hidden overflow-y-auto"
+        >
           <DeliveryMenu />
         </TabsContent>
       </Tabs>

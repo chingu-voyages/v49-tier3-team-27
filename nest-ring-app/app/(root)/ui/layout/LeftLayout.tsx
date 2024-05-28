@@ -39,7 +39,7 @@ const LeftLayout = () => {
   return (
     <div
       className={clsx(
-        " max-md:hidden xl:w-[20%] md:w-[25%] h-full sticky top-16",
+        " max-md:hidden  min-w-[20%] w-[200px] h-full sticky top-16",
         {
           hidden:
             pathname.startsWith("/events") ||

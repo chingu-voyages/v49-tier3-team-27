@@ -18,7 +18,7 @@ const TabNavButton = ({
   const pathname = usePathname();
 
   return (
-    <Link href={tabName} className={" flex flex-col items-center"}>
+    <Link replace href={tabName} className={" flex flex-col items-center"}>
       {pathname === `/${tabName}` ? (
         <Image
           src={`/nav-icons/${tabName}-icon-active.svg`}
