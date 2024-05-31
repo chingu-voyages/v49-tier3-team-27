@@ -9,24 +9,61 @@ import dbConnect from "@/lib/mongo";
 import { foodMenu } from "./deliveryMenu";
 import { DeliveryMenuType } from "./interface";
 
+export const createSlug = async (name: string) => {
+  return name
+    .toLowerCase() // Convert to lowercase
+    .trim() // Trim whitespace from both ends
+    .replace(/\s+/g, "-") // Replace spaces with hyphens
+    .replace(/[^a-z0-9\-]/g, "") // Remove non-alphanumeric characters except hyphens
+    .replace(/-+/g, "-") // Replace multiple hyphens with a single hyphen
+    .replace(/^-+|-+$/g, ""); // Trim hyphens from start and end
+};
+
 export const insertFoodToDb = async () => {
   try {
     await dbConnect();
-    console.log("json data: ", foodMenu);
-    const result = await Food.insertMany([...foodMenu]);
 
-    console.log("insert to db result: ", result);
+    const foodWithSlug = await Promise.all(
+      foodMenu.map(async (obj) => {
+        const slug = await createSlug(obj.name);
+        return {
+          ...obj,
+          slug,
+        };
+      })
+    );
+
+    console.log("inserting food objs with slug; to db.", foodWithSlug[0]);
+    const result = await Food.insertMany(foodWithSlug);
+
+    console.log("insert to db result: ", result[0]);
   } catch (error) {
     console.log("error inserting to db: ", error);
   }
 };
 
-export const getDeliveryMenu = async () => {
+export const fetchDeliveryFood = async (slug: string | null = null) => {
   try {
     await dbConnect();
 
-    const result = (await Food.find()) as IFood[];
+    let result = null;
+    if (slug) {
+      result = await Food.find({ slug });
+      result = result[0];
+    } else {
+      result = await Food.find();
+    }
 
+    return result;
+  } catch (error) {
+    console.log("Error Fetch delivery menu: ", error);
+    throw error;
+  }
+};
+
+export const getDeliveryMenu = async () => {
+  try {
+    const result = (await fetchDeliveryFood()) as IFood[];
     if (!result) {
       return {};
     }
@@ -70,7 +107,10 @@ export const getDeliveryMenu = async () => {
       subCategory.values.push(item);
     });
 
-    return { ...deliveryMenu, categories: deliveryMenu.categories.reverse() };
+    return {
+      ...deliveryMenu,
+      categories: deliveryMenu.categories.toReversed(),
+    };
   } catch (error) {
     console.log("getDelivery Menu error: ", error);
   }

@@ -8,7 +8,7 @@ const InsertToMenuDBBtn = () => {
   const [message, dispatch] = useFormState(insertFoodToDb, undefined);
   return (
     <form action={dispatch}>
-      {message || ""}
+      {message ?? ""}
       <Button type="submit">Insert To DB</Button>
     </form>
   );

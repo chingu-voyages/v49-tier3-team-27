@@ -4,6 +4,7 @@ export interface IFood extends mongoose.Document {
   category: string;
   subCategory: string;
   name: string;
+  slug: string;
   price: number;
   imageUrl: string;
   description: string;
@@ -22,6 +23,9 @@ const FoodSchema = new mongoose.Schema<IFood>(
       type: String,
     },
     name: {
+      type: String,
+    },
+    slug: {
       type: String,
     },
     price: {
