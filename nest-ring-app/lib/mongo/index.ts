@@ -13,9 +13,7 @@ let uri: string;
 if (process.env.MONGODB_URI) {
   uri = process.env.MONGODB_URI;
 } else {
-  throw new Error(
-    "Your uri is not defined inside .env",
-  );
+  throw new Error("Your uri is not defined inside .env");
 }
 
 let cached = global.mongoose;

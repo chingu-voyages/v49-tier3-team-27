@@ -8,6 +8,7 @@ export const authConfig = {
     async authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isLoginPage = nextUrl.pathname.startsWith("/login");
+      const isHome = nextUrl.pathname.startsWith("/home");
       const isCommunity = nextUrl.pathname.startsWith("/community");
       const isEvents = nextUrl.pathname.startsWith("/events");
       const isOrderMeal = nextUrl.pathname.startsWith("/order-meal");
@@ -16,8 +17,11 @@ export const authConfig = {
       const isProfile = nextUrl.pathname.startsWith("/profile");
       const query = new URLSearchParams(nextUrl.search);
       const redirectURL = query.get("callbackUrl");
+      const baseURL = process.env.NEXTAUTH_URL;
 
-      if (
+      if (isHome && isLoggedIn && baseURL) {
+        return Response.redirect(new URL("/order-meal", baseURL));
+      } else if (
         isCommunity ||
         isEvents ||
         isOrderMeal ||
@@ -28,8 +32,6 @@ export const authConfig = {
         if (isLoggedIn) return true;
         return false; // Redirect unauthenticated users to login page
       } else if (isLoginPage) {
-        const baseURL = process.env.NEXTAUTH_URL;
-
         if (isLoggedIn && redirectURL !== undefined && redirectURL !== null) {
           return Response.redirect(new URL(new URL(redirectURL)));
         } else if (isLoggedIn && baseURL) {

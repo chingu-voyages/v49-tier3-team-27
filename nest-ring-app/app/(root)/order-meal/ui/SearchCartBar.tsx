@@ -2,7 +2,7 @@
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import React from "react";
-import cartIcon from "@/public/order-meal-icons/cart-icon.svg";
+import cartIcon from "@/public/order-meal/icons/cart-icon.svg";
 import { SearchIcon } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 

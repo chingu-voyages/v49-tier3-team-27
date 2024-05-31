@@ -18,8 +18,12 @@ const TabNavButton = ({
   const pathname = usePathname();
 
   return (
-    <Link href={tabName} className={" flex flex-col items-center"}>
-      {pathname === `/${tabName}` ? (
+    <Link
+      replace
+      href={`/${tabName}`}
+      className={" flex flex-col items-center"}
+    >
+      {pathname.startsWith(`/${tabName}`) ? (
         <Image
           src={`/nav-icons/${tabName}-icon-active.svg`}
           alt={`${tabName} tab`}
@@ -38,8 +42,9 @@ const TabNavButton = ({
       )}
       <hr
         className={clsx({
-          "w-full h-1 bg-figma-brown max-md:hidden mt-1":
-            pathname === `/${tabName}`,
+          "w-full h-1 bg-figma-brown max-md:hidden mt-1": pathname.startsWith(
+            `/${tabName}`
+          ),
         })}
       />
     </Link>

@@ -3,7 +3,7 @@ import TabNavButton from "./TabNavButton";
 
 const AppNavbarMobile = () => {
   return (
-    <nav className="bg-white md:hidden w-full h-[48px] flex flex-row items-center justify-between px-2">
+    <nav className=" md:hidden w-full h-[48px] fixed bottom-0 bg-white flex flex-row items-center justify-between px-2">
       <TabNavButton tabName="community" />
       <TabNavButton tabName="events" />
       <TabNavButton tabName="order-meal" />
