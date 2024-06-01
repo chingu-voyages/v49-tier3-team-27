@@ -1,8 +1,20 @@
-import { IFood } from "@/lib/models/Food";
+export type DeliveryFoodType = {
+  category: string;
+  subCategory: string;
+  name: string;
+  slug: string;
+  price: number;
+  imageUrl: string;
+  description: string;
+  calories: number;
+  rating: number;
+  isChefsChoice: boolean;
+  count: number;
+};
 
 export type SubCategoryType = {
   name: string;
-  values: IFood[];
+  values: DeliveryFoodType[];
 };
 
 export type CategoriesType = {
@@ -11,6 +23,6 @@ export type CategoriesType = {
 };
 
 export type DeliveryMenuType = {
-  chefsChoice: IFood;
+  chefsChoice: DeliveryFoodType;
   categories: CategoriesType[];
 };
