@@ -11,7 +11,7 @@ const TabLayout = ({
       {/* Left side layout */}
       <LeftLayout />
       {/* children */}
-      <div className=" h-full overflow-hidden">{children}</div>
+      <div className="w-full h-full overflow-hidden">{children}</div>
       {/* Right side layout */}
       <RightLayout />
     </div>
