@@ -4,10 +4,12 @@
     3. function to restructure the retrived food documents to be ready for ui.
 */
 "use server";
-import Food, { IFood } from "@/lib/models/Food";
+import DeliveryMenu, { IDeliveryMenu } from "@/lib/models/DeliveryMenu";
+import EventMenu, { IEventMenu } from "@/lib/models/EventMenu";
 import dbConnect from "@/lib/mongo";
 import { foodMenu } from "./deliveryMenu";
-import { DeliveryMenuType } from "./interface";
+import { eventMenu } from "./eventMenu"
+import { CategoryItems, DeliveryMenuType } from "./interface";
 
 export const createSlug = async (name: string) => {
   return name
@@ -34,7 +36,7 @@ export const insertFoodToDb = async () => {
     );
 
     console.log("inserting food objs with slug; to db.", foodWithSlug[0]);
-    const result = await Food.insertMany(foodWithSlug);
+    const result = await DeliveryMenu.insertMany(foodWithSlug);
 
     console.log("insert to db result: ", result[0]);
   } catch (error) {
@@ -48,10 +50,10 @@ export const fetchDeliveryFood = async (slug: string | null = null) => {
 
     let result = null;
     if (slug) {
-      result = await Food.find({ slug });
+      result = await DeliveryMenu.find({ slug });
       result = result[0];
     } else {
-      result = await Food.find();
+      result = await DeliveryMenu.find();
     }
 
     return result;
@@ -63,19 +65,19 @@ export const fetchDeliveryFood = async (slug: string | null = null) => {
 
 export const getDeliveryMenu = async () => {
   try {
-    const result = (await fetchDeliveryFood()) as IFood[];
+    const result = (await fetchDeliveryFood()) as IDeliveryMenu[];
     if (!result) {
       return {};
     }
 
     const deliveryMenu: DeliveryMenuType = {
-      chefsChoice: {} as IFood,
+      chefsChoice: {} as IDeliveryMenu,
       categories: [],
     };
 
     const categoryMap = new Map();
 
-    result.forEach((item: IFood) => {
+    result.forEach((item: IDeliveryMenu) => {
       // Handle chef's choice
       if (item.isChefsChoice) {
         deliveryMenu.chefsChoice = item;
@@ -109,9 +111,85 @@ export const getDeliveryMenu = async () => {
 
     return {
       ...deliveryMenu,
-      categories: deliveryMenu.categories.toReversed(),
+      categories: deliveryMenu.categories.reverse(),
     };
   } catch (error) {
     console.log("getDelivery Menu error: ", error);
+  }
+};
+
+export const insertEventMenuToDb = async () => {
+  try {
+    await dbConnect();
+
+    const foodWithSlug = await Promise.all(
+      eventMenu.map(async (obj) => {
+        const slug = await createSlug(obj.name);
+        return {
+          ...obj,
+          slug,
+        };
+      })
+    );
+
+    const result = await EventMenu.insertMany(foodWithSlug);
+
+    console.log("insert to db result: ", result[0]);
+  } catch (error) {
+    console.log("error inserting to db: ", error);
+  }
+};
+
+export const fetchEventFood = async () => {
+  try {
+    await dbConnect();
+
+    let result = null;
+    
+    result = await EventMenu.find();    
+
+    return result;
+  } catch (error) {
+    console.log("Error Fetch event menu: ", error);
+    throw error;
+  }
+};
+
+export const getEventMenu = async () => {
+  try {
+    const result = (await fetchEventFood()) as IEventMenu[];
+    if (!result) {
+      return {};
+    }
+
+    // const eventMenu: EventMenuType = {                  
+    //   categories: [],
+    // };
+
+    const eventMenu = [] as CategoryItems[]
+
+    const categoryMap = new Map();
+
+    result.forEach((item: IEventMenu) => {      
+
+      // Find or create category
+      let category = categoryMap.get(item.category);
+      if (!category) {
+        category = {
+          name: item.category,            
+          values: [],  
+        };
+        categoryMap.set(item.category, category);
+        eventMenu.push(category);
+      }
+      
+      category.values.push(item);
+      
+    });
+
+    return eventMenu
+
+  } catch (error) {
+    console.log("getEventMenu error: ", error);
   }
 };

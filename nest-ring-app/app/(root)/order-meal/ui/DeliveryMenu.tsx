@@ -3,7 +3,7 @@ import { getDeliveryMenu } from "../lib/utils";
 import { DeliveryMenuType } from "../lib/interface";
 import Link from "next/link";
 import AddToCartCheckBtn from "./AddToCartCheckBtn";
-// import InsertToMenuDBBtn from "./InsertBtn";
+// import { InsertToMenuDBBtn, InsertToEventDBBtn } from "./InsertBtn";
 
 const DeliveryMenu = async () => {
   const deliveryMenu = (await getDeliveryMenu()) as DeliveryMenuType;
@@ -11,6 +11,7 @@ const DeliveryMenu = async () => {
   return (
     <section className="w-full h-full flex flex-col mt-5 mb-20 gap-7">
       {/* <InsertToMenuDBBtn /> */}
+      {/* <InsertToEventDBBtn /> */}
       {!deliveryMenu ? (
         <span className=" text-lg font-bold text-center">Menu is Empty</span>
       ) : (
