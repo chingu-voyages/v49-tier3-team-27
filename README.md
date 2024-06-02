@@ -36,6 +36,6 @@ coding!
 
 - Jyotirmoy Das: [GitHub](https://github.com/jdx-code) / [LinkedIn](https://www.linkedin.com/in/jdx-code/)
 - Jack Weru: [GitHub](https://github.com/Jaweki) / [LinkedIn](https://linkedin.com/in/jaweki-dekut)
-- Mariana Farcas: [GitHub](https://github.com/MarianaFarcas) / [LinkedIn](https://linkedin.com/in/Mariana-Farcas)
+- Mariana Farcas: [GitHub](https://github.com/MarianaFarcas) / [LinkedIn](https://linkedin.com/in/Mariana Farcas)
 - Osarumen Peace Osayande: [GitHub](https://github.com/Chukuli12) / [LinkedIn](https://www.linkedin.com/in/osarumen-osayande-019a3823b)
 - Simon Summers: [GitHub](https://github.com/simonC137) / [LinkedIn](https://linkedin.com/in/simonsummers)
