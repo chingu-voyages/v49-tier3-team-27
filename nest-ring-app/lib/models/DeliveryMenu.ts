@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export interface IFood extends mongoose.Document {
+export interface IDeliveryMenu extends mongoose.Document {
   category: string;
   subCategory: string;
   name: string;
@@ -14,7 +14,7 @@ export interface IFood extends mongoose.Document {
   count: number;
 }
 
-const FoodSchema = new mongoose.Schema<IFood>(
+const DeliveryMenuSchema = new mongoose.Schema<IDeliveryMenu>(
   {
     category: {
       type: String,
@@ -55,5 +55,5 @@ const FoodSchema = new mongoose.Schema<IFood>(
   { timestamps: true }
 );
 
-export default mongoose.models.food ||
-  mongoose.model("food", FoodSchema, "deliveryMenu");
+export default mongoose.models.deliveryMenu ||
+  mongoose.model("deliveryMenu", DeliveryMenuSchema, "deliveryMenu");
