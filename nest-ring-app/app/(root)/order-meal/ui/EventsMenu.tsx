@@ -15,7 +15,7 @@ const EventsMenu = async() => {
       <div className="w-full h-full flex flex-col items-start gap-6 overflow-hidden px-2">
         {eventMenu?.map((category) => (
           <div
-            key={category.name}
+            key={`${category.name}-${category.values.length}-${category.values[0].name}`}
             id={`category-${category.name}`}
             className="w-full flex flex-col gap-2 items-start shrink-0"
           >
@@ -29,7 +29,7 @@ const EventsMenu = async() => {
             <div className=" w-full flex flex-row items-center gap-3 overflow-hidden md:hover:overflow-x-auto max-md:overflow-x-auto shrink-0">
                       {category.values.map((foodObj) => (
                         <div
-                          
+                          key={`${foodObj.name}-${category.name}-${foodObj.name.length}`}
                           className=" w-[200px] h-[220px] border hover:border-figma-brown border-b-4 shrink-0 rounded-sm rounded-t-lg transition-colors duration-300 hover:text-figma-brown "
                         >
                           {/* Food image */}

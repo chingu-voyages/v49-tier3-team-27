@@ -58,7 +58,7 @@ const DeliveryMenu = async () => {
           <div className="w-full h-full flex flex-col items-start gap-6 overflow-hidden px-2">
             {deliveryMenu?.categories.map((category) => (
               <div
-                key={category.name}
+                key={`${category.name}-${category.subCategories.length}-${category.subCategories[0].name}`}
                 id={`category-${category.name}`}
                 className="w-full flex flex-col gap-2 items-start shrink-0"
               >

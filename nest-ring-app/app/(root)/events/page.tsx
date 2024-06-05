@@ -1,7 +1,8 @@
-import React from "react";
 
-const page = () => {
-  return <div>events tab</div>;
+import EventsHomePage from "./ui/EventsHomePage";
+
+const EventsPage = () => {
+  return <EventsHomePage />;
 };
 
-export default page;
+export default EventsPage;
