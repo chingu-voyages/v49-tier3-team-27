@@ -7,7 +7,7 @@ const TabLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className=" pt-6 w-full h-full xl:px-28 lg:px-20 md:px-10 bg-slate-100 flex flex-row justify-between items-start gap-7 overflow-hidden">
+    <div className=" md:pt-5 w-full h-full xl:px-28 lg:px-20 md:px-10 bg-slate-100 flex flex-row justify-between items-start gap-7 overflow-hidden md:pb-10">
       {/* Left side layout */}
       <LeftLayout />
       {/* children */}
