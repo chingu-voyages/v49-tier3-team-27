@@ -12,7 +12,7 @@ export interface IEventMenu extends mongoose.Document {
     equivalence: string;    
 }
 
-const EventSchema = new mongoose.Schema<IEventMenu>(
+const EventMenuSchema = new mongoose.Schema<IEventMenu>(
     {
         name: { type: String },
         slug: { type: String },
@@ -27,4 +27,4 @@ const EventSchema = new mongoose.Schema<IEventMenu>(
     { timestamps: true }
 );
 
-export default mongoose.models.eventMenu || mongoose.model("eventMenu", EventSchema, "eventMenu")
+export default mongoose.models.eventMenu || mongoose.model("eventMenu", EventMenuSchema, "eventMenu")
