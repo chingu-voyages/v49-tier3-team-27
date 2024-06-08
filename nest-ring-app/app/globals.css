@@ -1,7 +1,7 @@
+@import "rsuite/dist/rsuite.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 .signin-form-desktop {
   animation: signin-form-desktop-animate 1s ease;

@@ -11,7 +11,7 @@ const PrevPageBtn = () => {
       onClick={() => {
         router.back();
       }}
-      className="w-[50px] sticky top-2 -ml-11 bg-transparent hover:bg-interactive-green hover:text-white text-interactive-green"
+      className="w-[50px] sticky top-2 bg-transparent hover:bg-interactive-green hover:text-white text-interactive-green"
     >
       <MoveLeftIcon />
     </Button>
