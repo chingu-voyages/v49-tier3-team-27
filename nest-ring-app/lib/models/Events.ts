@@ -5,9 +5,9 @@ export interface IEvent extends mongoose.Document {
     description: string;
     category: string;
     creator: { userId: Types.ObjectId, imageUrl: string | null, name: string }; 
-    location: number[]; 
+    location: string; 
     imageUrl: string;
-    eventDate: Date;
+    eventDate: { fromDate: string, toDate: string, fromTime: string, toTime: string }
     likeCount: number;
     monetization: { sponsor: number | null, fee: number | null };
     invitedGuests: {userId: Types.ObjectId, imageUrl: string | null, name: string}[];
@@ -25,9 +25,14 @@ const EventSchema = new mongoose.Schema<IEvent>(
             imageUrl: { type: String, default: null },
             name: { type: String, required: true },
         },
-        location: { type: [Number], required: true },
+        location: { type: String, required: true },
         imageUrl: { type: String, required: true },
-        eventDate: { type: Date, required: true },
+        eventDate: {
+            fromDate: { type: String, required: true }, 
+            toDate: { type: String, required: true }, 
+            fromTime: { type: String, required: true }, 
+            toTime: { type: String, required: true }, 
+        },
         likeCount: { type: Number, default: 0 },
         monetization: {                         
             sponsor: { type: Number, default: null },
