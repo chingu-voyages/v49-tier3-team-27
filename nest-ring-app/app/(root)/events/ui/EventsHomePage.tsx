@@ -6,10 +6,10 @@ import EventCards from "./EventCards";
 
 const EventsHomePage = () => {
   return (
-    <main className=" w-full h-full max-sm:pb-14 flex flex-col">
+    <main className=" w-full h-full max-sm:pb-14 flex flex-col pb-2">
       {/* Event Search section */}
       <EventSearch />
-      <div className="w-full h-full bg-white rounded-t-lg mt-3  overflow-hidden max-md:overflow-y-auto flex flex-col items-center pb-5">
+      <div className="w-full h-full bg-white rounded-t-lg mt-3  overflow-hidden overflow-y-auto flex flex-col items-center pb-3">
         {/* Event category filter section */}
         <EventCategories />
         {/* Event buttons */}

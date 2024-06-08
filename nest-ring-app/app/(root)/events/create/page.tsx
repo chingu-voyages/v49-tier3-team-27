@@ -5,11 +5,12 @@ import Step1 from "./ui/steps/Step1";
 import PrevPageBtn from "../../order-meal/[searchTerm]/ui/PrevPageBtn";
 import { CreateEventContext } from "./ui/CreateEventContext";
 import Step2 from "./ui/steps/Step2";
+import { useSession } from "next-auth/react";
 
 const CreateEventMainPage = () => {
   const { activeStep } = useContext(CreateEventContext);
   return (
-    <main className="w-full h-full overflow-hidden overflow-y-auto bg-white rounded-lg p-3">
+    <main className="w-full h-full overflow-hidden overflow-y-auto bg-white rounded-lg p-3 max-sm:pb-20">
       <div className="w-full bg-white">
         <PrevPageBtn />
       </div>

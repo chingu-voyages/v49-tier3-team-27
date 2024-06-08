@@ -43,6 +43,7 @@ export const authConfig = {
     },
     async jwt({ token, user }: { token: any; user: any }) {
       if (user) {
+        token.userId = user._id;
         token.name = user.name;
         token.email = user.email;
         token.foodOrders = user.foodOrders;
@@ -64,6 +65,7 @@ export const authConfig = {
     },
     async session({ session, token }: { session: any; token: any }) {
       if (token) {
+        session.user.userId = token.userId;
         session.user.name = token.name;
         session.user.email = token.email;
         session.user.foodOrders = token.foodOrders;

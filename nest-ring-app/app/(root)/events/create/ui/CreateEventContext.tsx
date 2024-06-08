@@ -24,8 +24,11 @@ const CreateEventContextProvider = ({
   const [step2Values, setStep2Values] = useState<Step2Type>({
     imageFile: null,
     imageDataUrl: null,
-    datePicked: null,
-    timePicked: null,
+    datePickedFrom: null,
+    datePickedTo: null,
+    timePickedFrom: "",
+    timePickedTo: "",
+    location: "",
   });
 
   const contextValues = useMemo(() => {

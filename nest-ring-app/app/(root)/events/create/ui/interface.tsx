@@ -14,6 +14,9 @@ export interface Step1Type {
 export interface Step2Type {
   imageFile: null | File;
   imageDataUrl: any;
-  datePicked: null | Date;
-  timePicked: null | Date;
+  datePickedFrom: null | Date;
+  datePickedTo: null | Date;
+  timePickedFrom: string;
+  timePickedTo: string;
+  location: string;
 }
