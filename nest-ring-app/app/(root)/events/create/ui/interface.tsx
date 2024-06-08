@@ -20,3 +20,13 @@ export interface Step2Type {
   timePickedTo: string;
   location: string;
 }
+
+export type EventUserType = {
+  userId: string;
+  imageUrl: string;
+  name: string;
+};
+export interface Step3Type {
+  invitedGuests: EventUserType[];
+  isOpenToAll: boolean;
+}
