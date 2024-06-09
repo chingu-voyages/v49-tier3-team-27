@@ -13,6 +13,7 @@ export type DeliveryFoodType = {
 };
 
 export type EventFoodType = {
+  _id: string;
   name: string;
   slug: string;
   category: string;
@@ -21,6 +22,7 @@ export type EventFoodType = {
   description: string;
   rating: number;
   price: number;
+  count: number;
   equivalence: string;
 };
 
@@ -31,7 +33,7 @@ export type SubCategoryType = {
 
 export type CategoriesType = {
   name: string;
-  subCategories: SubCategoryType[];  
+  subCategories: SubCategoryType[];
 };
 
 export type DeliveryMenuType = {
@@ -39,7 +41,7 @@ export type DeliveryMenuType = {
   categories: CategoriesType[];
 };
 
-export type CategoryItems = {  
+export type CategoryItems = {
   name: string;
   values: EventFoodType[];
 };

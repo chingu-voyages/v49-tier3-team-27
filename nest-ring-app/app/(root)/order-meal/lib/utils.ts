@@ -8,8 +8,8 @@ import DeliveryMenu, { IDeliveryMenu } from "@/lib/models/DeliveryMenu";
 import EventMenu, { IEventMenu } from "@/lib/models/EventMenu";
 import dbConnect from "@/lib/mongo";
 import { foodMenu } from "./deliveryMenu";
-import { eventMenu } from "./eventMenu"
-import { CategoryItems, DeliveryMenuType } from "./interface";
+import { eventMenu } from "./eventMenu";
+import { CategoryItems, DeliveryMenuType, EventFoodType } from "./interface";
 
 export const createSlug = async (name: string) => {
   return name
@@ -140,15 +140,23 @@ export const insertEventMenuToDb = async () => {
   }
 };
 
-export const fetchEventFood = async () => {
+export const fetchEventFood = async (searchTerm: string | null = null) => {
   try {
     await dbConnect();
 
     let result = null;
-    
-    result = await EventMenu.find();    
 
-    return result;
+    if (searchTerm) {
+      result = await EventMenu.findOne({ slug: searchTerm });
+    } else {
+      result = await EventMenu.find();
+    }
+
+    if (searchTerm) {
+      return result as EventFoodType;
+    } else {
+      return result as EventFoodType[];
+    }
   } catch (error) {
     console.log("Error Fetch event menu: ", error);
     throw error;
@@ -162,33 +170,30 @@ export const getEventMenu = async () => {
       return {};
     }
 
-    // const eventMenu: EventMenuType = {                  
+    // const eventMenu: EventMenuType = {
     //   categories: [],
     // };
 
-    const eventMenu = [] as CategoryItems[]
+    const eventMenu = [] as CategoryItems[];
 
     const categoryMap = new Map();
 
-    result.forEach((item: IEventMenu) => {      
-
+    result.forEach((item: IEventMenu) => {
       // Find or create category
       let category = categoryMap.get(item.category);
       if (!category) {
         category = {
-          name: item.category,            
-          values: [],  
+          name: item.category,
+          values: [],
         };
         categoryMap.set(item.category, category);
         eventMenu.push(category);
       }
-      
+
       category.values.push(item);
-      
     });
 
-    return eventMenu
-
+    return eventMenu;
   } catch (error) {
     console.log("getEventMenu error: ", error);
   }

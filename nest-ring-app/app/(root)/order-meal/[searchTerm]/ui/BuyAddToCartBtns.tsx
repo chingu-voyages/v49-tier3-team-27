@@ -5,9 +5,9 @@ import { DeliveryFoodType } from "../../lib/interface";
 import { useContext, useEffect, useState } from "react";
 import { OrderMealContext } from "@/app/(root)/ui/OrderMealContext";
 import { toast } from "@/components/ui/use-toast";
-import { title } from "process";
 import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
+import { NextURL } from "next/dist/server/web/next-url";
 
 const BuyAddToCartBtns = ({
   foodObj,
@@ -24,6 +24,13 @@ const BuyAddToCartBtns = ({
     }
   }, [cartItems, foodObj]);
 
+  const handleOrderNow = () => {
+    // 1. Add this specific food item to cart
+    updateCartItems([...cartItems, foodObj]);
+    // 2. reroute user to the checkout tab
+    router.push("/order-meal/checkout");
+  };
+
   return (
     <section className=" w-full flex flex-row gap-5">
       <Button
@@ -39,7 +46,7 @@ const BuyAddToCartBtns = ({
                   handleOpenCart();
                   router.back();
                 }}
-                className="bg-interactive-green hover:bg-interactive-green hover:bg-opacity-80"
+                className="bg-interactive-green hover:bg-interactive-green hover:bg-opacity-80 text-white"
               >
                 Checkout Cart
               </ToastAction>
@@ -48,11 +55,14 @@ const BuyAddToCartBtns = ({
           });
         }}
         disabled={isAddedToCart}
-        className=" border-2 border-interactive-green text-interactive-green bg-transparent hover:bg-transparent hover:scale-105 transition-transform duration-700"
+        className={` border-2 border-interactive-green text-interactive-green bg-transparent hover:bg-transparent hover:scale-105 transition-transform duration-700 `}
       >
         {isAddedToCart ? "Added to cart" : "Add To Cart"}
       </Button>
-      <Button className=" bg-interactive-green hover:bg-interactive-green text-white hover:scale-105">
+      <Button
+        onClick={handleOrderNow}
+        className={` bg-interactive-green hover:bg-interactive-green text-white hover:scale-105`}
+      >
         Order Now
       </Button>
     </section>
