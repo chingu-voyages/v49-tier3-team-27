@@ -20,7 +20,7 @@ const EventCards = () => {
         })
         .map((event) => (
           <div
-            key={event.eventId}
+            key={event._id}
             className="w-[230px] h-[230px] max-lg:w-[200px] max-lg:h-[200px] rounded-md relative shrink-0"
           >
             <Image
@@ -88,7 +88,7 @@ const EventCards = () => {
                 </button>
                 <button
                   onClick={() => {
-                    router.push(`/events/${event.eventId}`);
+                    router.push(`/events/${event._id}`);
                   }}
                   className=" text-xs p-[2px] px-2 bg-interactive-green hover:bg-interactive-green hover:bg-opacity-80 flex flex-row items-center justify-center gap-1 rounded-md text-white transition-colors duration-300"
                 >
@@ -105,7 +105,7 @@ const EventCards = () => {
                     width={15}
                     height={15}
                   />
-                  <span className=" text-xs">City Name</span>
+                  <span className=" text-xs">{event.location}</span>
                 </div>
                 <div className="text-white bg-slate-200 bg-opacity-50 rounded-md flex flex-row items-center justify-center gap-1 p-1">
                   <Image

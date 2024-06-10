@@ -400,12 +400,14 @@ export const EventsTabContextProvider = ({
   useEffect(() => {
     async function fetchEvents() {
       try {
+        console.log("user: ", data.user.userId);
         const response = await fetch(
           `/api/events/fetch/events-sessions?userId=${data?.user.userId}`
         );
 
         if (response.status === 200) {
           const events = (await response.json()) as EventsObjType[];
+          console.log(events);
           setEvents([...events]);
         }
       } catch (error) {

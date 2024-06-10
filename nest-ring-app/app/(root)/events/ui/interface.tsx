@@ -9,7 +9,7 @@ type MonetizationType = {
   amount: number | null;
 };
 export interface EventsObjType {
-  eventId: string;
+  _id: string;
   subject: string;
   description: string;
   category:
@@ -23,7 +23,7 @@ export interface EventsObjType {
   creator: EventUserType;
   createdAt: null | Date;
   updatedAt: null | Date;
-  location: number[];
+  location: string;
   imageUrl: null | string;
   eventDate: null | Date;
   likeCount: number;
