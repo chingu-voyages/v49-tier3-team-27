@@ -11,6 +11,7 @@ const SearchTerm = async ({
   const eventMenu = (await fetchEventFood(searchTerm)) as EventFoodType;
 
   const foodObj = {
+    _id: eventMenu._id,
     category: eventMenu.category,
     name: eventMenu.name,
     slug: eventMenu.slug,
