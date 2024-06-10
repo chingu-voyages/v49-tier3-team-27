@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { OrderMealContext } from "../../ui/OrderMealContext";
 import { useSession } from "next-auth/react";
 import { CheckIcon } from "lucide-react";
@@ -20,18 +20,15 @@ import { SelectGroup } from "@radix-ui/react-select";
 
 const CheckoutPage = () => {
   const { data } = useSession() as any;
-  const { cartItems } = useContext(OrderMealContext);
-  const [orderAmount, setOrderAmount] = useState(0);
-  const [paymentOption, setPaymentOption] = useState<string | null>(null);
-
-  useEffect(() => {
-    console.log(data);
-    let amount = 0;
-    cartItems.forEach((item) => {
-      amount = amount + item.price;
-    });
-    setOrderAmount(amount);
-  }, [cartItems, data]);
+  const {
+    isUploading,
+    cartItems,
+    orderAmount,
+    paymentOption,
+    updatePaymentOption,
+    updateCredentials,
+    confirmOrder,
+  } = useContext(OrderMealContext);
 
   return (
     <main className=" w-full h-full pb-20 flex flex-col gap-5 overflow-hidden overflow-y-auto">
@@ -116,7 +113,10 @@ const CheckoutPage = () => {
 
         <Select
           onValueChange={(value) => {
-            setPaymentOption(value);
+            updatePaymentOption(value);
+            if (value == "cashOnDelivery") {
+              updateCredentials(null);
+            }
           }}
         >
           <SelectTrigger>
@@ -158,6 +158,17 @@ const CheckoutPage = () => {
                   <span>Mpesa</span>
                 </div>
               </SelectItem>
+              <SelectItem value="cashOnDelivery">
+                <div className="flex flex-row items-center justify-start gap-2">
+                  <Image
+                    src={"/random-images/cash-on-delivery-icon.png"}
+                    alt=""
+                    width={20}
+                    height={20}
+                  />
+                  <span>Cash On Delivery</span>
+                </div>
+              </SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -183,6 +194,7 @@ const CheckoutPage = () => {
                 </span>
               </div>
             )}
+            {/* Bank card input */}
             {paymentOption == "card" && (
               <div className=" relative">
                 <label
@@ -201,6 +213,7 @@ const CheckoutPage = () => {
                 </span>
               </div>
             )}
+            {/* Mpesa Input */}
             {paymentOption == "mpesa" && (
               <div className=" relative">
                 <label
@@ -222,10 +235,19 @@ const CheckoutPage = () => {
             )}
             <Button
               disabled={cartItems.length < 1}
-              onClick={() => {}}
+              onClick={confirmOrder}
               className=" bg-interactive-green hover:bg-interactive-green hover:bg-opacity-80"
             >
-              Confirm Order
+              {isUploading ? (
+                <Image
+                  src={"/random-images/dot-loader.svg"}
+                  alt=""
+                  width={20}
+                  height={20}
+                />
+              ) : (
+                <span>Confirm Order</span>
+              )}
             </Button>
           </div>
         )}
