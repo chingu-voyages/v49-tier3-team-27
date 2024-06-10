@@ -5,13 +5,13 @@ export interface IOrder extends mongoose.Document {
         foodId: Types.ObjectId,
         quantity: number
     }[],
-    rating: number,
-    comment: string,
+    rating?: number | null,
+    comment?: string | null,
     totalAmount: number,
-    discount: number,
+    discount?: number | null,
     payment: {
         option: string,
-        credentials: string
+        credentials?: string | null
     }    
 }
 
@@ -23,17 +23,17 @@ const OrderSchema = new mongoose.Schema<IOrder>(
                 quantity: { type: Number }
             }
         ],
-        rating: { type: Number },
-        comment: { type: String },
+        rating: { type: Number, default: null },
+        comment: { type: String, default: null },
         totalAmount: { type: Number },
-        discount: { type: Number },
+        discount: { type: Number, default: null },
         payment: {
             option: { 
                 type: String,
                 default: "cashOnDelivery",
                 enum: ["paypal", "card", "mpesa", "cashOnDelivery"],
             },
-            credentials: { type: String }
+            credentials: { type: String, default: null }
         }
     },
 
