@@ -108,6 +108,7 @@ const DeliveryMenu = async () => {
                               </Link>
                               <AddToCartCheckBtn
                                 foodObj={{
+                                  _id: foodObj._id,
                                   category: foodObj.category,
                                   subCategory: foodObj.subCategory,
                                   name: foodObj.name,

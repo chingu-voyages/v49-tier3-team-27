@@ -9,7 +9,12 @@ import EventMenu, { IEventMenu } from "@/lib/models/EventMenu";
 import dbConnect from "@/lib/mongo";
 import { foodMenu } from "./deliveryMenu";
 import { eventMenu } from "./eventMenu";
-import { CategoryItems, DeliveryMenuType, EventFoodType } from "./interface";
+import {
+  CategoryItems,
+  DeliveryFoodType,
+  DeliveryMenuType,
+  EventFoodType,
+} from "./interface";
 
 export const createSlug = async (name: string) => {
   return name
@@ -65,19 +70,19 @@ export const fetchDeliveryFood = async (slug: string | null = null) => {
 
 export const getDeliveryMenu = async () => {
   try {
-    const result = (await fetchDeliveryFood()) as IDeliveryMenu[];
+    const result = (await fetchDeliveryFood()) as DeliveryFoodType[];
     if (!result) {
       return {};
     }
 
     const deliveryMenu: DeliveryMenuType = {
-      chefsChoice: {} as IDeliveryMenu,
+      chefsChoice: {} as DeliveryFoodType,
       categories: [],
     };
 
     const categoryMap = new Map();
 
-    result.forEach((item: IDeliveryMenu) => {
+    result.forEach((item: DeliveryFoodType) => {
       // Handle chef's choice
       if (item.isChefsChoice) {
         deliveryMenu.chefsChoice = item;
