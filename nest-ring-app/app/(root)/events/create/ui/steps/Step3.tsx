@@ -141,8 +141,8 @@ const Step3 = () => {
       <div className="flex flex-col gap-1">
         <div className=" flex flex-row max-sm:flex-col sm:justify-between sm:items-center">
           <span className="text-md">
-            Search a person's name to add them as your guest. They'll be
-            notified.
+            Search a person&apos;s name to add them as your guest. They&apos;ll
+            be notified.
           </span>
           <Button
             variant={"ghost"}
@@ -237,6 +237,8 @@ const Step3 = () => {
                 <Button
                   variant={"destructive"}
                   className="p-1"
+                  aria-label="remove person from guest list"
+                  aria-atomic
                   onClick={() => {
                     const remainingGuests = step3Values.invitedGuests.filter(
                       (user) => user.userId != guest.userId
@@ -310,7 +312,7 @@ const Step3 = () => {
                         I want to charge an attendance fee to the guests
                       </SelectItem>
                       <SelectItem value="off">
-                        I don't want to monetize my event
+                        I don&apos;t want to monetize my event
                       </SelectItem>
                     </SelectContent>
                   </Select>
