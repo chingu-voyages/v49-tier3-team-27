@@ -25,7 +25,7 @@ const EventCards = () => {
             className="w-[230px] h-[230px] max-lg:w-[200px] max-lg:h-[200px] rounded-md relative shrink-0"
           >
             <Image
-              src={event.imageUrl || "/events/event-photo-thumbnail.png"}
+              src={event.imageUrl ?? "/random-images/profile-banner.jpeg"}
               alt=""
               fill
             />
@@ -35,7 +35,7 @@ const EventCards = () => {
               <div className="flex flex-row items-center justify-between">
                 <Image
                   src={
-                    event.creator.imageUrl ||
+                    event.creator.imageUrl ??
                     "/random-images/profile-avatar.png"
                   }
                   alt={event.creator.name}
@@ -43,22 +43,32 @@ const EventCards = () => {
                   height={30}
                   className=" bg-white rounded-full"
                 />
-                <div className=" flex flex-row">
-                  {event.invitedGuests.slice(0, 3).map((guest) => (
-                    <Image
-                      src={
-                        guest.imageUrl || "/random-images/profile-avatar.png"
-                      }
-                      alt=""
-                      width={30}
-                      height={30}
-                      className=" bg-white rounded-full -ml-2"
-                    />
-                  ))}
-                  {event.invitedGuests.length > 2 && (
-                    <div className="w-[30px] h-[30px] -ml-2 bg-figma-brown text-white rounded-full flex flex-row items-center justify-center text-xs gap-[2px] font-bold">
-                      <span>+</span>
-                      <span>{event.invitedGuests.length - 2}</span>
+                <div>
+                  {event.isOpenToAll ? (
+                    <span className="bg-white text-black rounded-full p-1 px-2 font-bold text-xs">
+                      Everyone is Invited
+                    </span>
+                  ) : (
+                    <div className=" flex flex-row">
+                      {event.invitedGuests.slice(0, 3).map((guest) => (
+                        <Image
+                          key={guest.userId}
+                          src={
+                            guest.imageUrl ??
+                            "/random-images/profile-avatar.png"
+                          }
+                          alt=""
+                          width={100}
+                          height={100}
+                          className="w-[30px] h-[30px] bg-white rounded-full -ml-2 object-fill"
+                        />
+                      ))}
+                      {event.invitedGuests.length > 2 && (
+                        <div className="w-[30px] h-[30px] -ml-2 bg-figma-brown text-white rounded-full flex flex-row items-center justify-center text-xs gap-[2px] font-bold">
+                          <span>+</span>
+                          <span>{event.invitedGuests.length - 2}</span>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>

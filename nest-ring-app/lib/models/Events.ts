@@ -20,8 +20,8 @@ export interface IEvent extends mongoose.Document {
     imageUrl: string | null;
     name: string;
   }[];
-  isOpentoAll: boolean;
-  eventDishes: Types.ObjectId;
+  isOpenToAll: boolean;
+  eventDishes: Types.ObjectId[];
 }
 
 const EventSchema = new mongoose.Schema<IEvent>(
@@ -54,8 +54,8 @@ const EventSchema = new mongoose.Schema<IEvent>(
         name: { type: String, required: true },
       },
     ],
-    isOpentoAll: { type: Boolean, default: true },
-    eventDishes: { type: Schema.Types.ObjectId, ref: "EventMenu" },
+    isOpenToAll: { type: Boolean, default: false },
+    eventDishes: [{ type: Schema.Types.ObjectId, ref: "EventMenu" }],
   },
   { timestamps: true }
 );

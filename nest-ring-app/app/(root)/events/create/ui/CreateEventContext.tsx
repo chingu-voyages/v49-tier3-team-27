@@ -103,7 +103,7 @@ const CreateEventContextProvider = ({
       payload.append("isOpenToAll", String(step3Values.isOpenToAll));
       payload.append("monetization", JSON.stringify(step3Values.monetization));
       payload.append(
-        "eventMenu",
+        "eventDishes",
         JSON.stringify(cartItems.map((item) => item._id))
       );
       return payload;
