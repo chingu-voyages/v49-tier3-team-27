@@ -78,6 +78,7 @@ export const OrderMealContextProvider = ({
             title: "Done!",
             description: "New Order Placed Successfully.",
           });
+          setCartItems([]);
         } else {
           toast({
             title: "Alert!",

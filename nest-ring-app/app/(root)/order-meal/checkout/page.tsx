@@ -240,7 +240,7 @@ const CheckoutPage = () => {
             >
               {isUploading ? (
                 <Image
-                  src={"/random-images/dot-loader.svg"}
+                  src={"/random-images/dots-loader.svg"}
                   alt=""
                   width={20}
                   height={20}
