@@ -1,4 +1,5 @@
 export type DeliveryFoodType = {
+  _id: string;
   category: string;
   subCategory: string;
   name: string;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { OrderMealContext } from "../../ui/OrderMealContext";
 import { useSession } from "next-auth/react";
 import { CheckIcon } from "lucide-react";
@@ -8,26 +8,34 @@ import Image from "next/image";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { SelectGroup } from "@radix-ui/react-select";
 
 const CheckoutPage = () => {
   const { data } = useSession() as any;
-  const { cartItems } = useContext(OrderMealContext);
-  const [orderAmount, setOrderAmount] = useState(0);
+  const {
+    isUploading,
+    cartItems,
+    orderAmount,
+    paymentOption,
+    updatePaymentOption,
+    updateCredentials,
+    confirmOrder,
+  } = useContext(OrderMealContext);
 
-  useEffect(() => {
-    console.log(data);
-    let amount = 0;
-    cartItems.forEach((item) => {
-      amount = amount + item.price;
-    });
-    setOrderAmount(amount);
-  }, [cartItems, data]);
   return (
     <main className=" w-full h-full pb-20 flex flex-col gap-5 overflow-hidden overflow-y-auto">
       {/* Customer Address */}
       <section
         id="checkout-customer-address"
-        className="w-full bg-white rounded-lg p-2 flex flex-col"
+        className="w-full bg-white rounded-lg p-2 flex flex-col gap-2"
       >
         <label
           htmlFor="checkout-customer-address"
@@ -45,7 +53,7 @@ const CheckoutPage = () => {
       {/* Cart Summary */}
       <section
         id="checkout-customer-address"
-        className="w-full bg-white rounded-lg p-2 flex flex-col"
+        className="w-full bg-white rounded-lg p-2 flex flex-col gap-2"
       >
         <label
           htmlFor="checkout-customer-address"
@@ -80,7 +88,7 @@ const CheckoutPage = () => {
       {/* Order summary */}
       <section
         id="checkout-customer-address"
-        className="w-full bg-white rounded-lg p-2 flex flex-col"
+        className="w-full bg-white rounded-lg p-2 flex flex-col gap-3"
       >
         <label
           htmlFor="checkout-customer-address"
@@ -100,33 +108,149 @@ const CheckoutPage = () => {
             <span>Ksh. 50/ Km</span>
           </div>
         </div>
-        <div className=" flex flex-row items-end gap-5">
-          {/* Mpesa Input */}
-          <div className=" relative">
-            <label
-              htmlFor="mpesa-number-input"
-              className=" text-xs font-semibold"
+
+        <hr className="w-full h-[2px]" />
+
+        <Select
+          onValueChange={(value) => {
+            updatePaymentOption(value);
+            if (value == "cashOnDelivery") {
+              updateCredentials(null);
+            }
+          }}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Choose a payment option" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Payment options</SelectLabel>
+              <SelectItem value="paypal">
+                <div className="flex flex-row items-center justify-start gap-2">
+                  <Image
+                    src={"/random-images/paypal-icon.png"}
+                    alt=""
+                    width={20}
+                    height={20}
+                  />
+                  <span>PayPal</span>
+                </div>
+              </SelectItem>
+              <SelectItem value="card">
+                <div className="flex flex-row items-center justify-start gap-2">
+                  <Image
+                    src={"/random-images/credit-card-icon.png"}
+                    alt=""
+                    width={20}
+                    height={20}
+                  />
+                  <span>Bank Card</span>
+                </div>
+              </SelectItem>
+              <SelectItem value="mpesa">
+                <div className="flex flex-row items-center justify-start gap-2">
+                  <Image
+                    src={"/random-images/mpesa-icon.png"}
+                    alt=""
+                    width={20}
+                    height={20}
+                  />
+                  <span>Mpesa</span>
+                </div>
+              </SelectItem>
+              <SelectItem value="cashOnDelivery">
+                <div className="flex flex-row items-center justify-start gap-2">
+                  <Image
+                    src={"/random-images/cash-on-delivery-icon.png"}
+                    alt=""
+                    width={20}
+                    height={20}
+                  />
+                  <span>Cash On Delivery</span>
+                </div>
+              </SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+
+        {paymentOption !== null && (
+          <div className=" flex flex-row items-end gap-5">
+            {/* paypal Input */}
+            {paymentOption == "paypal" && (
+              <div className=" relative">
+                <label
+                  htmlFor="paypal-email-input"
+                  className=" text-xs font-semibold"
+                >
+                  PayPal account
+                </label>
+                <Input
+                  id="paypal-email-input"
+                  type="email"
+                  className=" pl-14 text-sm"
+                />
+                <span className=" absolute bottom-[9px] left-3 bg text-sm">
+                  email:
+                </span>
+              </div>
+            )}
+            {/* Bank card input */}
+            {paymentOption == "card" && (
+              <div className=" relative">
+                <label
+                  htmlFor="bank-card-input"
+                  className=" text-xs font-semibold"
+                >
+                  Bank Card
+                </label>
+                <Input
+                  id="paypal-email-input"
+                  type="email"
+                  className=" pl-16 text-sm"
+                />
+                <span className=" absolute bottom-[9px] left-3 bg text-sm">
+                  A/C No:
+                </span>
+              </div>
+            )}
+            {/* Mpesa Input */}
+            {paymentOption == "mpesa" && (
+              <div className=" relative">
+                <label
+                  htmlFor="mpesa-number-input"
+                  className=" text-xs font-semibold"
+                >
+                  Mpesa Number
+                </label>
+                <Input
+                  id="mpesa-number-input"
+                  placeholder="7........"
+                  type="tel"
+                  className=" pl-12 text-sm"
+                />
+                <span className=" absolute bottom-[9px] left-3 bg text-sm">
+                  +254
+                </span>
+              </div>
+            )}
+            <Button
+              disabled={cartItems.length < 1}
+              onClick={confirmOrder}
+              className=" bg-interactive-green hover:bg-interactive-green hover:bg-opacity-80"
             >
-              Mpesa Number
-            </label>
-            <Input
-              id="mpesa-number-input"
-              placeholder="7........"
-              type="tel"
-              className=" pl-12 text-sm"
-            />
-            <span className=" absolute bottom-[9px] left-3 bg text-sm">
-              +254
-            </span>
+              {isUploading ? (
+                <Image
+                  src={"/random-images/dots-loader.svg"}
+                  alt=""
+                  width={20}
+                  height={20}
+                />
+              ) : (
+                <span>Confirm Order</span>
+              )}
+            </Button>
           </div>
-          <Button
-            disabled={cartItems.length < 1}
-            onClick={() => {}}
-            className=" bg-interactive-green hover:bg-interactive-green hover:bg-opacity-80"
-          >
-            Confirm Order
-          </Button>
-        </div>
+        )}
       </section>
       <Link
         href={"/order-meal"}
