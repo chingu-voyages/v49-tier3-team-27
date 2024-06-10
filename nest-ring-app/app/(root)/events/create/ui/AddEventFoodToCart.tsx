@@ -1,21 +1,20 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
-import { OrderMealContext } from "../../ui/OrderMealContext";
 import { CheckCheck, PlusIcon } from "lucide-react";
-import { DeliveryFoodType, EventFoodType } from "../lib/interface";
 import { toast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import { EventFoodType } from "@/app/(root)/order-meal/lib/interface";
+import { CreateEventContext } from "./CreateEventContext";
 
-const AddToCartCheckBtn = ({
+const AddEventFoodToCart = ({
   foodObj,
-}: Readonly<{ foodObj: DeliveryFoodType }>) => {
-  const { cartItems, updateCartItems, handleOpenCart } =
-    useContext(OrderMealContext);
+}: Readonly<{ foodObj: EventFoodType }>) => {
+  const { cartItems, updateCartItems } = useContext(CreateEventContext);
   const [itemIsInCart, setItemIsInCart] = useState(false);
 
   useEffect(() => {
-    const itemFound = cartItems.find((item) => item.slug == foodObj.slug);
+    const itemFound = cartItems.find((item: any) => item.slug == foodObj.slug);
     if (itemFound) {
       setItemIsInCart(true);
     } else {
@@ -34,21 +33,8 @@ const AddToCartCheckBtn = ({
           onClick={() => {
             updateCartItems([...cartItems, foodObj]);
             toast({
-              title: "Cart",
-              description: `${foodObj.name} has been added to cart`,
-              action: (
-                <ToastAction
-                  altText="checkout"
-                  onClick={() => {
-                    handleOpenCart();
-                    // router.back();
-                  }}
-                  className="bg-interactive-green hover:bg-interactive-green hover:bg-opacity-80 text-white"
-                >
-                  Checkout Cart
-                </ToastAction>
-              ),
-              duration: 5000,
+              title: "New Order!",
+              description: `${foodObj.name} has been added to Event cart`,
             });
           }}
           disabled={itemIsInCart}
@@ -61,4 +47,4 @@ const AddToCartCheckBtn = ({
   );
 };
 
-export default AddToCartCheckBtn;
+export default AddEventFoodToCart;

@@ -1,12 +1,5 @@
 export interface Step1Type {
-  category:
-    | "birthday"
-    | "dowry"
-    | "fundraising"
-    | "wedding"
-    | "baby-shower"
-    | "business"
-    | "other";
+  category: string;
   subject: string;
   description: string;
 }
@@ -26,7 +19,12 @@ export type EventUserType = {
   imageUrl: string;
   name: string;
 };
+type MonetizationType = {
+  type: string;
+  amount: number;
+};
 export interface Step3Type {
   invitedGuests: EventUserType[];
   isOpenToAll: boolean;
+  monetization: MonetizationType;
 }

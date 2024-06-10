@@ -2,7 +2,6 @@
 import { useContext } from "react";
 import { EventsTabContext } from "./EventsTabContext";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import { MoveRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -21,11 +20,11 @@ const EventCards = () => {
         })
         .map((event) => (
           <div
-            key={event.eventId}
+            key={event._id}
             className="w-[230px] h-[230px] max-lg:w-[200px] max-lg:h-[200px] rounded-md relative shrink-0"
           >
             <Image
-              src={event.imageUrl || "/events/event-photo-thumbnail.png"}
+              src={event.imageUrl ?? "/random-images/profile-banner.jpeg"}
               alt=""
               fill
             />
@@ -35,7 +34,7 @@ const EventCards = () => {
               <div className="flex flex-row items-center justify-between">
                 <Image
                   src={
-                    event.creator.imageUrl ||
+                    event.creator.imageUrl ??
                     "/random-images/profile-avatar.png"
                   }
                   alt={event.creator.name}
@@ -43,22 +42,32 @@ const EventCards = () => {
                   height={30}
                   className=" bg-white rounded-full"
                 />
-                <div className=" flex flex-row">
-                  {event.invitedGuests.slice(0, 3).map((guest) => (
-                    <Image
-                      src={
-                        guest.imageUrl || "/random-images/profile-avatar.png"
-                      }
-                      alt=""
-                      width={30}
-                      height={30}
-                      className=" bg-white rounded-full -ml-2"
-                    />
-                  ))}
-                  {event.invitedGuests.length > 2 && (
-                    <div className="w-[30px] h-[30px] -ml-2 bg-figma-brown text-white rounded-full flex flex-row items-center justify-center text-xs gap-[2px] font-bold">
-                      <span>+</span>
-                      <span>{event.invitedGuests.length - 2}</span>
+                <div>
+                  {event.isOpenToAll ? (
+                    <span className="bg-white text-black rounded-full p-1 px-2 font-bold text-xs">
+                      Everyone is Invited
+                    </span>
+                  ) : (
+                    <div className=" flex flex-row">
+                      {event.invitedGuests.slice(0, 3).map((guest) => (
+                        <Image
+                          key={guest.userId}
+                          src={
+                            guest.imageUrl ??
+                            "/random-images/profile-avatar.png"
+                          }
+                          alt=""
+                          width={100}
+                          height={100}
+                          className="w-[30px] h-[30px] bg-white rounded-full -ml-2 object-fill"
+                        />
+                      ))}
+                      {event.invitedGuests.length > 2 && (
+                        <div className="w-[30px] h-[30px] -ml-2 bg-figma-brown text-white rounded-full flex flex-row items-center justify-center text-xs gap-[2px] font-bold">
+                          <span>+</span>
+                          <span>{event.invitedGuests.length - 2}</span>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -79,7 +88,7 @@ const EventCards = () => {
                 </button>
                 <button
                   onClick={() => {
-                    router.push(`/events/${event.eventId}`);
+                    router.push(`/events/${event._id}`);
                   }}
                   className=" text-xs p-[2px] px-2 bg-interactive-green hover:bg-interactive-green hover:bg-opacity-80 flex flex-row items-center justify-center gap-1 rounded-md text-white transition-colors duration-300"
                 >
@@ -96,7 +105,7 @@ const EventCards = () => {
                     width={15}
                     height={15}
                   />
-                  <span className=" text-xs">City Name</span>
+                  <span className=" text-xs">{event.location}</span>
                 </div>
                 <div className="text-white bg-slate-200 bg-opacity-50 rounded-md flex flex-row items-center justify-center gap-1 p-1">
                   <Image
@@ -105,9 +114,11 @@ const EventCards = () => {
                     width={15}
                     height={15}
                   />
-                  <span className=" text-xs">
-                    Ksh. {event.fundFee || event.fundSupport}
-                  </span>
+                  {event.monetization.type != "off" && (
+                    <span className=" text-xs">
+                      Ksh. {event.monetization.amount}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>

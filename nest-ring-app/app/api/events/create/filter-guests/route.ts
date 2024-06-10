@@ -6,17 +6,23 @@ export async function GET(req: NextRequest) {
   try {
     const keyword = req.nextUrl.searchParams.get("name");
 
-    let result = [];
+    let result = [] as any;
     if (keyword) {
       await dbConnect();
 
-      const keywordRegex = new RegExp("." + "*" + keyword);
+      const keywordRegex = new RegExp(".*" + keyword + ".*");
       result = await User.find({
         name: { $regex: keywordRegex, $options: "si" },
       });
+
+      result = result.map((obj: any) => ({
+        userId: obj._id,
+        imageUrl: obj.avatarUrl,
+        name: obj.name,
+      }));
     }
 
-    return NextResponse.json(result, { status: 200 });
+    return NextResponse.json([...result], { status: 200 });
   } catch (err) {
     console.error(err);
     return NextResponse.json({ status: 500 });

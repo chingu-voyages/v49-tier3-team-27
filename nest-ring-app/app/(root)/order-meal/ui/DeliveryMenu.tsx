@@ -64,7 +64,7 @@ const DeliveryMenu = async () => {
               >
                 <label
                   htmlFor={`category-${category.name}`}
-                  className=" text-5xl font-semibold self-center font-serif"
+                  className=" lg:text-5xl md:text-3xl text-2xl font-semibold self-center font-serif"
                 >
                   {category.name}
                 </label>
@@ -76,7 +76,7 @@ const DeliveryMenu = async () => {
                   >
                     <label
                       htmlFor={`subCategory-${category.name}-${subCategory.name}`}
-                      className=" text-xl font-bold font-serif"
+                      className=" lg:text-xl md:text-lg text-sm font-bold font-serif"
                     >
                       {subCategory.name}
                     </label>

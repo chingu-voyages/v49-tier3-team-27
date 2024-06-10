@@ -1,46 +1,27 @@
-import { fetchDeliveryFood, fetchEventFood } from "../lib/utils";
 import Image from "next/image";
-import BuyAddToCartBtns from "./ui/BuyAddToCartBtns";
-import PrevPageBtn from "./ui/PrevPageBtn";
-import { DeliveryFoodType, EventFoodType } from "../lib/interface";
-import Link from "next/link";
+import BuyAddToCartBtns from "@/app/(root)/order-meal/[searchTerm]/ui/BuyAddToCartBtns";
+import PrevPageBtn from "@/app/(root)/order-meal/[searchTerm]/ui/PrevPageBtn";
+import { EventFoodType } from "@/app/(root)/order-meal/lib/interface";
+import { fetchEventFood } from "@/app/(root)/order-meal/lib/utils";
+import AddToCartBtn from "./ui/AddToCartBtn";
 
 const SearchTerm = async ({
   params: { searchTerm },
 }: Readonly<{ params: { searchTerm: string } }>) => {
-  const result = (await fetchDeliveryFood(searchTerm)) as DeliveryFoodType;
+  const eventMenu = (await fetchEventFood(searchTerm)) as EventFoodType;
 
-  let foodObj = {} as any;
-  if (result) {
-    foodObj = {
-      category: result.category,
-      subCategory: result.subCategory,
-      name: result.name,
-      slug: result.slug,
-      price: result.price,
-      imageUrl: result.imageUrl,
-      description: result.description,
-      calories: result.calories,
-      rating: result.rating,
-      isChefsChoice: result.isChefsChoice,
-      count: result.count,
-    };
-  } else {
-    const eventMenu = (await fetchEventFood(searchTerm)) as EventFoodType;
-
-    foodObj = {
-      category: eventMenu.category,
-      name: eventMenu.name,
-      slug: eventMenu.slug,
-      price: eventMenu.price,
-      imageUrl: eventMenu.imageUrl,
-      description: eventMenu.description,
-      calories: eventMenu.calories,
-      rating: eventMenu.rating,
-      count: eventMenu.count,
-      equivalence: eventMenu.equivalence,
-    };
-  }
+  const foodObj = {
+    category: eventMenu.category,
+    name: eventMenu.name,
+    slug: eventMenu.slug,
+    price: eventMenu.price,
+    imageUrl: eventMenu.imageUrl,
+    description: eventMenu.description,
+    calories: eventMenu.calories,
+    rating: eventMenu.rating,
+    count: eventMenu.count,
+    equivalence: eventMenu.equivalence,
+  };
 
   return (
     <main className="w-full h-full max-sm:h-[91%] flex flex-col gap-10 bg-white p-2 pb-20 sm:px-12 px-5 rounded-t-xl overflow-hidden overflow-y-auto relative">
@@ -91,17 +72,8 @@ const SearchTerm = async ({
         {foodObj?.equivalence && (
           <span>1 unit is equivalent to: {foodObj.equivalence}</span>
         )}
-
         {/* Interactivity */}
-        {!foodObj.equivalence && <BuyAddToCartBtns foodObj={foodObj} />}
-        {foodObj.equivalence && (
-          <Link
-            href={"/events/create"}
-            className="border border-interactive-green rounded-md text-interactive-green text-sm hover:underline text-center p-2"
-          >
-            Create New Event to Order
-          </Link>
-        )}
+        <AddToCartBtn foodObj={foodObj} />
 
         {/* Description */}
         <div className=" flex flex-col">
