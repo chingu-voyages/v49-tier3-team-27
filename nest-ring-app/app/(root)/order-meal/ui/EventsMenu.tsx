@@ -1,9 +1,7 @@
 import Image from "next/image";
-import { eventMenu } from "../lib/eventMenu";
 import { CategoryItems } from "../lib/interface";
 import { getEventMenu } from "../lib/utils";
 import Link from "next/link";
-import AddToCartCheckBtn from "./AddToCartCheckBtn";
 
 const EventsMenu = async () => {
   const eventMenu = (await getEventMenu()) as CategoryItems[];
