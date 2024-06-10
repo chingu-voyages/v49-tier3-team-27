@@ -2,7 +2,6 @@
 import { useContext } from "react";
 import { EventsTabContext } from "./EventsTabContext";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import { MoveRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -115,9 +114,11 @@ const EventCards = () => {
                     width={15}
                     height={15}
                   />
-                  <span className=" text-xs">
-                    Ksh. {event.fundFee || event.fundSupport}
-                  </span>
+                  {event.monetization.type != "off" && (
+                    <span className=" text-xs">
+                      Ksh. {event.monetization.amount}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>

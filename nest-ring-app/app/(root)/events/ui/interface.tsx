@@ -4,6 +4,10 @@ type EventUserType = {
   imageUrl: string | null;
 };
 
+type MonetizationType = {
+  type: "contribution" | "fee" | "off";
+  amount: number | null;
+};
 export interface EventsObjType {
   eventId: string;
   subject: string;
@@ -23,8 +27,7 @@ export interface EventsObjType {
   imageUrl: null | string;
   eventDate: null | Date;
   likeCount: number;
-  fundSupport: null | number;
-  fundFee: null | number;
+  monetization: MonetizationType;
   invitedGuests: EventUserType[];
   isOpenToAll: boolean;
   eventDishes: string[];
