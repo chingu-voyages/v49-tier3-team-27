@@ -1,38 +1,43 @@
-# voyage-tasks
+**Project Name:**- *Nestling App*
 
-Your project's `readme` is as important to success as your code. For
-this reason you should put as much care into its creation and maintenance
-as you would any other component of the application.
+**Overview**
 
-If you are unsure of what should go into the `readme` let this article,
-written by an experienced Chingu, be your starting point -
-[Keys to a well written README](https://tinyurl.com/yk3wubft).
+Our vision is to build a platform that can help people within the region of Nairobi to order meals from their favorite hotel without having to visit the hotel.
+Nestling is a food app for users who cannot visit Nestling hotels or users who prefer Nestling food.
 
-And before we go there's "one more thing"! Once you decide what to include
-in your `readme` feel free to replace the text we've provided here.
+**Mission:**
+To be able to serve Nestling clients all over Africa with a single platform.
 
-> Own it & Make it your Own!
+**Link for the app:** https://nest-ring-app.vercel.app/order-meal
 
-## Team Documents
+App prototype: https://www.figma.com/proto/SsUQDElRLMCQ7N6KJRuRZm/Nestling-Hotel-App-Mobile-Design?page-id=28%3A1011&node-id=505-190&viewport=-2761%2C1700%2C0.52&t=sPBYQVPU4TMsUn7y-1&scaling=scale-down-width
 
-You may find these helpful as you work together to organize your project.
+![Screenshot 2024-06-11 092808](https://github.com/chingu-voyages/v49-tier3-team-27/assets/168421863/a5cc270e-cbeb-49c2-9ade-4930b84db673)
 
-- [Team Project Ideas](./docs/team_project_ideas.md)
-- [Team Decision Log](./docs/team_decision_log.md)
+![Screenshot 2024-06-11 092707](https://github.com/chingu-voyages/v49-tier3-team-27/assets/168421863/5d1a1f39-625b-4350-9713-6730f6fd27b7)
 
-Meeting Agenda templates (located in the `/docs` directory in this repo):
+![Screenshot 2024-06-11 092832](https://github.com/chingu-voyages/v49-tier3-team-27/assets/168421863/38572e64-00e2-46d4-aa4a-bcc48b17b5e0)
 
-- Meeting - Voyage Kickoff --> ./docs/meeting-voyage_kickoff.docx
-- Meeting - App Vision & Feature Planning --> ./docs/meeting-vision_and_feature_planning.docx
-- Meeting - Sprint Retrospective, Review, and Planning --> ./docs/meeting-sprint_retrospective_review_and_planning.docx
-- Meeting - Sprint Open Topic Session --> ./docs/meeting-sprint_open_topic_session.docx
+
+**The app was build in usind the following frameworks/libraries:**
+
+**Framework:** Next.js with Typescript and Tailwind
+
+**UI library:** shadcn/ui
+
+**Database:** MongoDB Atlas
+
+**Media Storage:** Cloudinary
+
+**Deployment Cloud:**  Vercel
+
+**Design tool:** Figma
+
+**Project Management Tool:** GitHub Projects
+
+
 
 ## Our Team
-
-Everyone on your team should add their name along with a link to their GitHub
-& optionally their LinkedIn profiles below. Do this in Sprint #1 to validate
-your repo access and to practice PR'ing with your team _before_ you start
-coding!
 
 - Jyotirmoy Das: [GitHub](https://github.com/jdx-code) / [LinkedIn](https://www.linkedin.com/in/jdx-code/)
 - Jack Weru: [GitHub](https://github.com/Jaweki) / [LinkedIn](https://linkedin.com/in/jaweki-dekut)
