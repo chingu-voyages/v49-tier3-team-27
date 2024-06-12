@@ -5,14 +5,17 @@ import {
   DialogHeader,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Delete, DeleteIcon, Edit3Icon, Trash2Icon } from "lucide-react";
+import { Edit3Icon, Trash2Icon } from "lucide-react";
 import Image from "next/image";
 import { useContext } from "react";
 import { ProfileUpdateContext } from "../ProfileUpdateContext";
+import { useFormState } from "react-dom";
+import { deleteImagesByUrl } from "@/app/(root)/lib/utils";
 
 const Appearance = () => {
   const { appearance, updateAppearance, updateActiveStep } =
     useContext(ProfileUpdateContext);
+  const [deleteStatus, deletePhoto] = useFormState(deleteImagesByUrl, undefined);
 
   return (
     <section className="w-full h-full text-black p-2 flex flex-col gap-2">
@@ -121,13 +124,27 @@ const Appearance = () => {
           </button>
         </div>
       </div>
-
+            {
+              deleteStatus && (
+                <span className="text-xs font-light text-figma-brown">{deleteStatus}</span>
+              )
+            }
       {/* footer */}
       <DialogFooter>
         <Button
           variant={"ghost"}
           className="border-2 border-interactive-green text-interactive-green bg-transparent"
-          onClick={() => {}}
+          onClick={() => {
+            const payload = new FormData();
+            payload.append("url", appearance.profileAvatarURL);
+            payload.append("type", "profile Photo");
+            deletePhoto(payload);
+            updateAppearance({
+              ...appearance,
+              profileAvatarFile: null,
+              profileAvatarURL: null,
+            })
+          }}
         >
           <Trash2Icon /> Profile Photo
         </Button>
@@ -135,10 +152,15 @@ const Appearance = () => {
           variant={"ghost"}
           className="border-2 border-interactive-green text-interactive-green bg-transparent"
           onClick={() => {
-            const imageEl = document.getElementById(
-              "profile-banner-image-PU"
-            ) as HTMLImageElement;
-            imageEl.setAttribute("src", "/random-images/profile-banner.jpeg");
+            const payload = new FormData();
+            payload.append("url", appearance.profileBannerURL);
+            payload.append("type", "profile Banner");
+            deletePhoto(payload);
+            updateAppearance({
+              ...appearance,
+              profileBannerURL: null,
+              profileBannerFile: null,
+            })
           }}
         >
           <Trash2Icon /> Banner Photo

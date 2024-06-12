@@ -70,7 +70,7 @@ export async function PUT(req: NextRequest) {
     const updatedUser = await User.findOneAndReplace(
       { _id: userExists._id },
       {
-        name: userExists.name,
+        name:  `${firstname} ${middlename} ${lastname}`,
         email: userExists.email,
         password: userExists.password,
         foodOrders: userExists.foodOrders,

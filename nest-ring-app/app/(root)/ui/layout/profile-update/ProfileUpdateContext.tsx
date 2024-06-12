@@ -18,7 +18,7 @@ type PersonalInfoType = {
 };
 
 type moreDetailsType = {
-  usersRole: "Customer" | "Customer Support" | "Admin";
+  accountType: "Customer" | "Customer Support" | "Admin";
   authToken: string | null;
   deliveryAddress: string | null;
   country: string | null;
@@ -32,6 +32,7 @@ type ConsentConcludeType = {
 };
 
 export const ProfileUpdateContext = createContext({
+  isUploading: false as boolean,
   appearance: {} as AppearanceType,
   personalInfo: {} as PersonalInfoType,
   moreDetails: {} as moreDetailsType,
@@ -50,6 +51,7 @@ export const ProfileUpdateContext = createContext({
 export const ProfileUpdateContextProvider = ({
   children,
 }: Readonly<{ children: ReactNode }>) => {
+  const [isUploading, setIsUploading] = useState(false);
   const [appearance, setAppearance] = useState<AppearanceType>({
     profileAvatarURL: null,
     profileAvatarFile: null,
@@ -64,7 +66,7 @@ export const ProfileUpdateContextProvider = ({
     dob: new Date(),
   });
   const [moreDetails, setMoreDetails] = useState<moreDetailsType>({
-    usersRole: "Customer",
+    accountType: "Customer",
     authToken: null,
     deliveryAddress: null,
     country: null,
@@ -81,6 +83,7 @@ export const ProfileUpdateContextProvider = ({
 
   const { toast } = useToast();
   const { data, status } = useSession() as any;
+
   useEffect(() => {
     if (data?.user) {
       setUserEmail(data.user.email);
@@ -104,6 +107,15 @@ export const ProfileUpdateContextProvider = ({
         lastname: data.user.lastname || data.user.name.split(" ")[1] || "",
         middlename: data.user.middlename || data.user.name.split(" ")[2] || "",
         description: data.user.description,
+      });
+
+      setMoreDetails({
+        ...moreDetails,
+        accountType: data.user?.accountType || "",
+        country: data.user?.location?.country || "",
+        state: data.user?.location?.state || "",
+        city: data.user?.location?.city || "",
+        deliveryAddress: data.user?.location?.deliveryAddress || "",
       });
     }
   }, [data, status]);
@@ -132,12 +144,7 @@ export const ProfileUpdateContextProvider = ({
       setConsentConclude(data);
     };
 
-    const uploadData = async () => {
-      toast({
-        title: "Uploading data...",
-        description: "Will be done in a few; hang on tight.",
-      });
-
+    const assembleData = async(): Promise<FormData | undefined> => {
       const payload = new FormData();
 
       if (
@@ -146,12 +153,13 @@ export const ProfileUpdateContextProvider = ({
         personalInfo.firstname &&
         personalInfo.lastname &&
         personalInfo.description &&
-        moreDetails.usersRole &&
+        moreDetails.accountType &&
         moreDetails.deliveryAddress &&
         moreDetails.country &&
         moreDetails.state &&
         moreDetails.city
       ) {
+        setIsUploading(true);
         payload.append("email", userEmail);
         payload.append("avatarFile", appearance.profileAvatarFile);
         payload.append("bannerFile", appearance.profileBannerFile);
@@ -166,16 +174,16 @@ export const ProfileUpdateContextProvider = ({
         payload.append("state", moreDetails.state);
         payload.append("city", moreDetails.city);
         payload.append("password", password);
-        payload.append("accountType", moreDetails.usersRole);
+        payload.append("accountType", moreDetails.accountType);
         if (
-          (moreDetails.usersRole === "Admin" ||
-            moreDetails.usersRole === "Customer Support") &&
+          (moreDetails.accountType === "Admin" ||
+            moreDetails.accountType === "Customer Support") &&
           moreDetails.authToken
         ) {
           payload.append("authToken", moreDetails.authToken);
         } else if (
-          (moreDetails.usersRole === "Admin" ||
-            moreDetails.usersRole === "Customer Support") &&
+          (moreDetails.accountType === "Admin" ||
+            moreDetails.accountType === "Customer Support") &&
           !moreDetails.authToken
         ) {
           toast({
@@ -192,6 +200,16 @@ export const ProfileUpdateContextProvider = ({
         });
         return;
       }
+      return payload;
+    };
+
+    const uploadData = async () => {
+      toast({
+        title: "Uploading data...",
+        description: "Will be done in a few; hang on tight.",
+      });
+
+      const payload = await assembleData();
 
       try {
         const fetchResponse = await fetch("/api/profile/update", {
@@ -228,9 +246,11 @@ export const ProfileUpdateContextProvider = ({
           duration: 30000,
         });
       }
+      setIsUploading(false);
     };
 
     return {
+      isUploading,
       appearance,
       personalInfo,
       moreDetails,
@@ -246,6 +266,7 @@ export const ProfileUpdateContextProvider = ({
       uploadData,
     };
   }, [
+    isUploading,
     userEmail,
     appearance,
     personalInfo,

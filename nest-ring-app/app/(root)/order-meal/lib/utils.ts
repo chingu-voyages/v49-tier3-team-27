@@ -15,6 +15,7 @@ import {
   DeliveryMenuType,
   EventFoodType,
 } from "./interface";
+import { unstable_noStore } from "next/cache";
 
 export const createSlug = async (name: string) => {
   return name
@@ -50,6 +51,7 @@ export const insertFoodToDb = async () => {
 };
 
 export const fetchDeliveryFood = async (slug: string | null = null) => {
+  unstable_noStore();
   try {
     await dbConnect();
 
@@ -61,7 +63,20 @@ export const fetchDeliveryFood = async (slug: string | null = null) => {
       result = await DeliveryMenu.find();
     }
 
-    return result;
+    return result.map((obj: DeliveryFoodType ) => ({
+      _id: String(obj._id),
+      category: obj.category,
+      subCategory: obj.subCategory,
+      name: obj.name,
+      slug: obj.slug,
+      price: obj.price,
+      imageUrl: obj.imageUrl,
+      description: obj.description,
+      calories: obj.calories,
+      rating: obj.rating,
+      isChefsChoice: obj.isChefsChoice,
+      count: obj.count,
+    }));
   } catch (error) {
     console.log("Error Fetch delivery menu: ", error);
     throw error;
@@ -74,6 +89,7 @@ export const getDeliveryMenu = async () => {
     if (!result) {
       return {};
     }
+
 
     const deliveryMenu: DeliveryMenuType = {
       chefsChoice: {} as DeliveryFoodType,
@@ -158,9 +174,33 @@ export const fetchEventFood = async (searchTerm: string | null = null) => {
     }
 
     if (searchTerm) {
-      return result as EventFoodType;
+      return {
+        _id: String(result._id),
+    name: result.name,
+    slug: result.slug,
+    category: result.category,
+    calories: result.calories,
+    imageUrl: result.imageUrl,
+    description: result.description,
+    rating: result.rating,
+    price: result.price,
+    count: result.count,
+    equivalence: result.equivalence,
+      } as EventFoodType;
     } else {
-      return result as EventFoodType[];
+      return result.map((obj: EventFoodType) => ({
+        _id: String(obj._id),
+        name: obj.name,
+        slug: obj.slug,
+        category: obj.category,
+        calories: obj.calories,
+        imageUrl: obj.imageUrl,
+        description: obj.description,
+        rating: obj.rating,
+        price: obj.price,
+        count: obj.count,
+        equivalence: obj.equivalence,
+      }));
     }
   } catch (error) {
     console.log("Error Fetch event menu: ", error);
@@ -174,10 +214,6 @@ export const getEventMenu = async () => {
     if (!result) {
       return {};
     }
-
-    // const eventMenu: EventMenuType = {
-    //   categories: [],
-    // };
 
     const eventMenu = [] as CategoryItems[];
 

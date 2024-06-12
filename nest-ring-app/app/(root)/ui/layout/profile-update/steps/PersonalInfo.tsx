@@ -69,7 +69,6 @@ const PersonalInfo = () => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
     updatePersonalInfo({
       ...personalInfo,
       firstname: values.firstname,
@@ -190,7 +189,7 @@ const PersonalInfo = () => {
               <FormItem>
                 <FormLabel>Describe yourself</FormLabel>
                 <FormControl>
-                  <Input placeholder="Description..." {...field} required />
+                  <Input placeholder="Description..." defaultValue={personalInfo.description} {...field} required />
                 </FormControl>
                 <FormMessage />
               </FormItem>
