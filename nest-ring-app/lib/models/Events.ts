@@ -35,7 +35,7 @@ const EventSchema = new mongoose.Schema<IEvent>(
       name: { type: String, required: true },
     },
     location: { type: String, required: true },
-    imageUrl: { type: String, required: true },
+    imageUrl: { type: String },
     eventDate: {
       fromDate: { type: String, required: true },
       toDate: { type: String, required: true },

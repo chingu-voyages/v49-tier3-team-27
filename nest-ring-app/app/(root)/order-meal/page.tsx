@@ -19,7 +19,7 @@ const page = () => {
           value="events-menu"
           className="w-full overflow-hidden overflow-y-auto"
         >
-          <EventsMenu />
+          {/* <EventsMenu /> */}
         </TabsContent>
         <TabsContent
           value="delivery-menu"

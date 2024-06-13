@@ -1,12 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useContext, useEffect, useState } from "react";
 import { ProfileUpdateContext } from "../ProfileUpdateContext";
@@ -46,26 +39,45 @@ const MoreDetails = () => {
   const [countrieOptions, setCountriesOptions] = useState([]);
   const [states, setStates] = useState<any>([]);
   const [statesOptions, setStatesOptions] = useState<any>([]);
-  const [cities, setCities] = useState<any>([]);
   const [citiesOptions, setCitiesOptions] = useState<any>([]);
   const [requestAuth, setRequestAuth] = useState(false);
 
   useEffect(() => {
     const foundCountires = Country.getAllCountries() as any;
+    const foundStates = State.getAllStates().slice(0, 100);
+    const foundCities = City.getAllCities().slice(0, 100);
     if (foundCountires) {
       setCountries([...foundCountires]);
       const options = foundCountires.map((item: any) => ({
+        key: item.isoCode,
         value: item.name,
         label: item.name,
       }));
       setCountriesOptions(options);
     }
+    if (foundStates) {
+      setStates([...foundStates]);
+      const options = foundStates.map((item) => ({
+        key: item.isoCode,
+        value: item.name,
+        label: item.name,
+      }));
+      setStatesOptions(options);
+    }
+    if (foundCities) {
+      const options = foundCities.map((item) => ({
+        key: `${item.name}-${item.stateCode}`,
+        value: item.name,
+        label: item.name,
+      }));
+      setCitiesOptions(options);
+    }
   }, []);
 
   useEffect(() => {
     if (
-      moreDetails.usersRole === "Admin" ||
-      moreDetails.usersRole === "Customer Support"
+      moreDetails.accountType === "Admin" ||
+      moreDetails.accountType === "Customer Support"
     ) {
       setRequestAuth(true);
     } else {
@@ -81,15 +93,16 @@ const MoreDetails = () => {
     <section className="w-full h-full overflow-hidden">
       <form onSubmit={handleSubmit} className="space-y-1 h-full">
         <div className="w-full flex gap-2 mt-3">
-          <div className="w-1/2 flex flex-col gap-2">
+          <div className="w-[48%] flex flex-col gap-2">
             <label
-              htmlFor="terms"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              htmlFor="account-type-select-input"
+              className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               Account Type
             </label>
             <Select
-              defaultMenuIsOpen
+              id="account-type-select-input"
+              placeholder={"Choose here"}
               onChange={(e: any) => {
                 const value = e?.value;
                 if (value === "Admin" || value === "Customer Support") {
@@ -99,7 +112,7 @@ const MoreDetails = () => {
                 }
                 updateMoreDetails({
                   ...moreDetails,
-                  usersRole: value,
+                  accountType: value,
                 });
               }}
               options={[
@@ -118,14 +131,15 @@ const MoreDetails = () => {
               ]}
             />
           </div>
-          <div className={`${requestAuth ? "block" : "hidden"}`}>
+          <div className={`${requestAuth ? "block w-[48%]" : "hidden"}`}>
             <label
-              htmlFor="terms"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              htmlFor="auth-token-input"
+              className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               Auth Token
             </label>
             <Input
+              id="auth-token-input"
               placeholder="Token"
               value={moreDetails.authToken || ""}
               onChange={(e) => {
@@ -145,13 +159,13 @@ const MoreDetails = () => {
             htmlFor="terms"
             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
-            Select Your Location
+            Select Your Location:
           </label>
           <div className=" w-full flex items-center justify-between">
-            <div className="w-[48%] flex flex-col ">
+            <div className="w-[48%] flex flex-col gap-1">
               <label
-                htmlFor="terms"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                htmlFor="country-select-input"
+                className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 Country
               </label>
@@ -175,6 +189,7 @@ const MoreDetails = () => {
                       setStates([...discoveredStates]);
                       const options: any = discoveredStates.map(
                         (item: any) => ({
+                          key: item.isoCode,
                           value: item.name,
                           label: item.name,
                         })
@@ -189,10 +204,10 @@ const MoreDetails = () => {
                 }}
               />
             </div>
-            <div className="w-[48%] flex flex-col ">
+            <div className="w-[48%] flex flex-col gap-1">
               <label
-                htmlFor="terms"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                htmlFor="state-select-input"
+                className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 State
               </label>
@@ -222,10 +237,9 @@ const MoreDetails = () => {
                         countryObj.isoCode,
                         statesObj.isoCode
                       );
-                      console.log(discoveredCities);
-                      setCities([...discoveredCities]);
                       const options: any = discoveredCities.map(
                         (item: any) => ({
+                          key: `${item.name}-${item.stateCode}`,
                           value: item.name,
                           label: item.name,
                         })
@@ -241,11 +255,11 @@ const MoreDetails = () => {
               />
             </div>
           </div>
-          <div className="w-full flex items-center justify-between">
-            <div className="w-[48%] flex flex-col">
+          <div className="w-full flex items-center justify-between gap-2">
+            <div className="w-[48%] flex flex-col gap-1">
               <label
-                htmlFor="terms"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                htmlFor="city-select-input"
+                className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 City
               </label>
@@ -255,6 +269,7 @@ const MoreDetails = () => {
                 options={citiesOptions}
                 placeholder="City"
                 className="grow text-sm"
+                defaultInputValue={moreDetails.city || ""}
                 onChange={(e: any) => {
                   const value = e.value;
                   if (value) {
@@ -266,14 +281,15 @@ const MoreDetails = () => {
                 }}
               />
             </div>
-            <div className=" flex flex-col">
+            <div className="w-[48%] flex flex-col gap-1">
               <label
-                htmlFor="terms"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                htmlFor="delivery-address-input"
+                className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 Delivery Address
               </label>
               <Input
+                id="delivery-address-input"
                 placeholder="street address..."
                 value={moreDetails.deliveryAddress || ""}
                 onChange={(e) => {

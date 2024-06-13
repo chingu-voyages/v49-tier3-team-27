@@ -18,7 +18,7 @@ export interface IUser extends mongoose.Document {
   };
   dob?: string;
   foodOrders?: Types.ObjectId[];
-  acountType?: string;
+  accountType?: string;
   authToken?: string;
   isAuthenticated?: boolean;
   isEmailVerified?: boolean;
@@ -79,7 +79,7 @@ const UserSchema = new mongoose.Schema<IUser>(
       type: [Schema.Types.ObjectId],
       ref: "orders",
     },
-    acountType: {
+    accountType: {
       type: String,
       default: "Customer",
       enum: ["Customer", "Admin", "Customer Support"],

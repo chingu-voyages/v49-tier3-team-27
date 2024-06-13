@@ -35,12 +35,12 @@ const DeliveryMenu = async () => {
                 </h3>
                 <div className=" flex flex-col">
                   <h4 className="font-bold text-lg">
-                    {deliveryMenu?.chefsChoice.name}
+                    {deliveryMenu?.chefsChoice?.name}
                   </h4>
-                  <span>{deliveryMenu?.chefsChoice.description}</span>
+                  <span>{deliveryMenu?.chefsChoice?.description}</span>
                 </div>
                 <span className=" font-bold text-2xl">
-                  Ksh. {deliveryMenu?.chefsChoice.price}
+                  Ksh. {deliveryMenu?.chefsChoice?.price}
                 </span>
                 <div className=" flex flex-row items-center gap-1 self-end -mt-2">
                   <Image
@@ -49,7 +49,7 @@ const DeliveryMenu = async () => {
                     width={15}
                     height={15}
                   />
-                  <span>{deliveryMenu?.chefsChoice.rating}</span>
+                  <span>{deliveryMenu?.chefsChoice?.rating}</span>
                 </div>
               </div>
             </div>
@@ -107,21 +107,7 @@ const DeliveryMenu = async () => {
                                 </span>
                               </Link>
                               <AddToCartCheckBtn
-                                foodObj={{
-                                  _id: foodObj._id,
-                                  category: foodObj.category,
-                                  subCategory: foodObj.subCategory,
-                                  name: foodObj.name,
-                                  slug: foodObj.slug,
-                                  price: foodObj.price,
-                                  imageUrl: foodObj.imageUrl,
-                                  description: foodObj.description,
-                                  calories: foodObj.calories,
-                                  rating: foodObj.rating,
-                                  isChefsChoice: foodObj.isChefsChoice,
-                                  count: foodObj.count,
-                                }}
-                              />
+                                foodObj={foodObj} />
                             </div>
                             <div className=" flex flex-row justify-between">
                               {/* Price */}
