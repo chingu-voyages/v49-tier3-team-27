@@ -7,6 +7,7 @@ import Image from "next/image";
 import NotificationOverviewCard from "./NotificationOverviewCard";
 import OrderAgainCard from "./OrderAgainCard";
 import { signOut } from "next-auth/react";
+import Chatbot from "./Chatbot";
 
 const FooterLinks = () => {
   const router = useRouter();
@@ -85,6 +86,7 @@ const RightLayout = () => {
 
       {/* footer links */}
       {!pathname.startsWith("/profile") && <FooterLinks />}
+        
     </div>
   );
 };
