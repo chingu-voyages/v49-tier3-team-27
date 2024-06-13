@@ -63,7 +63,7 @@ const EventViewPage = ({
           </span>
           <span className=" text-sm">{activeEvent.description}</span>
           <Image
-            src={activeEvent.imageUrl || "/events/event-photo-thumbnail.png"}
+            src={activeEvent.imageUrl || "/random-images/profile-banner.jpeg"}
             alt=""
             width={700}
             height={700}

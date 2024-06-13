@@ -77,7 +77,8 @@ const CreateEventContextProvider = ({
       payload.append("category", step1Values.category);
       payload.append("subject", step1Values.subject);
       payload.append("description", step1Values.description);
-      payload.append("imageFile", step2Values.imageFile || new Blob());
+      step2Values.imageFile &&
+        payload.append("imageFile", step2Values.imageFile);
       payload.append(
         "creator",
         JSON.stringify({

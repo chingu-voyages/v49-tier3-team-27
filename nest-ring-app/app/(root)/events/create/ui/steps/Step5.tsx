@@ -168,7 +168,7 @@ const Step5 = () => {
           >
             Guests:
           </label>
-          <div className="flex flex-col gap-1 max-h-[250px]">
+          <div className="flex flex-col gap-1 max-h-[250px] overflow-hidden overflow-y-auto">
             {step3Values.isOpenToAll ? (
               <span className="text-md font-bold text-start">Invited All</span>
             ) : (
