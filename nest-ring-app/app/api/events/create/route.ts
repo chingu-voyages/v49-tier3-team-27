@@ -8,7 +8,7 @@ import { CloudinaryResponse } from "@/lib/types";
 export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
     const formData = await req.formData();
-    const imageFile = formData.get("imageFile") as File;
+    const imageFile = (formData.get("imageFile") as File) || undefined;
 
     const formDataObject = parseEventFormData(formData) as IEvent;
 

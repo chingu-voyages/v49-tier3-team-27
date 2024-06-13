@@ -12,7 +12,10 @@ const Success = () => {
       <CheckCircle2Icon />
 
       <Button
-        onClick={() => router.push("/events")}
+        onClick={() => {
+          window.location.reload();
+          router.push("/events");
+        }}
         className=" bg-interactive-green hover:bg-interactive-green text-white hover:bg-opacity-80 transition-colors duration-300"
       >
         Dismiss

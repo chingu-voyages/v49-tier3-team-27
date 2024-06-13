@@ -111,6 +111,7 @@ export const ProfileUpdateContextProvider = ({
 
       setMoreDetails({
         ...moreDetails,
+        authToken: data.user?.authToken || null,
         accountType: data.user?.accountType || "",
         country: data.user?.location?.country || "",
         state: data.user?.location?.state || "",
@@ -144,12 +145,10 @@ export const ProfileUpdateContextProvider = ({
       setConsentConclude(data);
     };
 
-    const assembleData = async(): Promise<FormData | undefined> => {
+    const assembleData = async (): Promise<FormData | undefined> => {
       const payload = new FormData();
 
       if (
-        appearance.profileAvatarFile &&
-        appearance.profileBannerFile &&
         personalInfo.firstname &&
         personalInfo.lastname &&
         personalInfo.description &&
@@ -161,8 +160,14 @@ export const ProfileUpdateContextProvider = ({
       ) {
         setIsUploading(true);
         payload.append("email", userEmail);
-        payload.append("avatarFile", appearance.profileAvatarFile);
-        payload.append("bannerFile", appearance.profileBannerFile);
+        appearance.profileAvatarURL &&
+          payload.append("avatarUrl", appearance.profileAvatarURL);
+        appearance.profileBannerURL &&
+          payload.append("bannerUrl", appearance.profileBannerURL);
+        appearance.profileAvatarFile &&
+          payload.append("avatarFile", appearance.profileAvatarFile);
+        appearance.profileBannerFile &&
+          payload.append("bannerFile", appearance.profileBannerFile);
         payload.append("firstname", personalInfo.firstname);
         personalInfo.middlename &&
           payload.append("middlename", personalInfo.middlename);
@@ -219,6 +224,7 @@ export const ProfileUpdateContextProvider = ({
 
         const result = await fetchResponse.json();
         if (fetchResponse.status === 201) {
+          setPassword("");
           setConsentConclude({
             ...consentConclude,
             conclude: true,

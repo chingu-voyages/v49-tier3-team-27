@@ -336,6 +336,7 @@ const Step3 = () => {
                   <FormControl>
                     <Input
                       type="number"
+                      min={0}
                       placeholder={
                         step3Values.monetization.type == "fee"
                           ? "How much is the for the attendance fee?"

@@ -10,8 +10,14 @@ import {
 import Image from "next/image";
 
 const Confirmation = () => {
-  const { isUploading, password, updatePassword, activeStep, updateActiveStep, uploadData } =
-    useContext(ProfileUpdateContext);
+  const {
+    isUploading,
+    password,
+    updatePassword,
+    activeStep,
+    updateActiveStep,
+    uploadData,
+  } = useContext(ProfileUpdateContext);
 
   return (
     <section className="w-full">
@@ -30,6 +36,7 @@ const Confirmation = () => {
             Password
           </label>
           <Input
+            disabled={isUploading}
             placeholder="Enter Password"
             name="password"
             value={password}
@@ -55,21 +62,21 @@ const Confirmation = () => {
             Back
           </Button>
           <Button
-          disabled={isUploading}
+            disabled={isUploading}
             type="button"
             onClick={uploadData}
             className=" bg-interactive-green hover:bg-interactive-green hover:scale-110"
           >
             {isUploading ? (
-              <Image 
+              <Image
                 src={"/random-images/dots-loader.svg"}
                 alt=""
                 width={20}
                 height={20}
               />
-            ) : (<span>
-            Complete
-            </span>)}
+            ) : (
+              <span>Complete</span>
+            )}
           </Button>
         </div>
       </form>

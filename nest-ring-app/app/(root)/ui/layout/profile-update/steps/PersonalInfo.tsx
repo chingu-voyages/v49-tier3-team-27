@@ -24,6 +24,8 @@ import { Input } from "@/components/ui/input";
 import clsx from "clsx";
 import { useContext } from "react";
 import { ProfileUpdateContext } from "../ProfileUpdateContext";
+import { DatePicker } from "rsuite";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 const formSchema = z.object({
   firstname: z.string().min(2, {
@@ -120,7 +122,7 @@ const PersonalInfo = () => {
               )}
             />
           </div>
-          <div className="flex flex-row items-center gap-2">
+          <div className="flex flex-row items-center justify-end gap-2">
             <FormField
               control={form.control}
               name="lastname"
@@ -181,6 +183,27 @@ const PersonalInfo = () => {
                 </FormItem>
               )}
             />
+            {/* <FormField
+              control={form.control}
+              name="dob"
+              render={({ ...field }) => (
+                <FormItem>
+                  <FormLabel>Date of Birth</FormLabel>
+                  <DatePicker
+                  placement=""
+                    defaultValue={personalInfo.dob}
+                    onChange={(date: Date | null) => {
+                      if (date) {
+                        updatePersonalInfo({
+                          ...personalInfo,
+                          dob: date,
+                        });
+                      }
+                    }}
+                  />
+                </FormItem>
+              )}
+            /> */}
           </div>
           <FormField
             control={form.control}
@@ -189,7 +212,12 @@ const PersonalInfo = () => {
               <FormItem>
                 <FormLabel>Describe yourself</FormLabel>
                 <FormControl>
-                  <Input placeholder="Description..." defaultValue={personalInfo.description} {...field} required />
+                  <Input
+                    placeholder="Description..."
+                    defaultValue={personalInfo.description}
+                    {...field}
+                    required
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

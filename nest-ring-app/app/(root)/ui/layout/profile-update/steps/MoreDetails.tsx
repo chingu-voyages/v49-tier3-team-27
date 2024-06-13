@@ -60,16 +60,16 @@ const MoreDetails = () => {
       const options = foundStates.map((item) => ({
         key: item.isoCode,
         value: item.name,
-        label: item.name
-      }))
+        label: item.name,
+      }));
       setStatesOptions(options);
     }
     if (foundCities) {
       const options = foundCities.map((item) => ({
         key: `${item.name}-${item.stateCode}`,
         value: item.name,
-        label: item.name
-      }))
+        label: item.name,
+      }));
       setCitiesOptions(options);
     }
   }, []);
@@ -101,9 +101,8 @@ const MoreDetails = () => {
               Account Type
             </label>
             <Select
-            id="account-type-select-input"
-            placeholder={"Choose here"}
-            defaultInputValue={moreDetails.accountType}
+              id="account-type-select-input"
+              placeholder={"Choose here"}
               onChange={(e: any) => {
                 const value = e?.value;
                 if (value === "Admin" || value === "Customer Support") {
@@ -192,7 +191,7 @@ const MoreDetails = () => {
                         (item: any) => ({
                           key: item.isoCode,
                           value: item.name,
-                          label: item.name
+                          label: item.name,
                         })
                       );
                       options && setStatesOptions([...options]);
@@ -242,7 +241,7 @@ const MoreDetails = () => {
                         (item: any) => ({
                           key: `${item.name}-${item.stateCode}`,
                           value: item.name,
-                          label: item.name
+                          label: item.name,
                         })
                       );
                       options && setCitiesOptions([...options]);
