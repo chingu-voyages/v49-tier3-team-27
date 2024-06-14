@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { useContext } from "react";
-import { EventsTabContext } from "./EventsTabContext";
+import { EventsTabContext } from "../../ui/EventsTabContext";
 import { useRouter } from "next/navigation";
 import clsx from "clsx";
 

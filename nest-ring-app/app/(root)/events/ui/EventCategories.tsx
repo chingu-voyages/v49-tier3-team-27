@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useContext } from "react";
-import { EventsTabContext } from "./EventsTabContext";
+import { EventsTabContext } from "../../ui/EventsTabContext";
 
 const labels = [
   {
