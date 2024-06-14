@@ -4,7 +4,7 @@
     3. function to restructure the retrived food documents to be ready for ui.
 */
 "use server";
-import DeliveryMenu, { IDeliveryMenu } from "@/lib/models/DeliveryMenu";
+import DeliveryMenu from "@/lib/models/DeliveryMenu";
 import EventMenu, { IEventMenu } from "@/lib/models/EventMenu";
 import dbConnect from "@/lib/mongo";
 import { foodMenu } from "./deliveryMenu";
@@ -46,7 +46,7 @@ export const insertFoodToDb = async () => {
 
     console.log("insert to db result: ", result[0]);
   } catch (error) {
-    console.log("error inserting to db: ", error);
+    throw error;
   }
 };
 
@@ -63,7 +63,7 @@ export const fetchDeliveryFood = async (slug: string | null = null) => {
       result = await DeliveryMenu.find();
     }
 
-    return result.map((obj: DeliveryFoodType ) => ({
+    return result.map((obj: DeliveryFoodType) => ({
       _id: String(obj._id),
       category: obj.category,
       subCategory: obj.subCategory,
@@ -78,7 +78,6 @@ export const fetchDeliveryFood = async (slug: string | null = null) => {
       count: obj.count,
     }));
   } catch (error) {
-    console.log("Error Fetch delivery menu: ", error);
     throw error;
   }
 };
@@ -89,7 +88,6 @@ export const getDeliveryMenu = async () => {
     if (!result) {
       return {};
     }
-
 
     const deliveryMenu: DeliveryMenuType = {
       chefsChoice: {} as DeliveryFoodType,
@@ -135,7 +133,7 @@ export const getDeliveryMenu = async () => {
       categories: deliveryMenu.categories.reverse(),
     };
   } catch (error) {
-    console.log("getDelivery Menu error: ", error);
+    throw error;
   }
 };
 
@@ -157,7 +155,7 @@ export const insertEventMenuToDb = async () => {
 
     console.log("insert to db result: ", result[0]);
   } catch (error) {
-    console.log("error inserting to db: ", error);
+    throw error;
   }
 };
 
@@ -176,16 +174,16 @@ export const fetchEventFood = async (searchTerm: string | null = null) => {
     if (searchTerm) {
       return {
         _id: String(result._id),
-    name: result.name,
-    slug: result.slug,
-    category: result.category,
-    calories: result.calories,
-    imageUrl: result.imageUrl,
-    description: result.description,
-    rating: result.rating,
-    price: result.price,
-    count: result.count,
-    equivalence: result.equivalence,
+        name: result.name,
+        slug: result.slug,
+        category: result.category,
+        calories: result.calories,
+        imageUrl: result.imageUrl,
+        description: result.description,
+        rating: result.rating,
+        price: result.price,
+        count: result.count,
+        equivalence: result.equivalence,
       } as EventFoodType;
     } else {
       return result.map((obj: EventFoodType) => ({
@@ -203,7 +201,6 @@ export const fetchEventFood = async (searchTerm: string | null = null) => {
       }));
     }
   } catch (error) {
-    console.log("Error Fetch event menu: ", error);
     throw error;
   }
 };
@@ -236,6 +233,6 @@ export const getEventMenu = async () => {
 
     return eventMenu;
   } catch (error) {
-    console.log("getEventMenu error: ", error);
+    throw error;
   }
 };

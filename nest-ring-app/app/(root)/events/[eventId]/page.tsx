@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext, useEffect, useState } from "react";
-import { EventsTabContext } from "../ui/EventsTabContext";
+import { EventsTabContext } from "../../ui/EventsTabContext";
 import { EventsObjType } from "../ui/interface";
 import Image from "next/image";
 import PrevPageBtn from "../../order-meal/[searchTerm]/ui/PrevPageBtn";
