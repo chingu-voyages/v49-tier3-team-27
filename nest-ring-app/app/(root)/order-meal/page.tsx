@@ -4,8 +4,8 @@ import EventsMenu from "./ui/EventsMenu";
 import SearchCartBar from "./ui/SearchCartBar";
 
 const page = () => {
-  return (
-    <main className=" bg-white w-full h-full p-2 md:pr-4 pb-0 flex flex-col gap-6 md:rounded-t-lg">
+  return (    
+    <main className=" bg-white w-full h-full p-2 md:pr-4 pb-0 flex flex-col gap-6 md:rounded-t-lg">      
       <SearchCartBar />
       <Tabs
         defaultValue="delivery-menu"

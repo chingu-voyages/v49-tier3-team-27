@@ -10,7 +10,7 @@ const SearchTerm = async ({
 }: Readonly<{ params: { searchTerm: string } }>) => {
   const result = (await fetchDeliveryFood(searchTerm)) as DeliveryFoodType;
 
-  let foodObj = {} as any;
+  let foodObj: any;
   if (result) {
     foodObj = {
       category: result.category,

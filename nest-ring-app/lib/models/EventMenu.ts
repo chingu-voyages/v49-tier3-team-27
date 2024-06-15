@@ -23,7 +23,7 @@ const EventMenuSchema = new mongoose.Schema<IEventMenu>(
     description: { type: String },
     rating: { type: Number },
     price: { type: Number },
-    count: { type: Number, default: 0 },
+    count: { type: Number, default: 1 },
     equivalence: { type: String },
   },
   { timestamps: true }

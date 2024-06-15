@@ -1,6 +1,6 @@
 "use client";
 
-// import ChatComponent from "@/components/ui/chat-component";
+import ChatComponent from "@/components/ui/chat-component";
 import { useState } from "react";
 
 const Chatbot = () => {
