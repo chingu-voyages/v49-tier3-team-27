@@ -10,7 +10,9 @@ To be able to serve Nestling clients all over Africa with a single platform.
 
 **Link for the app:** https://nest-ring-app.vercel.app/order-meal
 
-App prototype: https://www.figma.com/proto/SsUQDElRLMCQ7N6KJRuRZm/Nestling-Hotel-App-Mobile-Design?page-id=28%3A1011&node-id=505-190&viewport=-2761%2C1700%2C0.52&t=sPBYQVPU4TMsUn7y-1&scaling=scale-down-width
+**Product Backlog:** https://docs.google.com/document/d/1PgAuGkSggzslXRLsS_g3fOIe-ek1r3pDoiH8GznOrVU/edit
+
+**App prototype:** https://www.figma.com/proto/SsUQDElRLMCQ7N6KJRuRZm/Nestling-Hotel-App-Mobile-Design?page-id=28%3A1011&node-id=505-190&viewport=-2761%2C1700%2C0.52&t=sPBYQVPU4TMsUn7y-1&scaling=scale-down-width
 
 ![Screenshot 2024-06-11 092808](https://github.com/chingu-voyages/v49-tier3-team-27/assets/168421863/a5cc270e-cbeb-49c2-9ade-4930b84db673)
 
@@ -19,7 +21,7 @@ App prototype: https://www.figma.com/proto/SsUQDElRLMCQ7N6KJRuRZm/Nestling-Hotel
 ![Screenshot 2024-06-11 092832](https://github.com/chingu-voyages/v49-tier3-team-27/assets/168421863/38572e64-00e2-46d4-aa4a-bcc48b17b5e0)
 
 
-**The app was build in usind the following frameworks/libraries:**
+**The app was built using the following:**
 
 **Framework:** Next.js with Typescript and Tailwind
 
@@ -33,7 +35,9 @@ App prototype: https://www.figma.com/proto/SsUQDElRLMCQ7N6KJRuRZm/Nestling-Hotel
 
 **Design tool:** Figma
 
-**Project Management Tool:** GitHub Projects
+**Project Management Tool:** GitHub Projects, Google Drive
+
+**Team Communication Tools:** Discord Channels, Google Meet
 
 
 
@@ -44,3 +48,5 @@ App prototype: https://www.figma.com/proto/SsUQDElRLMCQ7N6KJRuRZm/Nestling-Hotel
 - Mariana Farcas: [GitHub](https://github.com/MarianaFarcas) / [LinkedIn](https://linkedin.com/in/Mariana-Farcas)
 - Osarumen Peace Osayande: [GitHub](https://github.com/Chukuli12) / [LinkedIn](https://www.linkedin.com/in/osarumen-osayande-019a3823b)
 - Simon Summers: [GitHub](https://github.com/simonC137) / [LinkedIn](https://linkedin.com/in/simonsummers)
+
+Special thanks also goes to our Voyage Guide @Elias!
