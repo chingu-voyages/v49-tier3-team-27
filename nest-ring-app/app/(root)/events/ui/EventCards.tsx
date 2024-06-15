@@ -13,7 +13,7 @@ const EventCards = () => {
   return (
     <section className="w-full bg-white mt-3 px-10 flex flex-row flex-wrap max-md:justify-center gap-2 ">
       {isLoading ? (
-        <div className=" pt-5">
+        <div className="w-full pt-5">
           <LoadingUI />
         </div>
       ) : (

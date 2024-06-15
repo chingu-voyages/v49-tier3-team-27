@@ -57,26 +57,42 @@ export const fetchDeliveryFood = async (slug: string | null = null) => {
 
     let result = null;
     if (slug) {
-      result = await DeliveryMenu.find({ slug });
-      result = result[0];
+      result = await DeliveryMenu.findOne({ slug });
+      if (result) {
+        result = {
+          _id: String(result._id),
+          category: result.category,
+          subCategory: result.subCategory,
+          name: result.name,
+          slug: result.slug,
+          price: result.price,
+          imageUrl: result.imageUrl,
+          description: result.description,
+          calories: result.calories,
+          rating: result.rating,
+          isChefsChoice: result.isChefsChoice,
+          count: result.count,
+        };
+      }
     } else {
       result = await DeliveryMenu.find();
+      result = result.map((obj: DeliveryFoodType) => ({
+        _id: String(obj._id),
+        category: obj.category,
+        subCategory: obj.subCategory,
+        name: obj.name,
+        slug: obj.slug,
+        price: obj.price,
+        imageUrl: obj.imageUrl,
+        description: obj.description,
+        calories: obj.calories,
+        rating: obj.rating,
+        isChefsChoice: obj.isChefsChoice,
+        count: obj.count,
+      }));
     }
 
-    return result.map((obj: DeliveryFoodType) => ({
-      _id: String(obj._id),
-      category: obj.category,
-      subCategory: obj.subCategory,
-      name: obj.name,
-      slug: obj.slug,
-      price: obj.price,
-      imageUrl: obj.imageUrl,
-      description: obj.description,
-      calories: obj.calories,
-      rating: obj.rating,
-      isChefsChoice: obj.isChefsChoice,
-      count: obj.count,
-    }));
+    return result;
   } catch (error) {
     throw error;
   }
@@ -167,12 +183,7 @@ export const fetchEventFood = async (searchTerm: string | null = null) => {
 
     if (searchTerm) {
       result = await EventMenu.findOne({ slug: searchTerm });
-    } else {
-      result = await EventMenu.find();
-    }
-
-    if (searchTerm) {
-      return {
+      result = {
         _id: String(result._id),
         name: result.name,
         slug: result.slug,
@@ -184,9 +195,10 @@ export const fetchEventFood = async (searchTerm: string | null = null) => {
         price: result.price,
         count: result.count,
         equivalence: result.equivalence,
-      } as EventFoodType;
+      };
     } else {
-      return result.map((obj: EventFoodType) => ({
+      result = await EventMenu.find();
+      result = result.map((obj: EventFoodType) => ({
         _id: String(obj._id),
         name: obj.name,
         slug: obj.slug,
@@ -200,6 +212,8 @@ export const fetchEventFood = async (searchTerm: string | null = null) => {
         equivalence: obj.equivalence,
       }));
     }
+
+    return result;
   } catch (error) {
     throw error;
   }
