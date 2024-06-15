@@ -57,26 +57,28 @@ export const fetchDeliveryFood = async (slug: string | null = null) => {
 
     let result = null;
     if (slug) {
-      result = await DeliveryMenu.find({ slug });
+      result = await DeliveryMenu.findOne({ slug });
       result = result[0];
     } else {
       result = await DeliveryMenu.find();
+      result = result.map((obj: DeliveryFoodType) => ({
+        _id: String(obj._id),
+        category: obj.category,
+        subCategory: obj.subCategory,
+        name: obj.name,
+        slug: obj.slug,
+        price: obj.price,
+        imageUrl: obj.imageUrl,
+        description: obj.description,
+        calories: obj.calories,
+        rating: obj.rating,
+        isChefsChoice: obj.isChefsChoice,
+        count: obj.count,
+      }));
     }
 
-    return result.map((obj: DeliveryFoodType) => ({
-      _id: String(obj._id),
-      category: obj.category,
-      subCategory: obj.subCategory,
-      name: obj.name,
-      slug: obj.slug,
-      price: obj.price,
-      imageUrl: obj.imageUrl,
-      description: obj.description,
-      calories: obj.calories,
-      rating: obj.rating,
-      isChefsChoice: obj.isChefsChoice,
-      count: obj.count,
-    }));
+    console.log('THE RESULT IS : ', result)
+    return result
   } catch (error) {
     throw error;
   }
