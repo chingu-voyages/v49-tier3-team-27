@@ -1,12 +1,12 @@
-**Project Name:**- *Nestling App*
+**Project Name:**- *Nestring App*
 
 **Overview**
 
 Our vision is to build a platform that can help people within the region of Nairobi to order meals from their favorite hotel without having to visit the hotel.
-Nestling is a food app for users who cannot visit Nestling hotels or users who prefer Nestling food.
+Nestring is a food app for users who cannot visit Nestring hotels or users who prefer Nestring food.
 
 **Mission:**
-To be able to serve Nestling clients all over Africa with a single platform.
+To be able to serve Nestring clients all over Africa with a single platform.
 
 **Link for the app:** https://nest-ring-app.vercel.app/order-meal
 
