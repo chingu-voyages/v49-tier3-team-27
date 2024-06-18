@@ -14,11 +14,13 @@ To be able to serve Nestring clients all over Africa with a single platform.
 
 **App prototype:** https://www.figma.com/proto/SsUQDElRLMCQ7N6KJRuRZm/Nestling-Hotel-App-Mobile-Design?page-id=28%3A1011&node-id=505-190&viewport=-2761%2C1700%2C0.52&t=sPBYQVPU4TMsUn7y-1&scaling=scale-down-width
 
-![Screenshot 2024-06-11 092808](https://github.com/chingu-voyages/v49-tier3-team-27/assets/168421863/a5cc270e-cbeb-49c2-9ade-4930b84db673)
+![Screenshot 2024-06-18 193400](https://github.com/chingu-voyages/v49-tier3-team-27/assets/168421863/72d8ede9-cc4a-4de5-9ddd-093264b1a0c2)
 
-![Screenshot 2024-06-11 092707](https://github.com/chingu-voyages/v49-tier3-team-27/assets/168421863/5d1a1f39-625b-4350-9713-6730f6fd27b7)
+![Screenshot 2024-06-11 092832](https://github.com/chingu-voyages/v49-tier3-team-27/assets/168421863/dc9638d4-5936-4745-96db-14b2d6e1ed31)
 
-![Screenshot 2024-06-11 092832](https://github.com/chingu-voyages/v49-tier3-team-27/assets/168421863/38572e64-00e2-46d4-aa4a-bcc48b17b5e0)
+![Screenshot 2024-06-18 193444](https://github.com/chingu-voyages/v49-tier3-team-27/assets/168421863/f6be466d-72f7-424a-aeb3-b230cd9e87de)
+
+
 
 
 **The app was built using the following:**
