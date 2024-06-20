@@ -7,10 +7,17 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import Image from "next/image";
 
 const Confirmation = () => {
-  const { password, updatePassword, activeStep, updateActiveStep, uploadData } =
-    useContext(ProfileUpdateContext);
+  const {
+    isUploading,
+    password,
+    updatePassword,
+    activeStep,
+    updateActiveStep,
+    uploadData,
+  } = useContext(ProfileUpdateContext);
 
   return (
     <section className="w-full">
@@ -29,9 +36,12 @@ const Confirmation = () => {
             Password
           </label>
           <Input
-            placeholder="..."
+            disabled={isUploading}
+            placeholder="Enter Password"
             name="password"
             value={password}
+            type="password"
+            className="text-xs"
             onChange={(e) => {
               const value = e.currentTarget.value;
               updatePassword(value);
@@ -42,6 +52,7 @@ const Confirmation = () => {
         {/* Tab navigation buttons */}
         <div className=" flex flex-row gap-2 pt-5">
           <Button
+            disabled={isUploading}
             type="button"
             onClick={() => {
               updateActiveStep(activeStep - 1);
@@ -51,11 +62,21 @@ const Confirmation = () => {
             Back
           </Button>
           <Button
+            disabled={isUploading}
             type="button"
             onClick={uploadData}
             className=" bg-interactive-green hover:bg-interactive-green hover:scale-110"
           >
-            Complete
+            {isUploading ? (
+              <Image
+                src={"/random-images/dots-loader.svg"}
+                alt=""
+                width={20}
+                height={20}
+              />
+            ) : (
+              <span>Complete</span>
+            )}
           </Button>
         </div>
       </form>

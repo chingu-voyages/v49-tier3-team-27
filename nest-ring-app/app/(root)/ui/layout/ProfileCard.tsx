@@ -9,7 +9,7 @@ const ProfileCard = () => {
   return (
     <section className=" w-full xl:h-[20vw] md:h-[25vw]  bg-white rounded-lg flex flex-col justify-between lg:pb-4 md:pb-2">
       {/* Profile avatar and background banner */}
-      <div className=" w-full relative">
+      <div className="w-full relative">
         <Image
           src={data?.user?.bannerUrl || "/random-images/profile-banner.jpeg"}
           alt=""

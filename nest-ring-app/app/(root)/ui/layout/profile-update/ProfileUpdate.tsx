@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Sidebar from "./Sidebar";
 import ActiveTab from "./ActiveTab";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { ProfileUpdateContext } from "./ProfileUpdateContext";
 import clsx from "clsx";
 import Consent from "./steps/Consent";
@@ -27,12 +27,17 @@ const ProfileUpdate = ({
   showByDefault = false,
   hideTrigger = true,
 }: Readonly<{ showByDefault: boolean; hideTrigger?: boolean }>) => {
-  const { profileUpdateComplete, consentConclude } =
-    useContext(ProfileUpdateContext);
-  const { data } = useSession() as any;
+  const { consentConclude } = useContext(ProfileUpdateContext);
+  const { data, status } = useSession() as any;
 
   return (
-    <Dialog defaultOpen={showByDefault && !profileUpdateComplete}>
+    <Dialog
+      defaultOpen={
+        showByDefault &&
+        status == "authenticated" &&
+        !data?.user?.isProfileComplete
+      }
+    >
       <DialogTrigger
         id="update-profile-trigger"
         className={`${hideTrigger ? "hidden" : "block"}`}

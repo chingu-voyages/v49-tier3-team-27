@@ -8,16 +8,20 @@ export const authConfig = {
     async authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isLoginPage = nextUrl.pathname.startsWith("/login");
+      const isHome = nextUrl.pathname.startsWith("/home");
       const isCommunity = nextUrl.pathname.startsWith("/community");
       const isEvents = nextUrl.pathname.startsWith("/events");
-      const isOrderMeal = nextUrl.pathname.startsWith("/order-meal");
+      const isOrderMeal = nextUrl.pathname.startsWith("/order-meal/checkout");
       const isRecipes = nextUrl.pathname.startsWith("/recipes");
       const isNotifications = nextUrl.pathname.startsWith("/notifications");
       const isProfile = nextUrl.pathname.startsWith("/profile");
       const query = new URLSearchParams(nextUrl.search);
       const redirectURL = query.get("callbackUrl");
+      const baseURL = process.env.NEXTAUTH_URL;
 
-      if (
+      if (isHome && isLoggedIn && baseURL) {
+        return Response.redirect(new URL("/order-meal", baseURL));
+      } else if (
         isCommunity ||
         isEvents ||
         isOrderMeal ||
@@ -28,8 +32,6 @@ export const authConfig = {
         if (isLoggedIn) return true;
         return false; // Redirect unauthenticated users to login page
       } else if (isLoginPage) {
-        const baseURL = process.env.NEXTAUTH_URL;
-
         if (isLoggedIn && redirectURL !== undefined && redirectURL !== null) {
           return Response.redirect(new URL(new URL(redirectURL)));
         } else if (isLoggedIn && baseURL) {
@@ -41,6 +43,7 @@ export const authConfig = {
     },
     async jwt({ token, user }: { token: any; user: any }) {
       if (user) {
+        token.userId = user._id;
         token.name = user.name;
         token.email = user.email;
         token.foodOrders = user.foodOrders;
@@ -53,7 +56,7 @@ export const authConfig = {
         token.dob = user.dob;
         token.accountType = user.accountType;
         token.authToken = user.authToken;
-        token.location = user.loaction;
+        token.location = user.location;
         token.isAuthenticated = user.isAuthenticated;
         token.isEmailVerified = user.isEmailVerified;
         token.isProfileComplete = user.isProfileComplete;
@@ -62,6 +65,7 @@ export const authConfig = {
     },
     async session({ session, token }: { session: any; token: any }) {
       if (token) {
+        session.user.userId = token.userId;
         session.user.name = token.name;
         session.user.email = token.email;
         session.user.foodOrders = token.foodOrders;

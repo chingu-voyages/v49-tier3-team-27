@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import OrderMealContextProvider from "./ui/OrderMealContext";
+import OrderMealContextProvider from "../ui/OrderMealContext";
 
 const OrderMealLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
   return (

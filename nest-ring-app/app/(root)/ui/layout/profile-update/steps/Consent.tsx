@@ -4,6 +4,8 @@ import { ProfileUpdateContext } from "../ProfileUpdateContext";
 import { DialogTrigger } from "@/components/ui/dialog";
 import Image from "next/image";
 import appLogo from "@/public/app-named-logo-png.png";
+import { toast } from "@/components/ui/use-toast";
+import { signOut } from "next-auth/react";
 
 const Consent = () => {
   const { consentConclude, updateConsentConclude, updateActiveStep } =
@@ -61,9 +63,22 @@ const Consent = () => {
               <DialogTrigger>
                 <Button
                   onClick={() => {
-                    setTimeout(() => {
-                      window.location.reload();
-                    }, 3000);
+                    toast({
+                      title: "Alert!",
+                      description:
+                        "Please login again for updates to take effect.",
+                      variant: "destructive",
+                      duration: 60000,
+                      action: (
+                        <Button
+                          onClick={async () => {
+                            await signOut();
+                          }}
+                        >
+                          Refresh
+                        </Button>
+                      ),
+                    });
                   }}
                   className=" self-center bg-interactive-green hover:bg-interactive-green text-white hover:scale-105"
                 >

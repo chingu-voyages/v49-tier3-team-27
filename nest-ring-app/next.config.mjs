@@ -1,4 +1,3 @@
-import { hostname } from 'os';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -6,8 +5,22 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "res.cloudinary.com",
+                hostname: "**.*",
             },
+            {
+                protocol: "http",
+                hostname: "**.*",
+            },
+            {
+                protocol: "https",
+                hostname: "**",
+                pathname: "/.image/**",
+            },
+            {
+                protocol: "https",
+                hostname: "**",
+                pathname: "**/.*/**",
+            }
         ],
     },
 };

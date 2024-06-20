@@ -5,14 +5,23 @@ import {
   DialogHeader,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Delete, DeleteIcon, Edit3Icon, Trash2Icon } from "lucide-react";
+import { Edit3Icon, Trash2Icon } from "lucide-react";
 import Image from "next/image";
 import { useContext } from "react";
 import { ProfileUpdateContext } from "../ProfileUpdateContext";
+import { useFormState } from "react-dom";
+import { deleteImagesByUrl } from "@/app/(root)/lib/utils";
+import { signOut, useSession } from "next-auth/react";
+import { toast } from "@/components/ui/use-toast";
 
 const Appearance = () => {
   const { appearance, updateAppearance, updateActiveStep } =
     useContext(ProfileUpdateContext);
+  const [deleteStatus, deletePhoto] = useFormState(
+    deleteImagesByUrl,
+    undefined
+  );
+  const { data, update } = useSession() as any;
 
   return (
     <section className="w-full h-full text-black p-2 flex flex-col gap-2">
@@ -121,24 +130,105 @@ const Appearance = () => {
           </button>
         </div>
       </div>
-
+      {deleteStatus && (
+        <span className="text-xs font-light text-figma-brown">
+          {deleteStatus}
+        </span>
+      )}
       {/* footer */}
       <DialogFooter>
         <Button
+          disabled={data.user.avatarUrl == null}
           variant={"ghost"}
           className="border-2 border-interactive-green text-interactive-green bg-transparent"
-          onClick={() => {}}
+          onClick={() => {
+            if (data?.user?.userId) {
+              const userId = data.user?.userId;
+              updateAppearance({
+                ...appearance,
+                profileAvatarFile: null,
+                profileAvatarURL: null,
+              });
+              const payload = new FormData();
+              payload.append("url", appearance.profileAvatarURL);
+              payload.append("type", "profile Photo");
+              payload.append("key", "avatarUrl");
+              payload.append("userId", userId);
+              deletePhoto(payload);
+              update({ avatarUrl: null });
+              toast({
+                title: "Alert!",
+                description: "Please login again for updates to take effect.",
+                variant: "destructive",
+                duration: 60000,
+                action: (
+                  <Button
+                    onClick={async () => {
+                      await signOut();
+                    }}
+                  >
+                    Refresh
+                  </Button>
+                ),
+              });
+            } else {
+              toast({
+                title: "Alert!",
+                description: "Please authenticate your account.",
+                variant: "destructive",
+              });
+              setTimeout(async () => {
+                await signOut();
+              }, 2000);
+            }
+          }}
         >
           <Trash2Icon /> Profile Photo
         </Button>
         <Button
+          disabled={data.user.bannerUrl == null}
           variant={"ghost"}
           className="border-2 border-interactive-green text-interactive-green bg-transparent"
-          onClick={() => {
-            const imageEl = document.getElementById(
-              "profile-banner-image-PU"
-            ) as HTMLImageElement;
-            imageEl.setAttribute("src", "/random-images/profile-banner.jpeg");
+          onClick={async () => {
+            if (data?.user?.userId) {
+              const userId = data.user.userId;
+              const payload = new FormData();
+              payload.append("url", appearance.profileBannerURL);
+              payload.append("type", "profile Banner");
+              payload.append("key", "bannerUrl");
+              payload.append("userId", userId);
+              deletePhoto(payload);
+              updateAppearance({
+                ...appearance,
+                profileBannerURL: null,
+                profileBannerFile: null,
+              });
+              update({ bannerUrl: null });
+              toast({
+                title: "Alert!",
+                description: "Please login again for updates to take effect.",
+                variant: "destructive",
+                duration: 60000,
+                action: (
+                  <Button
+                    onClick={async () => {
+                      await signOut();
+                    }}
+                  >
+                    Refresh
+                  </Button>
+                ),
+              });
+            } else {
+              toast({
+                title: "Alert!",
+                description: "Please authenticate your account.",
+                variant: "destructive",
+              });
+              setTimeout(async () => {
+                await signOut();
+              }, 2000);
+            }
           }}
         >
           <Trash2Icon /> Banner Photo

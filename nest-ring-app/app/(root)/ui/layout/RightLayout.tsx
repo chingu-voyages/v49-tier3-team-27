@@ -7,6 +7,7 @@ import Image from "next/image";
 import NotificationOverviewCard from "./NotificationOverviewCard";
 import OrderAgainCard from "./OrderAgainCard";
 import { signOut } from "next-auth/react";
+import Chatbot from "./Chatbot";
 
 const FooterLinks = () => {
   const router = useRouter();
@@ -75,7 +76,7 @@ const RightLayout = () => {
   const pathname = usePathname();
 
   return (
-    <div className=" max-md:hidden w-[30%] sticky top-16">
+    <div className=" max-md:hidden min-w-[25%] w-[250px] sticky top-0">
       {/* notification overview card */}
       {(pathname.startsWith("/community") ||
         pathname.startsWith("/events")) && <NotificationOverviewCard />}
@@ -85,6 +86,7 @@ const RightLayout = () => {
 
       {/* footer links */}
       {!pathname.startsWith("/profile") && <FooterLinks />}
+        
     </div>
   );
 };

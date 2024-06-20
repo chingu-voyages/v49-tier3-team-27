@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { uploadImageToCloudinary } from "@/lib/cloudinary";
 import { CloudinaryResponse } from "@/lib/types";
 import bcrypt from "bcrypt";
+import { deleteCloudinaryImage } from "@/app/(root)/lib/utils";
 
 export async function PUT(req: NextRequest) {
   try {
@@ -12,8 +13,12 @@ export async function PUT(req: NextRequest) {
 
     console.log("profile upload payload: ", payload);
     const email = payload.get("email");
-    const avatarFile = payload.get("avatarFile") as File;
-    const bannerFile = payload.get("bannerFile") as File;
+    const avatarFile = (payload.get("avatarFile") as File) || undefined;
+    const bannerFile = (payload.get("bannerFile") as File) || undefined;
+    const existing_avatarUrl =
+      (payload.get("avatarUrl") as string) || undefined;
+    const existing_bannerUrl =
+      (payload.get("bannerUrl") as string) || undefined;
     const firstname = payload.get("firstname") as string;
     const middlename = payload.get("middlename") as string;
     const lastname = payload.get("lastname") as string;
@@ -50,27 +55,32 @@ export async function PUT(req: NextRequest) {
       );
     }
 
-    let avatarUrl;
-    let bannerUrl;
+    let avatarUrl = existing_avatarUrl;
+    let bannerUrl = existing_bannerUrl;
 
     if (avatarFile) {
+      if (existing_avatarUrl) {
+        await deleteCloudinaryImage(existing_avatarUrl);
+      }
       const arrayBuffer = await avatarFile.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
       const results = await uploadImageToCloudinary(buffer, avatarFile.name);
       avatarUrl = (results as CloudinaryResponse).secure_url;
     }
     if (bannerFile) {
+      if (existing_bannerUrl) {
+        await deleteCloudinaryImage(existing_bannerUrl);
+      }
       const arrayBuffer = await bannerFile.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
       const results = await uploadImageToCloudinary(buffer, bannerFile.name);
       bannerUrl = (results as CloudinaryResponse).secure_url;
     }
 
-    console.log("existing user: ", userExists);
-    const updatedUser = await User.findOneAndReplace(
+    await User.findOneAndReplace(
       { _id: userExists._id },
       {
-        name: userExists.name,
+        name: `${firstname} ${middlename} ${lastname}`,
         email: userExists.email,
         password: userExists.password,
         foodOrders: userExists.foodOrders,
@@ -92,7 +102,6 @@ export async function PUT(req: NextRequest) {
       }
     );
 
-    console.log("new user data: ", updatedUser);
     return NextResponse.json(
       { message: "Profile update successful." },
       { status: 201 }
