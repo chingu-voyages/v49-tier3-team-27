@@ -49,7 +49,7 @@ To be able to serve Nest-Ring clients all over Africa with a single platform.
 
 ## Our Team
 
-- Jyotirmoy Das: [GitHub](https://github.com/jdx-code) / [LinkedIn](https://www.linkedin.com/in/jdx-code/)
+- Jyotirmoy Das: [GitHub](https://github.com/jdx-code) / [LinkedIn](https://www.linkedin.com/in/jd1441/)
 - Jack Weru: [GitHub](https://github.com/Jaweki) / [LinkedIn](https://linkedin.com/in/jaweki-dekut)
 - Mariana Farcas: [GitHub](https://github.com/MarianaFarcas) / [LinkedIn](https://www.linkedin.com/in/mariana-f-6592661b5)
 - Osarumen Peace Osayande: [GitHub](https://github.com/Chukuli12) / [LinkedIn](https://www.linkedin.com/in/osarumen-osayande-019a3823b)
